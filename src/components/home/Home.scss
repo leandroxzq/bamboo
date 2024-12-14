@@ -1,0 +1,149 @@
+@use '../mixin.scss' as *;
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 0;
+    padding: 2rem 0;
+    background: #fafafa;
+
+    .background {
+        height: 70vh;
+        width: 80vw;
+
+        &__image {
+            @include flex-align(start, end);
+            height: 100%;
+            width: 100%;
+            filter: drop-shadow(3px 3px 20px #0000007c);
+            background-image: url(../background.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 2rem;
+            transition: 0.3s;
+
+            .bg-container {
+                color: #fff;
+                max-width: 500px;
+                padding: 0 0 2.5rem 2.5rem;
+
+                @media (width <= 600px) {
+                    padding: 1rem;
+                }
+
+                &__title {
+                    font-size: 2.3rem;
+                    padding: 0;
+                    margin: 0;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+
+                    @media (width <= 600px) {
+                        font-size: 1.8rem;
+                        -webkit-line-clamp: 2;
+                    }
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            &:hover {
+                box-shadow: inset 1px 1px 60px #000;
+            }
+        }
+    }
+
+    .posts {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        width: 100%;
+
+        &__latest {
+            font-size: 2rem;
+            text-align: center;
+            padding: 2.5rem;
+            font-weight: 600;
+        }
+
+        &__container {
+            display: grid;
+            width: 80%;
+            height: 100%;
+            grid-template-columns: repeat(4, minmax(200px, 1fr));
+            grid-template-rows: repeat(auto-fill, 350px);
+            gap: 2rem;
+
+            @media (width <= 1600px) {
+                grid-template-columns: repeat(3, minmax(200px, 1fr));
+            }
+
+            @media (width <= 1000px) {
+                grid-template-columns: repeat(2, minmax(200px, 1fr));
+            }
+
+            @media (width <= 500px) {
+                grid-template-columns: repeat(1, minmax(200px, 1fr));
+            }
+
+            .card {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                background: #fff;
+                box-shadow: 0px 4px 4px #00000025;
+                border-radius: 12px;
+                height: 350px;
+                transition: 0.3s;
+
+                &:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0px 4px 4px #0000009f;
+                }
+
+                &__info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    padding: 1rem;
+                    font-weight: 600;
+                    height: 100%;
+                }
+
+                &__title {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    font-size: 1.25rem;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+
+                &__date {
+                    font-size: 0.8rem;
+                    color: #8d8d8d;
+                }
+
+                &__img {
+                    background-image: url(./background.png);
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border-radius: 12px 12px 0 0;
+                    min-height: 50%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

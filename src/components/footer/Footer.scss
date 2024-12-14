@@ -1,0 +1,15 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0;
+    width: 100%;
+    border-top: 1px solid #c2c2c27c;
+
+    &__wrapper {
+        display: flex;
+        gap: 1rem;
+        line-height: 1.5;
+        align-items: center;
+    }
+}
