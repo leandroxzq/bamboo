@@ -1,8 +1,9 @@
 import { Link } from 'react-router';
 import { useState } from 'react';
 
-// eslint-disable-next-line react/prop-types
-function Cadastro({ onClose }) {
+import '../Modal.scss';
+
+function Cadastro() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const email = event.target.email.value;
@@ -28,70 +29,72 @@ function Cadastro({ onClose }) {
     };
 
     return (
-        <form className='form-login' onSubmit={handleSubmit}>
-            <div className='login'>
-                <Link to='/'>
-                    <i onClick={onClose} className='bi bi-x exit'></i>
-                </Link>
+        <div className='background-form'>
+            <form className='form-login' onSubmit={handleSubmit}>
+                <div className='login'>
+                    <Link to='/login'>
+                        <i className='bi bi-x exit'></i>
+                    </Link>
 
-                <div className='login__header'>
-                    <h2>Cadastre-se</h2>
-                </div>
-                <div className='login__input'>
-                    <label htmlFor='email'>Email</label>
-                    <input
-                        type='text'
-                        id='email'
-                        name='email'
-                        placeholder='Digite seu email'
-                    />
-                </div>
-                <div className='login__input'>
-                    <div className='login__input__container'>
-                        <label htmlFor='password'>Senha</label>
+                    <div className='login__header'>
+                        <h2>Cadastre-se</h2>
                     </div>
-                    <div className='password-container'>
+                    <div className='login__input'>
+                        <label htmlFor='nome'>Nome Completo</label>
                         <input
-                            type={passwordType}
-                            className='password-style'
-                            id='password'
-                            name='password'
-                            placeholder='Digite sua senha'
+                            type='text'
+                            id='nome'
+                            name='nome'
+                            placeholder='Digite seu nome completo'
                         />
-                        <i className={eye} onClick={togglePassword}></i>
                     </div>
-                </div>
-                <div className='login__input'>
-                    <label htmlFor='nome'>Nome Complete</label>
-                    <input
-                        type='text'
-                        id='nome'
-                        name='nome'
-                        placeholder='Digite seu nome completo'
-                    />
-                </div>
-                <div className='login__input'>
-                    <label htmlFor='date'>Data de Nascimento</label>
-                    <input type='date' id='date' name='date' />
-                </div>
-                <div className='login__input'>
-                    <label htmlFor='turma'>Turma</label>
-                    <input
-                        type='text'
-                        id='turma'
-                        name='turma'
-                        placeholder='Digite sua turma'
-                    />
-                </div>
+                    <div className='login__input'>
+                        <label htmlFor='email'>Email</label>
+                        <input
+                            type='text'
+                            id='email'
+                            name='email'
+                            placeholder='Digite seu email'
+                        />
+                    </div>
+                    <div className='login__input'>
+                        <div className='login__input__container'>
+                            <label htmlFor='password'>Senha</label>
+                        </div>
+                        <div className='password-container'>
+                            <input
+                                type={passwordType}
+                                className='password-style'
+                                id='password'
+                                name='password'
+                                placeholder='Digite sua senha'
+                            />
+                            <i className={eye} onClick={togglePassword}></i>
+                        </div>
+                    </div>
+                    <div className='login__input'>
+                        <label htmlFor='date'>Data de Nascimento</label>
+                        <input type='date' id='date' name='date' />
+                    </div>
+                    <div className='login__input'>
+                        <label htmlFor='turma'>Turma</label>
+                        <input
+                            type='text'
+                            id='turma'
+                            name='turma'
+                            placeholder='Digite sua turma'
+                        />
+                    </div>
 
-                <button type='submit' className='button-black'>
-                    Cria Conta
-                </button>
-                <span className='login__registrar'>
-                    <Link to='/'>Já tem Uma conta?</Link>
-                </span>
-            </div>
-        </form>
+                    <button type='submit' className='button-black'>
+                        Cria Conta
+                    </button>
+                    <span className='login__registrar'>
+                        <Link to='/login'>Já tem Uma conta?</Link>
+                    </span>
+                </div>
+            </form>
+        </div>
     );
 }
 

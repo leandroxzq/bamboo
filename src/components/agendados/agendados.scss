@@ -1,0 +1,32 @@
+.agendados {
+    width: 100%;
+    min-height: 100vh;
+
+    .agendados-container {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        justify-content: center;
+        padding: 4rem;
+        gap: 1rem;
+
+        @media (width <= 1000px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        &__card {
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            color: #fff;
+            background: #000;
+            border-radius: 6px;
+            max-width: 250px;
+
+            h2 {
+                margin: 0;
+            }
+        }
+    }
+}

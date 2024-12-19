@@ -1,4 +1,4 @@
-@use '../mixin.scss' as *;
+@use './mixin.scss' as *;
 
 .background-form {
     height: 100vh;
@@ -6,16 +6,7 @@
     z-index: 2;
     position: fixed;
     @include flex-align(center, center);
-    background: #00000071;
-
-    .background-form {
-        height: 100vh;
-        width: 100vw;
-        z-index: 2;
-        position: fixed;
-        @include flex-align(center, center);
-        background: #00000071;
-    }
+    background: #222222;
 
     .form-login {
         @include flex-align(center, center);
@@ -26,7 +17,7 @@
         min-width: 420px;
         max-width: 420px;
         font-size: 1.1rem;
-        box-shadow: 3px 3px 30px #000;
+        box-shadow: 1px 1px 6px #fff;
 
         .login {
             position: relative;
@@ -38,6 +29,16 @@
             &__input__container {
                 @include space-between;
                 align-items: center;
+            }
+
+            &__header {
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+
+                h1 {
+                    margin: 0;
+                }
             }
 
             &__input {
