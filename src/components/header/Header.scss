@@ -33,6 +33,7 @@
 
     &__title {
         font-size: 2rem;
+        color: #000;
 
         & span:hover {
             cursor: pointer;
@@ -60,6 +61,7 @@
         }
 
         .bi {
+            color: #000;
             transition: all 0.3s;
             font-size: 2rem;
             cursor: pointer;
