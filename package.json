@@ -11,6 +11,7 @@
         "start": "node --watch backend/src/server.js"
     },
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "bootstrap-icons": "^1.11.3",
         "cors": "^2.8.5",
         "express": "^4.21.2",

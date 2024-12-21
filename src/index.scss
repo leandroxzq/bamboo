@@ -11,7 +11,10 @@
 
 a {
     text-decoration: none;
-    color: inherit;
+    color: rgb(0, 0, 190);
+    &:hover {
+        color: rgb(55, 55, 126);
+    }
 }
 
 .exit {

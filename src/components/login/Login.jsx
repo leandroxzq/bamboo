@@ -27,8 +27,11 @@ function Login() {
         <div className='background-form'>
             <form className='form-login' onSubmit={handleSubmit}>
                 <div className='login'>
-                    <Link to={'/home'}>
-                        <div className='login__header'>
+                    <Link to='/home'>
+                        <i className='bi bi-x exit'></i>
+                    </Link>
+                    <div className='login__header'>
+                        <Link to={'/home'}>
                             <Logo />
                             <h1 className='header__title'>
                                 <span>B</span>
@@ -38,8 +41,9 @@ function Login() {
                                 <span>o</span>
                                 <span>o</span>
                             </h1>
-                        </div>
-                    </Link>
+                        </Link>
+                    </div>
+
                     <div className='login__input'>
                         <label htmlFor='email'>Email</label>
                         <input
