@@ -5,6 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TextField, Button, Box, Grid, Chip } from '@mui/material';
 import dayjs from 'dayjs';
 
+import Swal from 'sweetalert2';
+
 import Header from '../../layout/header/Header.jsx';
 import ListAvaibality from '../../ui/ListAvaibality/ListAvaibality.jsx';
 
@@ -30,14 +32,14 @@ function AvailabilityConfig() {
     console.log(savedDates);
     // Função para salvar a disponibilidade
     const saveAvailability = async () => {
-        const formattedDate = dayjs(selectedDate).format('YYYY-MM-DD');
+        const formattedDate = () => dayjs(selectedDate).format('YYYY-MM-DD');
         setSavedDates((prev) => ({
             ...prev,
             [formattedDate]: selectedTimes,
         }));
 
         const availability = {
-            date: formattedDate,
+            date: formattedDate(selectedDate),
             times: selectedTimes,
         };
 
@@ -53,9 +55,13 @@ function AvailabilityConfig() {
 
             if (response.ok) {
                 const data = await response.json();
-                alert(
-                    `Disponibilidade salva com sucesso ${formattedDate}, ${selectedTimes}`
-                );
+
+                Swal.fire({
+                    title: `Disponibilidade salva com sucesso ${formattedDateUser(selectedDate)}, ${selectedTimes}`,
+                    icon: 'success',
+                    draggable: true,
+                });
+
                 setSavedDates(data);
                 setSelectedDate(null);
                 setSelectedTimes([]);
@@ -68,30 +74,45 @@ function AvailabilityConfig() {
     // Função para limpar todas as disponibilidades
     const clearAvailability = async () => {
         if (
-            !window.confirm(
-                'Tem certeza de que deseja limpar todas as configurações?'
-            )
-        ) {
-            return;
-        }
+            Swal.fire({
+                text: 'Tem certeza de que deseja limpar todas as configurações?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Não',
+                confirmButtonText: 'Sim',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Deletado!',
+                        text: 'Todas as disponibilidades foram removidas do banco de dados.',
+                        icon: 'success',
+                    });
+                }
 
-        try {
-            const response = await fetch('http://localhost:5000/availability', {
-                method: 'DELETE',
-            });
+                return;
+            })
+        )
+            try {
+                const response = await fetch(
+                    'http://localhost:5000/availability',
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
 
-            if (response.ok) {
-                setSelectedDate(null);
-                setSelectedTimes([]);
-                setSavedDates(null);
+                if (response.ok) {
+                    setSelectedDate(null);
+                    setSelectedTimes([]);
+                    setSavedDates(null);
+                }
+            } catch (e) {
+                console.error(`Erro na requisição: ${e.message}`);
             }
-
-            alert(
-                'Todas as disponibilidades foram removidas do banco de dados.'
-            );
-        } catch (e) {
-            console.error(`Erro na requisição: ${e.message}`);
-        }
     };
 
     // Função para remover um horário
@@ -103,6 +124,8 @@ function AvailabilityConfig() {
         );
     };
 
+    const formattedDateUser = () => dayjs(selectedDate).format('DD-MM-YYYY');
+
     return (
         <>
             <Header />
@@ -112,7 +135,11 @@ function AvailabilityConfig() {
                     flexWrap: 'wrap',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    minHeight: '60vh',
+                    background: '#ececec93',
+                    boxShadow: '1px 1px 50px #00000057',
+                    padding: '2rem',
+                    borderRadius: '9px',
+                    marginTop: '3rem',
                 }}
             >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -125,6 +152,7 @@ function AvailabilityConfig() {
                             renderInput={(params) => (
                                 <TextField {...params} fullWidth />
                             )}
+                            inputFormat='DD/MM/YYYY'
                         />
                         <div className='times'>
                             {selectedDate && (

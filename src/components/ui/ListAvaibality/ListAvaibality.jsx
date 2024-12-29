@@ -17,7 +17,6 @@ function List() {
             const response = await fetch('http://localhost:5000/availability');
             if (response.ok) {
                 const data = await response.json();
-                console.log('Data recebida:', data.dates);
                 setSavedDates(data.dates);
             } else {
                 console.error('Nenhuma data encontrada na resposta.');
