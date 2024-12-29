@@ -28,16 +28,20 @@ a {
 }
 
 .button-black {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     background-color: #000000;
     color: #fff;
-    padding: 0.8rem 0;
+    padding: 0.8rem 1rem;
     font-size: 1.3rem;
     border: none;
     font-weight: 600;
     border-radius: 0.6rem;
-    cursor: pointer;
 
     &:hover {
+        cursor: pointer;
         background-color: #272727;
     }
 }

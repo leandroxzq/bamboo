@@ -16,16 +16,15 @@ export function isAuthenticated(req, res, next) {
 
         next();
     } catch (error) {
-        console.log(error.message);
+        console.error(`Não logado error: ${error.message}`);
         return res.status(401).json({ message: 'Token inválido ou expirado!' });
     }
 }
 
 export function isAdmin(req, res, next) {
     if (req.user.role !== 'admin') {
-        return res.status(403).json({
-            message: 'Acesso negado! Somente administradores podem acessar.',
-        });
+        console.error('Acesso negado! Somente administradores podem acessar.');
+        return res.status(401).json({ message: 'Token inválido ou expirado!' });
     }
 
     next();

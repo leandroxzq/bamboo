@@ -1,19 +1,13 @@
 import Header from '../../layout/header/Header.jsx';
 import Footer from '../../layout/footer/Footer.jsx';
 
-import Calendario from '../../ui/AvailabilityConfig/AvailabilityConfig.jsx';
-import List from '../../ui/ListAvaibality/ListAvaibality.jsx';
-
 import './AppointmentsList.scss';
 
 function agendados() {
     return (
         <>
             <Header />
-            <section className='config-wrapper'>
-                <Calendario />
-                <List />
-            </section>
+
             <div className='agendados'>
                 <h1
                     style={{

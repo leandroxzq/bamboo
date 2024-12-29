@@ -1,3 +1,8 @@
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 import { useState, useEffect } from 'react';
 
 import './ListAvaibality.scss';
@@ -45,6 +50,12 @@ function List() {
         }
     };
 
+    const update = () => {
+        setSelectedDate('');
+        setAvailableTimes([]);
+        fetchSavedDates();
+    };
+
     useEffect(() => {
         fetchSavedDates();
     }, []);
@@ -52,37 +63,62 @@ function List() {
     return (
         <div className='list'>
             <div className='list__wrapper'>
-                <label htmlFor='dates'>Datas Disponíveis</label>
-                <select
-                    id='dates'
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    onClick={fetchSavedDates}
-                    disabled={!savedDates}
-                >
-                    <option value='' disabled selected>
+                <FormControl fullWidth>
+                    <InputLabel id='demo-simple-select-label'>
                         Selecione uma data
-                    </option>
-                    {savedDates.map((item) => (
-                        <option key={item.date} value={item.date}>
-                            {formatDate(item.date)}{' '}
-                        </option>
-                    ))}
-                </select>
+                    </InputLabel>
+                    <Select
+                        labelId='demo-simple-select-label'
+                        id='demo-simple-select'
+                        label='Selecione uma data'
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        onClick={fetchSavedDates}
+                    >
+                        {savedDates?.length ? (
+                            savedDates.map((item) => (
+                                <MenuItem key={item.date} value={item.date}>
+                                    {formatDate(item.date)}
+                                </MenuItem>
+                            ))
+                        ) : (
+                            <MenuItem disabled>
+                                Nenhuma data disponível
+                            </MenuItem>
+                        )}
+                    </Select>
+                </FormControl>
             </div>
-
             <div className='list__wrapper'>
-                <label htmlFor='times'>Horários Disponíveis</label>
-                <select id='times' disabled={!availableTimes.length}>
-                    <option value='' disabled>
-                        Selecione um horário
-                    </option>
-                    {availableTimes.map((time, index) => (
-                        <option key={index} value={time}>
-                            {time}
-                        </option>
-                    ))}
-                </select>
+                <FormControl fullWidth>
+                    <InputLabel id='demo-simple-select-label'>
+                        Horários
+                    </InputLabel>
+                    <Select
+                        labelId='demo-simple-select-label'
+                        id='demo-simple-select'
+                        label='Horários'
+                        disabled={!availableTimes.length}
+                    >
+                        {availableTimes.map((time, index) => (
+                            <MenuItem key={index} value={time}>
+                                {time}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
+            <div
+                className='button-black'
+                onClick={update}
+                style={{
+                    fontSize: '1rem',
+                    minWidth: '170px',
+                    marginTop: '1rem',
+                }}
+            >
+                <p>Atualizar</p>
+                <i className='bi bi-arrow-clockwise'></i>
             </div>
         </div>
     );

@@ -52,6 +52,17 @@ function Header() {
                         </Link>
                     )}
 
+                    {role === 'admin' && (
+                        <Link to={'/configurar-disponibilidade'}>
+                            <i
+                                className='bi bi-gear-wide'
+                                data-tooltip-id='post-tooltip'
+                                data-tooltip-content='Configuração de Disponibilidade'
+                            ></i>
+                            <Tooltip id='post-tooltip' />
+                        </Link>
+                    )}
+
                     {role !== null ? (
                         role === 'admin' ? (
                             // Botão específico para o admin

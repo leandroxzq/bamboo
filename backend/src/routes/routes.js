@@ -118,7 +118,7 @@ router.post('/availability', isAuthenticated, isAdmin, async (req, res) => {
     }
 });
 
-router.delete('/availability', async (req, res) => {
+router.delete('/availability', isAuthenticated, isAdmin, async (req, res) => {
     try {
         const [result] = await dbPromise.query('DELETE FROM availability');
         res.status(200).json({
