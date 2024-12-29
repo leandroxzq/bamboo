@@ -128,5 +128,24 @@
                 }
             }
         }
+
+        .create {
+            display: flex;
+            flex-direction: column;
+            min-width: 100%;
+
+            &__title {
+                padding: 0;
+                text-align: center;
+            }
+        }
+
+        .list {
+            align-items: center;
+
+            &__wrapper {
+                width: 100%;
+            }
+        }
     }
 }

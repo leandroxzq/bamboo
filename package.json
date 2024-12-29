@@ -11,9 +11,15 @@
         "start": "node --watch backend/src/server.js"
     },
     "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/icons-material": "^6.3.0",
+        "@mui/material": "^6.3.0",
+        "@mui/x-date-pickers": "^7.23.3",
         "bcrypt": "^5.1.1",
         "bootstrap-icons": "^1.11.3",
         "cors": "^2.8.5",
+        "dayjs": "^1.11.13",
         "express": "^4.21.2",
         "jsonwebtoken": "^9.0.2",
         "moment": "^2.30.1",

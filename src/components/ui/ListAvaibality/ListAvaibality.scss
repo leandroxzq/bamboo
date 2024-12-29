@@ -1,0 +1,25 @@
+@use '../../../assets/style/mixin' as *;
+
+.list {
+    @include flex-align(start, start);
+    flex-direction: column;
+
+    padding: 1rem;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+
+        label {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        select {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-radius: 6px;
+        }
+    }
+}

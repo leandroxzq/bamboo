@@ -1,3 +1,13 @@
+.config-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 6px;
+    background-color: #eeeeee27;
+    box-shadow: 1px 1px 5px #00000073;
+}
+
 .agendados {
     width: 100%;
     min-height: 100vh;
