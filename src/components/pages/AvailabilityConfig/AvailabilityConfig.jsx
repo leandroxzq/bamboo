@@ -4,10 +4,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TextField, Button, Box, Grid, Chip } from '@mui/material';
 import dayjs from 'dayjs';
+import 'dayjs/locale/en-gb';
 
 import Swal from 'sweetalert2';
 
 import Header from '../../layout/header/Header.jsx';
+import Footer from '../../layout/footer/Footer.jsx';
 import ListAvaibality from '../../ui/ListAvaibality/ListAvaibality.jsx';
 
 const availableTimes = [
@@ -27,10 +29,11 @@ const availableTimes = [
 function AvailabilityConfig() {
     const [selectedDate, setSelectedDate] = useState(null); // Data selecionada no calendário
     const [selectedTimes, setSelectedTimes] = useState([]); // Horários configurados para a data atual
+    // eslint-disable-next-line no-unused-vars
     const [savedDates, setSavedDates] = useState({}); // Objeto com datas e horários salvos
 
-    console.log(savedDates);
-    // Função para salvar a disponibilidade
+    function ClearableProp() {}
+
     const saveAvailability = async () => {
         const formattedDate = () => dayjs(selectedDate).format('YYYY-MM-DD');
         setSavedDates((prev) => ({
@@ -59,15 +62,22 @@ function AvailabilityConfig() {
                 Swal.fire({
                     title: `Disponibilidade salva com sucesso ${formattedDateUser(selectedDate)}, ${selectedTimes}`,
                     icon: 'success',
-                    draggable: true,
                 });
 
                 setSavedDates(data);
                 setSelectedDate(null);
                 setSelectedTimes([]);
+            } else {
+                Swal.fire({
+                    title: `Data já configurada no sistema`,
+                    icon: 'error',
+                });
             }
         } catch (e) {
-            console.error(`Erro na requisição: ${e.message}`);
+            Swal.fire({
+                title: `Erro na requisição ${e.message}`,
+                icon: 'error',
+            });
         }
     };
 
@@ -129,83 +139,99 @@ function AvailabilityConfig() {
     return (
         <>
             <Header />
-            <section
-                style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    background: '#ececec93',
-                    boxShadow: '1px 1px 50px #00000057',
-                    padding: '2rem',
-                    borderRadius: '9px',
-                    marginTop: '3rem',
-                }}
+            <div
+                className='wrapper'
+                style={{ minHeight: 'calc(100vh - 216px)' }}
             >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Box sx={{ padding: 3 }}>
-                        <h2>Configuração de Disponibilidade</h2>
-                        <DatePicker
-                            label='Selecione uma data'
-                            value={selectedDate}
-                            onChange={(date) => setSelectedDate(date)}
-                            renderInput={(params) => (
-                                <TextField {...params} fullWidth />
-                            )}
-                            inputFormat='DD/MM/YYYY'
-                        />
-                        <div className='times'>
-                            {selectedDate && (
-                                <>
-                                    <h3>Escolha os Horários Disponíveis</h3>
-                                    <Grid container spacing={2}>
-                                        {availableTimes.map((time) => (
-                                            <Grid item key={time}>
-                                                <Chip
-                                                    label={time}
-                                                    color={
-                                                        selectedTimes.includes(
-                                                            time
-                                                        )
-                                                            ? 'primary'
-                                                            : 'default'
-                                                    }
-                                                    onClick={() =>
-                                                        toggleTimeSelection(
-                                                            time
-                                                        )
-                                                    }
-                                                />
-                                            </Grid>
-                                        ))}
-                                    </Grid>
-                                </>
-                            )}
-                        </div>
-                        <Box sx={{ marginTop: 3 }}>
-                            <Button
-                                variant='contained'
-                                color='primary'
-                                onClick={saveAvailability}
-                                disabled={
-                                    !selectedDate || selectedTimes.length === 0
-                                }
-                                sx={{ marginRight: 2 }}
-                            >
-                                Salvar Disponibilidade
-                            </Button>
-                            <Button
-                                variant='outlined'
-                                color='primary'
-                                onClick={clearAvailability}
-                            >
-                                Limpar Tudo
-                            </Button>
+                <section
+                    style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        background: '#ececec93',
+                        boxShadow: '1px 1px 50px #00000057',
+                        padding: '2rem',
+                        borderRadius: '9px',
+                        marginTop: '3rem',
+                    }}
+                >
+                    <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale='en-gb'
+                    >
+                        <Box sx={{ padding: 3 }}>
+                            <h2>Configuração de Disponibilidade</h2>
+                            <DatePicker
+                                sx={{ width: 260 }}
+                                slotProps={{
+                                    field: {
+                                        clearable: true,
+                                        onClear: () => ClearableProp,
+                                    },
+                                }}
+                                label='Selecione uma data'
+                                value={selectedDate}
+                                onChange={(date) => setSelectedDate(date)}
+                                renderInput={(params) => (
+                                    <TextField {...params} fullWidth />
+                                )}
+                            />
+                            <div className='times'>
+                                {selectedDate && (
+                                    <>
+                                        <h3>Escolha os Horários Disponíveis</h3>
+                                        <Grid container spacing={2}>
+                                            {availableTimes.map((time) => (
+                                                <Grid item key={time}>
+                                                    <Chip
+                                                        label={time}
+                                                        color={
+                                                            selectedTimes.includes(
+                                                                time
+                                                            )
+                                                                ? 'primary'
+                                                                : 'default'
+                                                        }
+                                                        onClick={() =>
+                                                            toggleTimeSelection(
+                                                                time
+                                                            )
+                                                        }
+                                                    />
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    </>
+                                )}
+                            </div>
+                            <Box sx={{ marginTop: 3 }}>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={saveAvailability}
+                                    disabled={
+                                        !selectedDate ||
+                                        selectedTimes.length === 0
+                                    }
+                                    sx={{ marginRight: 2 }}
+                                >
+                                    Salvar Disponibilidade
+                                </Button>
+                                <Button
+                                    variant='outlined'
+                                    color='primary'
+                                    onClick={clearAvailability}
+                                >
+                                    Limpar Tudo
+                                </Button>
+                            </Box>
                         </Box>
-                    </Box>
-                </LocalizationProvider>
-                <ListAvaibality />
-            </section>
+                    </LocalizationProvider>
+                    <ListAvaibality />
+                </section>
+            </div>
+            <Footer />
         </>
     );
 }

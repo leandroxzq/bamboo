@@ -104,6 +104,18 @@ router.post('/availability', isAuthenticated, isAdmin, async (req, res) => {
     const timesJSON = JSON.stringify(times);
 
     try {
+        const [existing] = await dbPromise.query(
+            'SELECT * FROM availability WHERE date = ?',
+            [date]
+        );
+
+        if (existing.length > 0) {
+            console.error('Data já configurada no sistema.');
+            return res
+                .status(400)
+                .json({ message: 'Disponibilidade salva com sucesso' });
+        }
+
         const [result] = await dbPromise.query(
             'INSERT INTO availability (date, times) VALUES (?, ?)',
             [date, timesJSON]
