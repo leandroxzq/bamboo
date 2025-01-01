@@ -40,6 +40,19 @@ function Header() {
                 </Link>
 
                 <div className='header__wrapper-button'>
+                    {role === null && (
+                        <>
+                            <Link to={'/login'}>
+                                <i
+                                    className='bi bi-person-circle'
+                                    data-tooltip-id='login-tooltip'
+                                    data-tooltip-content='Login'
+                                ></i>
+                            </Link>
+                            <Tooltip id='login-tooltip' />
+                        </>
+                    )}
+
                     <i className='bi bi-list' onClick={toggleMenu}></i>
                     {role !== null && (
                         <>
@@ -59,16 +72,6 @@ function Header() {
                 {isMenuOpen && (
                     <div className='header__menu'>
                         <i className='bi bi-x-lg' onClick={toggleMenu}></i>
-
-                        {role === null ? (
-                            <Link to={'/login'}>
-                                <i className='bi bi-person-circle'></i> Login
-                            </Link>
-                        ) : (
-                            <Link to={'/perfil'}>
-                                <i className='bi bi-person-circle'></i> Perfil
-                            </Link>
-                        )}
 
                         {role === 'admin' && (
                             <>
@@ -90,10 +93,16 @@ function Header() {
                                     Consultas Agendadas
                                 </Link>
                             ) : (
-                                <Link to={'/agendamento'}>
-                                    <i className='bi bi-clock'></i> Agendar uma
-                                    Consulta
-                                </Link>
+                                <>
+                                    <Link to={'/perfil'}>
+                                        <i className='bi bi-person-circle'></i>{' '}
+                                        Perfil
+                                    </Link>
+                                    <Link to={'/agendamento'}>
+                                        <i className='bi bi-clock'></i> Agendar
+                                        uma Consulta
+                                    </Link>
+                                </>
                             )
                         ) : (
                             <div>

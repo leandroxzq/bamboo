@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
 
 import Header from '../../layout/header/Header.jsx';
 import Footer from '../../layout/footer/Footer.jsx';
-import ListAvaibality from '../../ui/ListAvaibality/ListAvaibality.jsx';
+
+import List from '../../ui/ListAvaibality/ListAvaibality.jsx';
 
 const availableTimes = [
     '08:00',
@@ -27,10 +28,18 @@ const availableTimes = [
 ];
 
 function AvailabilityConfig() {
-    const [selectedDate, setSelectedDate] = useState(null); // Data selecionada no calendário
-    const [selectedTimes, setSelectedTimes] = useState([]); // Horários configurados para a data atual
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTimes, setSelectedTimes] = useState([]);
     // eslint-disable-next-line no-unused-vars
-    const [savedDates, setSavedDates] = useState({}); // Objeto com datas e horários salvos
+    const [savedDates, setSavedDates] = useState({});
+
+    // eslint-disable-next-line no-unused-vars
+    const [date, setDate] = useState(null);
+    // eslint-disable-next-line no-unused-vars
+    const [time, setTime] = useState(null);
+
+    const handleDate = (newData) => setDate(newData);
+    const handleTime = (newTime) => setTime(newTime);
 
     function ClearableProp() {}
 
@@ -43,7 +52,7 @@ function AvailabilityConfig() {
 
         const availability = {
             date: formattedDate(selectedDate),
-            times: selectedTimes,
+            times: selectedTimes.sort(),
         };
 
         try {
@@ -81,29 +90,18 @@ function AvailabilityConfig() {
         }
     };
 
-    // Função para limpar todas as disponibilidades
     const clearAvailability = async () => {
-        if (
-            Swal.fire({
-                text: 'Tem certeza de que deseja limpar todas as configurações?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText: 'Não',
-                confirmButtonText: 'Sim',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Deletado!',
-                        text: 'Todas as disponibilidades foram removidas do banco de dados.',
-                        icon: 'success',
-                    });
-                }
+        const result = await Swal.fire({
+            text: 'Tem certeza de que deseja limpar todas as configurações?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim',
+        });
 
-                return;
-            })
-        )
+        if (result.isConfirmed) {
             try {
                 const response = await fetch(
                     'http://localhost:5000/availability',
@@ -116,6 +114,12 @@ function AvailabilityConfig() {
                 );
 
                 if (response.ok) {
+                    Swal.fire({
+                        title: 'Deletado!',
+                        text: 'Todas as disponibilidades foram removidas do banco de dados.',
+                        icon: 'success',
+                    });
+
                     setSelectedDate(null);
                     setSelectedTimes([]);
                     setSavedDates(null);
@@ -123,9 +127,9 @@ function AvailabilityConfig() {
             } catch (e) {
                 console.error(`Erro na requisição: ${e.message}`);
             }
+        }
     };
 
-    // Função para remover um horário
     const toggleTimeSelection = (time) => {
         setSelectedTimes((prevTimes) =>
             prevTimes.includes(time)
@@ -141,19 +145,19 @@ function AvailabilityConfig() {
             <Header />
             <div
                 className='wrapper'
-                style={{ minHeight: 'calc(100vh - 216px)', zIndex: 0 }}
+                style={{ minHeight: 'calc(100vh - 190px)', zIndex: 0 }}
             >
                 <section
                     style={{
                         display: 'flex',
                         flexWrap: 'wrap',
                         justifyContent: 'center',
-                        alignItems: 'center',
                         background: '#ececec93',
                         boxShadow: '1px 1px 50px #00000057',
                         padding: '2rem',
                         borderRadius: '9px',
                         marginTop: '3rem',
+                        position: 'relative',
                     }}
                 >
                     <LocalizationProvider
@@ -228,7 +232,7 @@ function AvailabilityConfig() {
                             </Box>
                         </Box>
                     </LocalizationProvider>
-                    <ListAvaibality />
+                    <List sendDate={handleDate} sendTime={handleTime} />
                 </section>
             </div>
             <Footer />

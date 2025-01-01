@@ -52,10 +52,13 @@ function Login() {
             login(data.token, data.role);
 
             navigate('/home');
-            // eslint-disable-next-line no-unused-vars
         } catch (err) {
             setIsValid(false);
-            setError('Erro ao fazer login. Verifique suas credenciais.');
+            //setError('Erro ao fazer login. Verifique suas credenciais.');
+
+            if (err === 'email') {
+                alert('Email invalkido');
+            }
         }
     };
 

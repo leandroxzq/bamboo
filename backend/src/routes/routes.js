@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-import { db, dbPromise } from '../config/connection.js';
+import { dbPromise } from '../config/connection.js';
 import express from 'express';
 import { isAuthenticated, isAdmin } from '../middleware/auth.js';
 
@@ -34,9 +34,6 @@ router.post('/login', async (req, res) => {
             'SELECT * FROM users WHERE email = ?',
             [email]
         );
-        if (rows.length === 0) {
-            return res.status(404).json({ error: 'Usuário não encontrado.' });
-        }
 
         const user = rows[0];
 
@@ -81,18 +78,21 @@ router.post('/create-admin', async (req, res) => {
     }
 });
 
-router.get('/availability', (req, res) => {
-    const query = 'SELECT * FROM availability ORDER BY date, times';
-    db.query(query, (err, rows) => {
-        if (err) {
-            console.error('Erro ao buscar as disponibilidades:', err);
-            return res
-                .status(500)
-                .json({ error: 'Erro ao buscar as disponibilidades.' });
-        }
+router.get('/availability', async (req, res) => {
+    try {
+        await dbPromise.query(
+            'DELETE FROM availability WHERE JSON_LENGTH(times) = 0'
+        );
+
+        const [rows] = await dbPromise.query(
+            'SELECT * FROM availability ORDER BY date, times'
+        );
 
         res.status(200).json({ dates: rows });
-    });
+    } catch (err) {
+        console.error('Erro ao buscar as disponibilidades:', err);
+        res.status(500).json({ error: 'Erro ao buscar as disponibilidades.' });
+    }
 });
 
 router.post('/availability', isAuthenticated, isAdmin, async (req, res) => {
@@ -140,6 +140,67 @@ router.delete('/availability', isAuthenticated, isAdmin, async (req, res) => {
     } catch (error) {
         console.error('Erro ao remover disponibilidades:', error);
         res.status(500).json({ error: 'Erro ao remover as disponibilidades.' });
+    }
+});
+
+router.get('/appointments', async (req, res) => {
+    try {
+        const query = `
+            SELECT appointments.*, users.name, users.email, users.dob, users.turma
+            FROM appointments
+            INNER JOIN users ON appointments.user_id = users.id
+            ORDER BY appointments.date, appointments.time
+        `;
+        const [appointments] = await dbPromise.query(query);
+        res.status(200).json({ appointments });
+    } catch (e) {
+        console.error('Erro ao buscar agendamentos:', e);
+        res.status(500).json({ error: 'Erro ao buscar agendamentos.' });
+    }
+});
+
+router.delete('/appointments', isAuthenticated, isAdmin, async (req, res) => {
+    try {
+        const result = await dbPromise.query('DELETE FROM appointments');
+
+        if (result.affectedRows > 0) {
+            return res.status(200).json({
+                message: 'Todos os agendamentos foram deletados com sucesso!',
+            });
+        } else {
+            return res.status(404).json({
+                message: 'Nenhum agendamento encontrado para deletar.',
+            });
+        }
+    } catch (error) {
+        console.error('Erro ao deletar os agendamentos:', error);
+        return res
+            .status(500)
+            .json({ message: 'Erro ao deletar os agendamentos.' });
+    }
+});
+
+router.post('/schedule', isAuthenticated, async (req, res) => {
+    const { date, time } = req.body;
+    const userId = req.user.id;
+    console.log(userId, date, time);
+
+    try {
+        await dbPromise.query(
+            'INSERT INTO appointments (user_id, date, time) VALUES (?, ?, ?)',
+            [userId, date, time]
+        );
+
+        await dbPromise.query(
+            "UPDATE availability SET times = JSON_REMOVE(times, JSON_UNQUOTE(JSON_SEARCH(times, 'one', ?))) WHERE date = ?",
+            [time, date]
+        );
+
+        return res
+            .status(200)
+            .json({ message: 'Agendamento realizado com sucesso!' });
+    } catch (e) {
+        console.error(e);
     }
 });
 

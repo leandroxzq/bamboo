@@ -7,10 +7,12 @@ import { useState, useEffect } from 'react';
 
 import './ListAvaibality.scss';
 
-function List() {
+// eslint-disable-next-line react/prop-types
+function List({ sendDate, sendTime }) {
     const [savedDates, setSavedDates] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
 
     const fetchSavedDates = async () => {
         try {
@@ -32,16 +34,29 @@ function List() {
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const year = d.getFullYear();
 
+        return `${year}-${month}-${day}`;
+    };
+
+    const formatDateUser = (date) => {
+        const d = new Date(date);
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const year = d.getFullYear();
+
         return `${day}-${month}-${year}`;
     };
 
     const handleDateChange = (event) => {
         const selected = event.target.value;
         setSelectedDate(selected);
+        setSelectedTime('');
+        sendTime(null);
+        sendDate(formatDate(selected));
 
         const selectedDateData = savedDates.find(
             (item) => item.date === selected
         );
+
         if (selectedDateData && selectedDateData.times) {
             setAvailableTimes(selectedDateData.times);
         } else {
@@ -49,9 +64,18 @@ function List() {
         }
     };
 
+    const handleTimeChange = (event) => {
+        const selected = event.target.value;
+        setSelectedTime(selected);
+        sendTime(selected);
+    };
+
     const update = () => {
         setSelectedDate('');
+        setSelectedTime('');
         setAvailableTimes([]);
+        sendTime(null);
+        sendDate(null);
         fetchSavedDates();
     };
 
@@ -77,7 +101,7 @@ function List() {
                         {savedDates?.length ? (
                             savedDates.map((item) => (
                                 <MenuItem key={item.date} value={item.date}>
-                                    {formatDate(item.date)}
+                                    {formatDateUser(item.date)}
                                 </MenuItem>
                             ))
                         ) : (
@@ -98,26 +122,26 @@ function List() {
                         id='demo-simple-select'
                         label='Horários'
                         disabled={!availableTimes.length}
+                        value={selectedTime}
+                        onChange={handleTimeChange}
                     >
-                        {availableTimes.map((time, index) => (
-                            <MenuItem key={index} value={time}>
-                                {time}
+                        {availableTimes.length > 0 ? (
+                            availableTimes.map((time, index) => (
+                                <MenuItem key={index} value={time}>
+                                    {time}
+                                </MenuItem>
+                            ))
+                        ) : (
+                            <MenuItem disabled>
+                                Sem horários disponíveis
                             </MenuItem>
-                        ))}
+                        )}
                     </Select>
                 </FormControl>
             </div>
-            <div
-                className='button-black'
-                onClick={update}
-                style={{
-                    fontSize: '1rem',
-                    minWidth: '170px',
-                    marginTop: '1rem',
-                }}
-            >
-                <p>Atualizar</p>
-                <i className='bi bi-arrow-clockwise'></i>
+            <div className='list__button' onClick={update}>
+                <p>Atualizar Disponibilidade</p>
+                <i className={`bi bi-arrow-clockwise`}></i>
             </div>
         </div>
     );
