@@ -1,6 +1,8 @@
 import { Link } from 'react-router';
 import { useState } from 'react';
 
+import Swal from 'sweetalert2';
+
 import '../../../assets/style/Modal.scss';
 
 function Cadastro() {
@@ -12,9 +14,6 @@ function Cadastro() {
         turma: '',
     });
 
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -24,37 +23,48 @@ function Cadastro() {
         e.preventDefault();
 
         if (!formData.email.endsWith('@discente.ifpe.edu.br')) {
-            setError('O email deve ser do domínio @discente.ifpe.edu.br');
+            Swal.fire({
+                title: `O email deve ser do domínio @discente.ifpe.edu.br`,
+                icon: 'error',
+            });
+
             return;
-        } else {
-            try {
-                const response = await fetch('http://localhost:5000/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                Swal.fire({
+                    title: `Cadastro realizado com sucesso!`,
+                    icon: 'error',
                 });
 
-                if (response.ok) {
-                    setSuccess('Cadastro realizado com sucesso!');
-                    setError('');
-                    setFormData({
-                        name: '',
-                        email: '',
-                        password: '',
-                        dob: '',
-                        turma: '',
+                setFormData({
+                    name: '',
+                    email: '',
+                    password: '',
+                    dob: '',
+                    turma: '',
+                });
+            } else {
+                const data = await response.json();
+
+                if (data.code === 'ER_DUP_ENTRY') {
+                    Swal.fire({
+                        title: `Email já cadastrado`,
+                        icon: 'error',
                     });
-                } else {
-                    const data = await response.json();
-                    setError(data.error || 'Erro ao cadastrar o usuário.');
-                    setSuccess('');
                 }
-            } catch (err) {
-                setError(`${err.message}`);
-                setSuccess('');
             }
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -76,8 +86,6 @@ function Cadastro() {
 
                     <div className='login__header'>
                         <h2>Cadastre-se</h2>
-                        {error && <p className='error'>{error}</p>}
-                        {success && <p className='success'>{success}</p>}
                     </div>
                     <div className='login__input'>
                         <label htmlFor='name'>Nome Completo</label>

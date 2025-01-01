@@ -19,8 +19,7 @@ router.post('/register', async (req, res) => {
         await dbPromise.query('INSERT INTO users SET ?', newUser);
         res.status(201).json({ message: 'Usuário registrado com sucesso!' });
     } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ error: 'Erro ao cadastrar o usuário.' });
+        res.status(500).send(error);
     }
 });
 

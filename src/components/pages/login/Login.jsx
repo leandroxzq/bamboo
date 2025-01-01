@@ -43,22 +43,18 @@ function Login() {
                 body: JSON.stringify({ email, password }),
             });
 
-            if (!response.ok) {
-                throw new Error('Login failed');
+            if (response.ok) {
+                const data = await response.json();
+
+                login(data.token, data.role);
+
+                navigate('/home');
+            } else {
+                setError('Erro ao fazer login. Verifique suas credenciais.');
+                return;
             }
-
-            const data = await response.json();
-
-            login(data.token, data.role);
-
-            navigate('/home');
         } catch (err) {
-            setIsValid(false);
-            //setError('Erro ao fazer login. Verifique suas credenciais.');
-
-            if (err === 'email') {
-                alert('Email invalkido');
-            }
+            console.log(err);
         }
     };
 
