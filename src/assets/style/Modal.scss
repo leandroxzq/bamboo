@@ -11,12 +11,13 @@
     .form-login {
         @include flex-align(center, center);
         background: #fff;
-        padding: 1.5rem 3rem 2rem 3rem;
+        padding: 1rem 2rem;
         color: #000;
         border-radius: 1rem;
-        min-width: 420px;
+        width: 100%;
         max-width: 420px;
-        font-size: 1.1rem;
+        margin: 20px;
+        font-size: 1rem;
         box-shadow: 1px 1px 6px #fff;
 
         select {

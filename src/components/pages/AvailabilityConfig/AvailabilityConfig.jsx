@@ -141,7 +141,7 @@ function AvailabilityConfig() {
             <Header />
             <div
                 className='wrapper'
-                style={{ minHeight: 'calc(100vh - 216px)' }}
+                style={{ minHeight: 'calc(100vh - 216px)', zIndex: 0 }}
             >
                 <section
                     style={{
