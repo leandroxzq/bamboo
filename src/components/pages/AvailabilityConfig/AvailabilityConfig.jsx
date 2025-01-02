@@ -10,8 +10,9 @@ import Swal from 'sweetalert2';
 
 import Header from '../../layout/header/Header.jsx';
 import Footer from '../../layout/footer/Footer.jsx';
-
 import List from '../../ui/ListAvaibality/ListAvaibality.jsx';
+
+import './AvailabilityConfig.scss';
 
 const availableTimes = [
     '08:00',
@@ -143,31 +144,17 @@ function AvailabilityConfig() {
     return (
         <>
             <Header />
-            <div
-                className='wrapper'
-                style={{ minHeight: 'calc(100vh - 190px)', zIndex: 0 }}
-            >
-                <section
-                    style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
-                        background: '#ececec93',
-                        boxShadow: '1px 1px 50px #00000057',
-                        padding: '2rem',
-                        borderRadius: '9px',
-                        marginTop: '3rem',
-                        position: 'relative',
-                    }}
-                >
+            <div className='wrapper'>
+                <section>
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
                         adapterLocale='en-gb'
+                        sx={{ padding: 0 }}
                     >
                         <Box sx={{ padding: 3 }}>
                             <h2>Configuração de Disponibilidade</h2>
                             <DatePicker
-                                sx={{ width: 260 }}
+                                sx={{ width: '100%' }}
                                 slotProps={{
                                     field: {
                                         clearable: true,
@@ -209,7 +196,13 @@ function AvailabilityConfig() {
                                     </>
                                 )}
                             </div>
-                            <Box sx={{ marginTop: 3 }}>
+                            <Box
+                                sx={{
+                                    marginTop: 3,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}
+                            >
                                 <Button
                                     variant='contained'
                                     color='primary'
@@ -218,11 +211,11 @@ function AvailabilityConfig() {
                                         !selectedDate ||
                                         selectedTimes.length === 0
                                     }
-                                    sx={{ marginRight: 2 }}
                                 >
                                     Salvar Disponibilidade
                                 </Button>
                                 <Button
+                                    sx={{ marginTop: 2 }}
                                     variant='outlined'
                                     color='primary'
                                     onClick={clearAvailability}
@@ -232,7 +225,13 @@ function AvailabilityConfig() {
                             </Box>
                         </Box>
                     </LocalizationProvider>
-                    <List sendDate={handleDate} sendTime={handleTime} />
+                    <div className='wrapper-list'>
+                        <List
+                            className='list'
+                            sendDate={handleDate}
+                            sendTime={handleTime}
+                        ></List>
+                    </div>
                 </section>
             </div>
             <Footer />

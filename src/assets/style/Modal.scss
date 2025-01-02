@@ -1,7 +1,7 @@
 @use './mixin.scss' as *;
 
 .background-form {
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     z-index: 2;
     position: fixed;
@@ -42,6 +42,7 @@
                 flex-direction: column;
 
                 h1 {
+                    justify-content: center;
                     color: #000;
                     margin: 0;
                 }

@@ -30,6 +30,10 @@
         margin: 0;
         font-family: 'Rowdies', serif;
 
+        @media (width <= 512px) {
+            font-size: 1.4rem;
+        }
+
         span {
             opacity: 0;
             transform: translateY(10px);

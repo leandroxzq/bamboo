@@ -9,10 +9,10 @@
         @include flex-align(center, center);
         color: #fff;
         background-color: #000;
-        min-width: 60%;
-        padding: 0.8rem 1rem;
+        width: 100%;
         font-size: 1rem;
         font-weight: 600;
+        padding: 1rem 0;
         border-radius: 0.6rem;
         gap: 1rem;
         transition: 0.2s all;
