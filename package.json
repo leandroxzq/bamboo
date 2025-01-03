@@ -15,6 +15,7 @@
         "@emotion/styled": "^11.14.0",
         "@mui/icons-material": "^6.3.0",
         "@mui/material": "^6.3.0",
+        "@mui/x-data-grid": "^7.23.5",
         "@mui/x-date-pickers": "^7.23.3",
         "bcrypt": "^5.1.1",
         "bootstrap-icons": "^1.11.3",

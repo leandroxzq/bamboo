@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { Paper } from '@mui/material';
 
 import Header from '../../layout/header/Header.jsx';
 import Footer from '../../layout/footer/Footer.jsx';
@@ -15,6 +17,7 @@ function Agendados() {
             const response = await fetch('http://localhost:5000/appointments');
             if (response.ok) {
                 const data = await response.json();
+                console.log(data.appointments);
                 setAppointments(data.appointments);
             } else {
                 console.error('Erro ao buscar agendamentos.');
@@ -93,6 +96,31 @@ function Agendados() {
         return `${day}-${month}-${year}`;
     }
 
+    const columns = [
+        { field: 'id', headerName: 'Ordem', width: 70 },
+        { field: 'nomecompleto', headerName: 'Nome completo', width: 300 },
+        { field: 'turma', headerName: 'Turma', width: 100 },
+        {
+            field: 'idade',
+            headerName: 'Idade',
+            type: 'number',
+            width: 70,
+        },
+        { field: 'data', headerName: 'Data', width: 130 },
+        { field: 'horario', headerName: 'Horário', width: 130 },
+    ];
+
+    const rows = appointments.map((appointment) => ({
+        id: appointment.id,
+        nomecompleto: appointment.name,
+        turma: appointment.turma,
+        idade: calculateAge(appointment.dob),
+        data: formatDate(appointment.date),
+        horario: formatTime(appointment.time),
+    }));
+
+    const paginationModel = { page: 0, pageSize: 5 };
+
     useEffect(() => {
         fetchAppointments();
     }, []);
@@ -102,33 +130,25 @@ function Agendados() {
             <Header />
 
             <div className='agendados'>
-                <h1
-                    style={{
-                        textAlign: 'center',
-                        width: '100%',
-                        margin: '4rem 0 0 0',
-                    }}
-                >
-                    Consultas Marcadas
-                </h1>
-                <button className='button-black' onClick={removeAll}>
-                    Apagar todas
-                </button>
-                <div className='agendados-container'>
-                    {appointments.map((appointment) => {
-                        return (
-                            <div
-                                className='agendados-container__card'
-                                key={appointment.id}
-                            >
-                                <h2> {appointment.name} </h2>
-                                <p>Turma: {appointment.turma}</p>
-                                <p>Idade: {calculateAge(appointment.dob)}</p>
-                                <p>Data: {formatDate(appointment.date)}</p>
-                                <p>Horário: {formatTime(appointment.time)}</p>
-                            </div>
-                        );
-                    })}
+                <div className='agendados__wrapper'>
+                    <h2>Consultas agendadas</h2>
+                    <div className='agendados__button'>
+                        <button className='button-black' onClick={removeAll}>
+                            Apagar todas
+                        </button>
+                    </div>
+                    <Paper
+                        sx={{ height: 1000, width: '100%', marginTop: '1rem' }}
+                    >
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            initialState={{ pagination: { paginationModel } }}
+                            pageSizeOptions={[5, 10]}
+                            checkboxSelection
+                            sx={{ border: 0 }}
+                        />
+                    </Paper>
                 </div>
             </div>
             <Footer />
