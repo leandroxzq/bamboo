@@ -138,15 +138,22 @@ function Agendados() {
                         </button>
                     </div>
                     <Paper
-                        sx={{ height: 1000, width: '100%', marginTop: '1rem' }}
+                        sx={{
+                            minHeight: '369px',
+                            width: '100%',
+                            marginTop: '1rem',
+                        }}
                     >
                         <DataGrid
+                            sx={{
+                                minHeight: '369px',
+                                border: 0,
+                            }}
                             rows={rows}
                             columns={columns}
                             initialState={{ pagination: { paginationModel } }}
                             pageSizeOptions={[5, 10]}
                             checkboxSelection
-                            sx={{ border: 0 }}
                         />
                     </Paper>
                 </div>
