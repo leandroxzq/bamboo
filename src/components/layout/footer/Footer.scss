@@ -15,7 +15,7 @@
         gap: 1rem;
         padding: 0 1rem;
 
-        @media (width >= 720px) {
+        @media (width >= 512px) {
             flex-direction: row;
             justify-content: center;
             gap: 4rem;
@@ -29,45 +29,40 @@
         font-family: 'Rowdies', serif;
 
         img {
-            width: 100px;
-        }
-
-        p {
-            font-size: 1.5rem;
-            font-weight: bold;
+            width: 80px;
         }
     }
 
     &__msg {
         max-width: 400px;
+        font-size: 0.7rem;
     }
 
     &__contact-card {
-        padding: 1rem;
+        padding: 0.8rem;
         color: #000;
         border-radius: 0.5rem;
         text-align: left;
-        box-shadow: 0 4px 6px rgba(22, 22, 22, 0.452);
-        margin-bottom: 1rem;
+        border: 1px solid #1976d2;
+        transition: all 0.3s;
 
-        h3 {
-            margin: 0 0 1rem 0;
-            font-size: 1rem;
+        &:hover {
+            background: #1976d2;
+            color: #fff;
         }
 
-        p {
-            margin: 0.5rem 0;
-            font-size: 1rem;
+        p:nth-child(1) {
+            font-size: 0.8rem;
         }
 
-        .footer__email {
-            font-weight: bold;
-            text-decoration: none;
+        p:nth-child(2) {
+            font-size: 0.6rem;
         }
     }
 
     &__copyright {
-        font-size: 0.9rem;
+        margin-top: 1rem;
+        font-size: 0.5rem;
         color: #6d6d6d;
     }
 }
