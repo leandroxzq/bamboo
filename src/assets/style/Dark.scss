@@ -1,4 +1,4 @@
-@import './variables';
+@use './variables' as *;
 
 body.dark-mode {
     background: $bg-dark;
@@ -16,7 +16,7 @@ body.dark-mode .main,
 body.dark-mode .post,
 body.dark-mode .agendados {
     background: $bg-dark-lg;
-    color: $white;
+    color: $white-text;
     transition: all 1s;
 }
 
@@ -28,11 +28,11 @@ body.dark-mode .background-form {
     }
 
     .header__title {
-        color: $white;
+        color: $white-text;
     }
 
     .form-login {
-        color: $white;
+        color: $white-text;
         background: $bg-dark-lg;
         border: 1px solid #fff;
 
@@ -51,14 +51,14 @@ body.dark-mode .background-form {
         }
 
         i {
-            color: $white;
+            color: $white-text;
         }
     }
 }
 
 body.dark-mode .header {
     background: $bg-dark;
-    color: $white;
+    color: $white-text;
     transition: all 1s;
 
     &__logo {
@@ -66,7 +66,7 @@ body.dark-mode .header {
     }
 
     i {
-        color: $white;
+        color: $white-text;
     }
 
     &__menu {
@@ -74,7 +74,7 @@ body.dark-mode .header {
 
         a,
         div {
-            color: $white;
+            color: $white-text;
         }
     }
 }
@@ -83,23 +83,23 @@ body.dark-mode .card {
     background: $bg-dark;
 
     &__title {
-        color: $white;
+        color: $white-text;
     }
 }
 
 body.dark-mode .footer {
     background: $bg-dark;
-    color: $white;
+    color: $white-text;
 
     &__logo {
         filter: invert(1);
     }
 
     &__contact-card {
-        color: $white;
+        color: $white-text;
     }
 }
 
 body.dark-mode .wrapper__section {
-    background: $white;
+    background: $white-text;
 }
