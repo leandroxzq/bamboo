@@ -1,8 +1,7 @@
 @use '../../../assets/style/mixin' as *;
 
 .list {
-    @include flex-align(start, center);
-    flex-direction: column;
+    @include flex-align(start, center, column);
     padding: 1rem;
 
     &__button {

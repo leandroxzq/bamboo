@@ -5,31 +5,24 @@
     width: 100vw;
     z-index: 2;
     position: fixed;
+    background: #fdfdfd;
     @include flex-align(center, center);
-    background: #222222;
 
     .form-login {
         @include flex-align(center, center);
+        border: 1px solid #000;
         background: #fff;
         padding: 1rem 2rem;
         color: #000;
-        border-radius: 1rem;
+        border-radius: 8px;
         width: 100%;
         max-width: 420px;
-        margin: 20px;
-        font-size: 1rem;
-        box-shadow: 1px 1px 6px #fff;
-
-        select {
-            font-size: 1.2rem;
-        }
+        box-shadow: 1px 1px 6px #00000067;
 
         .login {
+            @include flex-align(center, unset, column);
             position: relative;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
 
             &__input__container {
                 @include space-between;
@@ -37,8 +30,7 @@
             }
 
             &__header {
-                align-items: center;
-                display: flex;
+                @include flex-align(start, center);
                 flex-direction: column;
 
                 h1 {
