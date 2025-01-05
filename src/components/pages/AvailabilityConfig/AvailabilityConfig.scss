@@ -12,7 +12,7 @@
         margin-top: 3rem;
     }
 
-    section {
+    &__section {
         @include flex-align(center, center, column);
         background: #ececec93;
         box-shadow: 1px 1px 50px #00000057;

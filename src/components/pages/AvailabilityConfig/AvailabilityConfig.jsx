@@ -145,7 +145,7 @@ function AvailabilityConfig() {
         <>
             <Header />
             <div className='wrapper'>
-                <section>
+                <section className='wrapper__section'>
                     <LocalizationProvider
                         dateAdapter={AdapterDayjs}
                         adapterLocale='en-gb'

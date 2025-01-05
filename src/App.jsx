@@ -4,6 +4,7 @@ import { AuthProvider } from './auth/AuthContext.jsx';
 
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.scss';
 import './assets/style/App.scss';
+import './assets/style/Dark.scss';
 
 function App() {
     return (

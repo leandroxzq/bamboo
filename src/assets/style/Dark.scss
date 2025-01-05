@@ -1,0 +1,105 @@
+@import './variables';
+
+body.dark-mode {
+    background: $bg-dark;
+}
+
+body.dark-mode .button-black {
+    background: #2947aa;
+
+    &:hover {
+        background: #1b3075;
+    }
+}
+
+body.dark-mode .main,
+body.dark-mode .post,
+body.dark-mode .agendados {
+    background: $bg-dark-lg;
+    color: $white;
+    transition: all 1s;
+}
+
+body.dark-mode .background-form {
+    background: $bg-dark;
+
+    img {
+        filter: invert(1);
+    }
+
+    .header__title {
+        color: $white;
+    }
+
+    .form-login {
+        color: $white;
+        background: $bg-dark-lg;
+        border: 1px solid #fff;
+
+        a {
+            color: #6c8eff;
+            &:hover {
+                color: #1a43c9;
+            }
+        }
+
+        input,
+        .password-container {
+            background-color: $bg-dark;
+            caret-color: #fff;
+            color: #fff;
+        }
+
+        i {
+            color: $white;
+        }
+    }
+}
+
+body.dark-mode .header {
+    background: $bg-dark;
+    color: $white;
+    transition: all 1s;
+
+    &__logo {
+        filter: invert(1);
+    }
+
+    i {
+        color: $white;
+    }
+
+    &__menu {
+        background: $bg-dark;
+
+        a,
+        div {
+            color: $white;
+        }
+    }
+}
+
+body.dark-mode .card {
+    background: $bg-dark;
+
+    &__title {
+        color: $white;
+    }
+}
+
+body.dark-mode .footer {
+    background: $bg-dark;
+    color: $white;
+
+    &__logo {
+        filter: invert(1);
+    }
+
+    &__contact-card {
+        color: $white;
+    }
+}
+
+body.dark-mode .wrapper__section {
+    background: $white;
+}
