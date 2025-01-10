@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useState } from 'react';
 
 import Swal from 'sweetalert2';
@@ -13,6 +13,8 @@ function Cadastro() {
         dob: '',
         turma: '',
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,7 +45,7 @@ function Cadastro() {
             if (response.ok) {
                 Swal.fire({
                     title: `Cadastro realizado com sucesso!`,
-                    icon: 'error',
+                    icon: 'success',
                 });
 
                 setFormData({
@@ -53,6 +55,8 @@ function Cadastro() {
                     dob: '',
                     turma: '',
                 });
+
+                navigate('/login');
             } else {
                 const data = await response.json();
 
