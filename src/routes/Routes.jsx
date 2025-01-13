@@ -12,6 +12,8 @@ import CreateAppointment from '../components/pages/createAppointment/CreateAppoi
 import CreatePost from '../components/pages/createPost/CreatePost.jsx';
 import AvailabilityConfig from '../components/pages/AvailabilityConfig/AvailabilityConfig.jsx';
 
+import Error from '../components/pages/Error.jsx';
+
 const RoutesConfig = () => {
     const { role } = useAuth();
 
@@ -38,6 +40,8 @@ const RoutesConfig = () => {
                     <Route path='/agendados' element={<AppointmentsList />} />
                 </>
             )}
+
+            <Route path='*' element={<Error />} />
         </Routes>
     );
 };
