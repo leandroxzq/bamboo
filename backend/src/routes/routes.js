@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import 'dotenv/config';
 
 import { dbPromise } from '../config/connection.js';
 import express from 'express';
@@ -24,7 +25,8 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    const secretKey = 'key';
+    // eslint-disable-next-line no-undef
+    const secretKey = process.env.SECRET_KEY;
 
     const { email, password } = req.body;
 

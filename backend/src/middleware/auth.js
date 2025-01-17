@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
-const secretKey = 'key';
+// eslint-disable-next-line no-undef
+const secretKey = process.env.SECRET_KEY;
 export function isAuthenticated(req, res, next) {
     const token = req.headers.authorization?.split(' ')[1];
 
