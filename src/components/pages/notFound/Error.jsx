@@ -1,4 +1,4 @@
-import Header from '../layout/header/Header.jsx';
+import Header from '../../layout/header/Header.jsx';
 import ErrorImg from './404 Error-bro.svg';
 
 function Error() {
