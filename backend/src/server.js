@@ -13,6 +13,8 @@ app.use(
 
 app.use('/', routes);
 
+app.use('/uploads', express.static('uploads'));
+
 const port = 5000;
 
 app.listen(port, () => {

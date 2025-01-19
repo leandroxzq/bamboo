@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import multer from 'multer';
+import path from 'path';
 import 'dotenv/config';
 
 import { dbPromise } from '../config/connection.js';
@@ -172,5 +174,46 @@ export const deleteAllAppointments = async (req, res) => {
         return res
             .status(500)
             .json({ message: 'Erro ao deletar os agendamentos.' });
+    }
+};
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Pasta onde as imagens serão salvas
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix);
+    },
+});
+
+export const upload = multer({ storage });
+
+export const createPost = async (req, res) => {
+    const { title, text } = req.body;
+    const file = req.file;
+
+    const directory = `/uploads/${file.filename}`;
+
+    try {
+        await dbPromise.query(
+            'INSERT INTO article (titulo, texto, diretorio_imagem) VALUES (?, ?, ?)',
+            [title, text, directory]
+        );
+
+        return res.status(200).json({ title, text, directory });
+    } catch (e) {
+        console.error('Erro ao salvar no banco de dados:', e);
+        return res.status(500).json({ message: 'Erro interno do servidor.' });
+    }
+};
+
+export const getPost = async (req, res) => {
+    try {
+        const list = await dbPromise.query('SELECT * FROM article');
+        return res.status(200).json({ list });
+    } catch (e) {
+        console.log(e);
+        return res.status(500);
     }
 };
