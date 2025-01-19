@@ -14,7 +14,12 @@ function Agendados() {
 
     const fetchAppointments = async () => {
         try {
-            const response = await fetch('http://localhost:5000/appointments');
+            const response = await fetch('http://localhost:5000/scheduled', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
             if (response.ok) {
                 const data = await response.json();
                 console.log(data.appointments);
@@ -41,7 +46,7 @@ function Agendados() {
         if (result.isConfirmed) {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/appointments',
+                    'http://localhost:5000/scheduled',
                     {
                         method: 'DELETE',
                         headers: {

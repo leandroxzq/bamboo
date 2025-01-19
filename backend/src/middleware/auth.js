@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 // eslint-disable-next-line no-undef
 const secretKey = process.env.SECRET_KEY;

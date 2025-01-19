@@ -20,7 +20,7 @@ function Create() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/schedule', {
+            const response = await fetch('http://localhost:5000/appointment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
