@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { Tooltip } from 'react-tooltip';
 
-import DarkMode from '../../ui/DarkMode/Darkmode.jsx';
 import Logo from '../../ui/Logo.jsx';
 import './Header.scss';
 
@@ -41,7 +40,6 @@ function Header() {
                 </Link>
 
                 <div className='header__wrapper-button'>
-                    <DarkMode />
                     {role === null && (
                         <>
                             <Link to={'/login'}>
