@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+import { useAuth } from '../../../auth/AuthContext.jsx';
 
 import Header from '../../layout/header/Header.jsx';
 import Footer from '../../layout/footer/Footer.jsx';
@@ -9,11 +10,9 @@ import './Home.scss';
 function Home() {
     const [posts, setPosts] = useState([]);
 
-    const navigate = useNavigate();
+    const { role } = useAuth();
 
-    const postsNavegate = () => {
-        navigate('/posts');
-    };
+    const navigate = useNavigate();
 
     const fetchCards = async () => {
         try {
@@ -23,6 +22,27 @@ function Home() {
             console.log(posts.list[0]);
         } catch (e) {
             console.log(e);
+        }
+    };
+
+    const handleDelete = async (id, e) => {
+        e.stopPropagation();
+
+        try {
+            const response = await fetch(`http://localhost:5000/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (response.ok) {
+                setPosts(posts.filter((post) => post.id !== id));
+            } else {
+                console.error('Erro ao excluir o post');
+            }
+        } catch (error) {
+            console.error('Erro ao excluir o post:', error);
         }
     };
 
@@ -58,22 +78,32 @@ function Home() {
                             <div
                                 key={post.id}
                                 className='card'
-                                onClick={() => postsNavegate()}
+                                onClick={() => navigate(`/posts/${post.id}`)}
                             >
                                 <div
                                     className='card__img'
                                     style={{
                                         backgroundImage: `url(${
-                                            post.diretorio_imagem
+                                            post.directory_img
                                         })`,
                                     }}
                                 />
                                 <div className='card__info'>
-                                    <p className='card__title'>{post.titulo}</p>
+                                    <p className='card__title'>{post.title}</p>
                                     <p className='card__date'>
-                                        {post.data_criacao}
+                                        {post.creation_date}
                                     </p>
                                 </div>
+                                {role === 'admin' && (
+                                    <button
+                                        className='button'
+                                        onClick={(e) =>
+                                            handleDelete(post.id, e)
+                                        }
+                                    >
+                                        <i className='bi bi-trash'></i>
+                                    </button>
+                                )}
                             </div>
                         ))}
                     </article>

@@ -12,7 +12,9 @@ import {
     deleteAllAppointments,
     createPost,
     upload,
+    getPosts,
     getPost,
+    deletePost,
 } from '../controllers/index.js';
 
 const router = express.Router();
@@ -43,9 +45,19 @@ router.delete('/scheduled', isAuthenticated, isAdmin, deleteAllAppointments);
 
 // post
 
-router.post('/upload', upload.single('imagem'), createPost);
+router.post(
+    '/upload',
+    isAuthenticated,
+    isAdmin,
+    upload.single('imagem'),
+    createPost
+);
 
-router.get('/posts', getPost);
+router.get('/posts', getPosts);
+
+router.get('/post/:id', getPost);
+
+router.delete('/delete/:id', isAuthenticated, isAdmin, deletePost);
 
 // Servir os arquivos estáticos da pasta de uploads
 router.use('/uploads', express.static('uploads'));

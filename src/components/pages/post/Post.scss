@@ -1,39 +1,46 @@
+@use '../../../assets/style/mixin.scss' as *;
+
 .post {
-    display: flex;
-    justify-content: center;
-    padding: 1rem 0;
     width: 100%;
 
     &__content {
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 1100px;
-        padding: 1rem;
     }
 
     &__header {
+        height: 60vh;
         width: 100%;
-
-        &__title {
-            font-size: 2rem;
-            margin: 2rem 0;
-        }
-
         &__img {
-            height: 500px;
+            height: 100%;
             width: 100%;
-            background-image: url(../background.png);
+            background-image: url();
             background-position: center center;
             background-repeat: no-repeat;
-            box-shadow: 1px 1px 10px #000;
-            margin: 2rem 0;
+            background-size: cover;
         }
     }
 
-    &__text {
-        font-family: sans-serif;
-        line-height: 2;
-        width: 100%;
+    &__body {
+        width: 90%;
+
+        .bi {
+            font-size: 2rem;
+
+            &:hover {
+                color: red;
+            }
+        }
+
+        .title {
+            margin: 0;
+            font-size: 3rem;
+        }
+
+        .text {
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
     }
 }

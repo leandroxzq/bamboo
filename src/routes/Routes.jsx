@@ -24,7 +24,7 @@ const RoutesConfig = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/cadastre-se' element={<SignUp />} />
             <Route path='/recuperar-senha' element={<ForgotPassword />} />
-            <Route path='/posts' element={<Post />} />
+            <Route path='/posts/:id' element={<Post />} />
 
             {role !== null && (
                 <Route path='/agendamento' element={<CreateAppointment />} />

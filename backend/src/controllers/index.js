@@ -179,7 +179,7 @@ export const deleteAllAppointments = async (req, res) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Pasta onde as imagens serão salvas
+        cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + path.extname(file.originalname);
@@ -193,11 +193,15 @@ export const createPost = async (req, res) => {
     const { title, text } = req.body;
     const file = req.file;
 
+    console.log(file);
+    console.log(title);
+    console.log(text);
+
     const directory = `/uploads/${file.filename}`;
 
     try {
         await dbPromise.query(
-            'INSERT INTO article (titulo, texto, diretorio_imagem) VALUES (?, ?, ?)',
+            'INSERT INTO article (title, text_article, directory_img) VALUES (?, ?, ?)',
             [title, text, directory]
         );
 
@@ -208,12 +212,42 @@ export const createPost = async (req, res) => {
     }
 };
 
-export const getPost = async (req, res) => {
+export const getPosts = async (req, res) => {
     try {
         const list = await dbPromise.query('SELECT * FROM article');
         return res.status(200).json({ list });
     } catch (e) {
         console.log(e);
         return res.status(500);
+    }
+};
+
+export const getPost = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [row] = await dbPromise.query(
+            'SELECT * FROM article WHERE id = ?;',
+            [id]
+        );
+        console.log(row);
+        return res.status(200).json(row[0]);
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: 'Server error' });
+    }
+};
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await dbPromise.query('DELETE FROM article WHERE id = ?', [id]);
+
+        return res
+            .status(200)
+            .json({ message: 'Postagem excluída com sucesso' });
+    } catch (e) {
+        console.error('Erro ao excluir o post:', e);
+        return res.status(500).json({ message: 'Erro ao excluir postagem' });
     }
 };

@@ -4,10 +4,11 @@ main {
     @include flex-align(unset, center, column);
     z-index: 0;
     background: #fafafa;
+    width: 100%;
 
     .background {
         height: calc(100dvh - 79px);
-        width: 100%;
+        width: 100vw;
 
         @media (width >= 1024px) {
             padding: 2rem 0;
@@ -79,6 +80,7 @@ main {
             grid-template-columns: repeat(1, minmax(200px, 1fr));
             grid-template-rows: repeat(auto-fill, 350px);
             gap: 2rem;
+            position: relative;
 
             @media (width >= 512px) {
                 grid-template-columns: repeat(2, minmax(200px, 1fr));
@@ -99,6 +101,25 @@ main {
                 border-radius: 12px;
                 height: 350px;
                 transition: 0.3s;
+                position: relative;
+
+                .button {
+                    @include flex-align(center, center, row);
+                    background: #000;
+                    color: #fff;
+                    border: none;
+                    border-radius: 0px 8px 0px 8px;
+                    padding: 0.6rem;
+                    gap: 0.6rem;
+                    position: absolute;
+                    right: 0;
+                    font-size: 1.5rem;
+
+                    &:hover {
+                        background-color: rgb(110, 0, 0);
+                        cursor: pointer;
+                    }
+                }
 
                 &:hover {
                     transform: scale(1.05);
@@ -108,10 +129,10 @@ main {
                 &__info {
                     display: flex;
                     flex-direction: column;
-                    gap: 1rem;
-                    padding: 1rem;
-                    font-weight: 600;
+                    width: 100%;
                     height: 100%;
+                    gap: 1rem;
+                    font-weight: 600;
                 }
 
                 &__title {
@@ -121,6 +142,7 @@ main {
                     overflow: hidden;
                     font-size: 1.25rem;
                     color: #000;
+                    padding: 0.5rem 1rem;
 
                     &:hover {
                         text-decoration: underline;
@@ -128,6 +150,9 @@ main {
                 }
 
                 &__date {
+                    position: absolute;
+                    bottom: 1rem;
+                    padding: 0 1rem;
                     font-size: 0.8rem;
                     color: #8d8d8d;
                 }
