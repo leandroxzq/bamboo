@@ -19,7 +19,6 @@ function Home() {
             const response = await fetch('http://localhost:5000/posts');
             const posts = await response.json();
             setPosts(posts.list[0]);
-            console.log(posts.list[0]);
         } catch (e) {
             console.log(e);
         }
@@ -55,24 +54,35 @@ function Home() {
             <Header />
             <main className='main'>
                 <section className='background'>
-                    <Link to={'/posts'}>
-                        <div className='background__image'>
-                            <div className='bg-container'>
-                                <h2 className='bg-container__title'>
-                                    Tecnologia e Saúde Mental: Aplicativos e
-                                    Terapia Online Transformam o Cuidado
-                                    Emocional
-                                </h2>
-                                <p className='bg-container__date'>
-                                    20 Dezembro, 2024
-                                </p>
+                    {posts[0] && (
+                        <Link to={`/posts/${posts[0].id}`}>
+                            <div
+                                className='background__image'
+                                style={{
+                                    backgroundImage: `url(${posts[0].directory_img})`,
+                                }}
+                            >
+                                <div className='bg-container'>
+                                    <h2 className='bg-container__title'>
+                                        {posts[0].title}
+                                    </h2>
+                                    <p className='bg-container__date'>
+                                        {posts[0].creation_date}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    )}
                 </section>
 
                 <section className='posts'>
-                    <span className='posts__latest'>Últimos Posts</span>
+                    {posts.length === 0 ? (
+                        <p className='posts__latest'>
+                            Nenhuma publicacão disponivel
+                        </p>
+                    ) : (
+                        <span className='posts__latest'>Últimos Posts</span>
+                    )}
                     <article className='posts__container'>
                         {posts.map((post) => (
                             <div

@@ -5,19 +5,18 @@
     width: 100vw;
     z-index: 2;
     position: fixed;
-    background: #fdfdfd;
+    background: #f8f9fa;
     @include flex-align(center, center);
 
     .form-login {
         @include flex-align(center, center);
-        border: 1px solid #000;
         background: #fff;
         padding: 1rem 2rem;
         color: #000;
         border-radius: 8px;
         width: 100%;
         max-width: 420px;
-        box-shadow: 1px 1px 6px #00000067;
+        box-shadow: 1px 1px 6px #0000003f;
 
         .login {
             @include flex-align(center, unset, column);
