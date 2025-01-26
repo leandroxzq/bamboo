@@ -1,18 +1,32 @@
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { Link, useNavigate } from 'react-router';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-
 import '../../../assets/style/Modal.scss';
 
-function Cadastro() {
+function SignUp() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        dob: '',
+        dob: null,
         turma: '',
     });
+
+    const [cleared, setCleared] = useState(false);
+
+    useEffect(() => {
+        if (cleared) {
+            const timeout = setTimeout(() => {
+                setCleared(false);
+            }, 1500);
+
+            return () => clearTimeout(timeout);
+        }
+        return () => {};
+    }, [cleared]);
 
     const navigate = useNavigate();
 
@@ -29,7 +43,6 @@ function Cadastro() {
                 title: `O email deve ser do domínio @discente.ifpe.edu.br`,
                 icon: 'error',
             });
-
             return;
         }
 
@@ -52,7 +65,7 @@ function Cadastro() {
                     name: '',
                     email: '',
                     password: '',
-                    dob: '',
+                    dob: null,
                     turma: '',
                 });
 
@@ -87,7 +100,6 @@ function Cadastro() {
                     <Link to='/login'>
                         <i className='bi bi-x exit'></i>
                     </Link>
-
                     <div className='login__header'>
                         <h2>Cadastre-se</h2>
                     </div>
@@ -133,17 +145,31 @@ function Cadastro() {
                         </div>
                     </div>
 
-                    <div className='login__input'>
-                        <label htmlFor='date'>Data de Nascimento</label>
-                        <input
-                            type='date'
-                            id='dob'
-                            name='dob'
-                            value={formData.dob}
-                            onChange={handleChange}
-                            required
-                        />
+                    <div>
+                        <span>Data de Nascimento</span>
+                        <LocalizationProvider
+                            dateAdapter={AdapterDayjs}
+                            adapterLocale='en-gb'
+                        >
+                            <DesktopDatePicker
+                                sx={{ width: '100%' }}
+                                value={formData.dob}
+                                onChange={(newValue) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        dob: newValue,
+                                    }));
+                                }}
+                                slotProps={{
+                                    field: {
+                                        clearable: true,
+                                        onClear: () => setCleared(true),
+                                    },
+                                }}
+                            />
+                        </LocalizationProvider>
                     </div>
+
                     <div className='login__input'>
                         <label htmlFor='turma'>Turma</label>
                         <input
@@ -156,12 +182,11 @@ function Cadastro() {
                             required
                         />
                     </div>
-
                     <button type='submit' className='button-black'>
                         Cria Conta
                     </button>
                     <span className='login__registrar'>
-                        <Link to='/login'>Já tem Uma conta?</Link>
+                        <Link to='/login'>Já tem uma conta?</Link>
                     </span>
                 </div>
             </form>
@@ -169,4 +194,4 @@ function Cadastro() {
     );
 }
 
-export default Cadastro;
+export default SignUp;

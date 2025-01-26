@@ -64,7 +64,7 @@ main {
     .posts {
         @include flex-align(unset, center, column);
         width: 100%;
-        margin: 1rem 0 2rem 0;
+        margin: 1rem 0 0 0;
 
         &__latest {
             font-size: 2rem;
@@ -163,7 +163,7 @@ main {
                     background-repeat: no-repeat;
                     background-size: cover;
                     border-radius: 12px 12px 0 0;
-                    min-height: 50%;
+                    min-height: 70%;
                     width: 100%;
                 }
             }

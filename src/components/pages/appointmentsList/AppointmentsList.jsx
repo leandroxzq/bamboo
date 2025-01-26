@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Paper } from '@mui/material';
 
-import Header from '../../layout/header/Header.jsx';
-import Footer from '../../layout/footer/Footer.jsx';
-
 import Swal from 'sweetalert2';
 
 import './AppointmentsList.scss';
@@ -131,40 +128,35 @@ function Agendados() {
     }, []);
 
     return (
-        <>
-            <Header />
-
-            <div className='agendados'>
-                <div className='agendados__wrapper'>
-                    <h2>Consultas agendadas</h2>
-                    <div className='agendados__button'>
-                        <button className='button-black' onClick={removeAll}>
-                            Apagar todas
-                        </button>
-                    </div>
-                    <Paper
+        <div className='agendados'>
+            <div className='agendados__wrapper'>
+                <h2>Consultas agendadas</h2>
+                <div className='agendados__button'>
+                    <button className='button-black' onClick={removeAll}>
+                        Apagar todas
+                    </button>
+                </div>
+                <Paper
+                    sx={{
+                        minHeight: '369px',
+                        width: '100%',
+                        marginTop: '1rem',
+                    }}
+                >
+                    <DataGrid
                         sx={{
                             minHeight: '369px',
-                            width: '100%',
-                            marginTop: '1rem',
+                            border: 0,
                         }}
-                    >
-                        <DataGrid
-                            sx={{
-                                minHeight: '369px',
-                                border: 0,
-                            }}
-                            rows={rows}
-                            columns={columns}
-                            initialState={{ pagination: { paginationModel } }}
-                            pageSizeOptions={[5, 10]}
-                            checkboxSelection
-                        />
-                    </Paper>
-                </div>
+                        rows={rows}
+                        columns={columns}
+                        initialState={{ pagination: { paginationModel } }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                    />
+                </Paper>
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }
 

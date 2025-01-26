@@ -7,17 +7,19 @@ import { useState, useEffect } from 'react';
 
 import './ListAvaibality.scss';
 
-// eslint-disable-next-line react/prop-types
 function List({ sendDate, sendTime }) {
     const [savedDates, setSavedDates] = useState([]);
     const [availableTimes, setAvailableTimes] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
+    // eslint-disable-next-line no-unused-vars
+    const [loading, SetLoading] = useState(false);
 
     const fetchSavedDates = async () => {
         try {
             const response = await fetch('http://localhost:5000/availability');
             if (response.ok) {
+                SetLoading(true);
                 const data = await response.json();
                 setSavedDates(data.dates);
             } else {
@@ -68,15 +70,6 @@ function List({ sendDate, sendTime }) {
         const selected = event.target.value;
         setSelectedTime(selected);
         sendTime(selected);
-    };
-
-    const update = () => {
-        setSelectedDate('');
-        setSelectedTime('');
-        setAvailableTimes([]);
-        sendTime(null);
-        sendDate(null);
-        fetchSavedDates();
     };
 
     useEffect(() => {
@@ -138,10 +131,6 @@ function List({ sendDate, sendTime }) {
                         )}
                     </Select>
                 </FormControl>
-            </div>
-            <div className='list__button' onClick={update}>
-                <p>Atualizar Disponibilidade</p>
-                <i className={`bi bi-arrow-clockwise`}></i>
             </div>
         </div>
     );

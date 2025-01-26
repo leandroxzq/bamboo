@@ -2,15 +2,19 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { useAuth } from '../auth/AuthContext.jsx';
 
-import Home from '../components/pages/home/Home.jsx';
+import Layout from '../components/layout/Layout.jsx';
+
 import Login from '../components/pages/login/Login.jsx';
 import SignUp from '../components/pages/signUp/SignUp.jsx';
 import ForgotPassword from '../components/pages/forgotPassword/ForgotPassword.jsx';
+
+import { Home } from '../components/pages/home/Home.jsx';
 import Post from '../components/pages/post/Post.jsx';
-import AppointmentsList from '../components/pages/appointmentsList/AppointmentsList.jsx';
-import CreateAppointment from '../components/pages/createAppointment/CreateAppointment.jsx';
 import CreatePost from '../components/pages/createPost/CreatePost.jsx';
-import AvailabilityConfig from '../components/pages/AvailabilityConfig/AvailabilityConfig.jsx';
+
+import CreateAppointment from '../components/pages/createAppointment/CreateAppointment.jsx';
+import AvailabilityConfig from '../components/pages/availabilityConfig/AvailabilityConfig.jsx';
+import AppointmentsList from '../components/pages/appointmentsList/AppointmentsList.jsx';
 
 import Error from '../components/pages/notFound/Error.jsx';
 
@@ -19,28 +23,59 @@ const RoutesConfig = () => {
 
     return (
         <Routes>
+            {/* Rotas públicas */}
             <Route path='/' element={<Navigate to='/home' replace />} />
-            <Route path='/home' element={<Home />} />
+            <Route
+                path='/home'
+                element={
+                    <Layout>
+                        <Home />
+                    </Layout>
+                }
+            />
+            <Route
+                path='/posts/:id'
+                element={
+                    <Layout>
+                        <Post />
+                    </Layout>
+                }
+            />
+
+            {/* Rotas sem Header/Footer */}
             <Route path='/login' element={<Login />} />
             <Route path='/cadastre-se' element={<SignUp />} />
             <Route path='/recuperar-senha' element={<ForgotPassword />} />
-            <Route path='/posts/:id' element={<Post />} />
 
+            {/* Rotas protegidas (role !== null) */}
             {role !== null && (
                 <Route path='/agendamento' element={<CreateAppointment />} />
             )}
 
+            {/* Rotas de administrador (role === 'admin') */}
             {role === 'admin' && (
                 <>
                     <Route path='/criar-postagem' element={<CreatePost />} />
                     <Route
                         path='/configurar-disponibilidade'
-                        element={<AvailabilityConfig />}
+                        element={
+                            <Layout>
+                                <AvailabilityConfig />
+                            </Layout>
+                        }
                     />
-                    <Route path='/agendados' element={<AppointmentsList />} />
+                    <Route
+                        path='/agendados'
+                        element={
+                            <Layout>
+                                <AppointmentsList />
+                            </Layout>
+                        }
+                    />
                 </>
             )}
 
+            {/* Rota de erro */}
             <Route path='*' element={<Error />} />
         </Routes>
     );

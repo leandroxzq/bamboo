@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import Header from '../../layout/header/Header.jsx';
-import Footer from '../../layout/footer/Footer.jsx';
-
 import './Post.scss';
 
 function Post() {
@@ -31,26 +28,22 @@ function Post() {
     }
 
     return (
-        <>
-            <Header />
-            <section className='post'>
-                <article className='post__content'>
-                    <div className='post__header'>
-                        <div
-                            className='post__header__img'
-                            style={{
-                                backgroundImage: `url(${post.directory_img})`,
-                            }}
-                        />
-                    </div>
-                    <div className='post__body'>
-                        <h1 className='title'>{post.title}</h1>
-                        <p className='text'>{post.text_article}</p>
-                    </div>
-                </article>
-            </section>
-            <Footer />
-        </>
+        <section className='post'>
+            <article className='post__content'>
+                <div className='post__header'>
+                    <div
+                        className='post__header__img'
+                        style={{
+                            backgroundImage: `url(${post.directory_img})`,
+                        }}
+                    />
+                </div>
+                <div className='post__body'>
+                    <h1 className='title'>{post.title}</h1>
+                    <p className='text'>{post.text_article}</p>
+                </div>
+            </article>
+        </section>
     );
 }
 
