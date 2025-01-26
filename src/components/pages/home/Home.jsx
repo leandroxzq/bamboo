@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
 
+import { formattedDateUser } from '../../../Date.js';
+
 import './Home.scss';
 
 export function Home() {
@@ -15,7 +17,7 @@ export function Home() {
         try {
             const response = await fetch('http://localhost:5000/posts');
             const posts = await response.json();
-            setPosts(posts.list[0]);
+            setPosts(posts);
         } catch (e) {
             console.log(e);
         }
@@ -61,9 +63,10 @@ export function Home() {
                                 <h2 className='bg-container__title'>
                                     {posts[0].title}
                                 </h2>
-                                <p className='bg-container__date'>
-                                    {posts[0].creation_date}
-                                </p>
+                                <div className='bg-container__date'>
+                                    <i className='bi bi-calendar-event'></i>
+                                    {formattedDateUser(posts[0].creation_date)}
+                                </div>
                             </div>
                         </div>
                     </Link>
@@ -95,9 +98,10 @@ export function Home() {
                             />
                             <div className='card__info'>
                                 <p className='card__title'>{post.title}</p>
-                                <p className='card__date'>
-                                    {post.creation_date}
-                                </p>
+                                <div className='card__date'>
+                                    <i className='bi bi-calendar-event'></i>
+                                    {formattedDateUser(post.creation_date)}
+                                </div>
                             </div>
                             {role === 'admin' && (
                                 <button

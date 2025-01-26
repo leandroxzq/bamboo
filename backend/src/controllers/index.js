@@ -6,6 +6,9 @@ import 'dotenv/config';
 
 import { dbPromise } from '../config/connection.js';
 
+import moment from 'moment';
+const now = moment.utc().toISOString();
+
 export const register = async (req, res) => {
     const { name, email, password, dob, turma } = req.body;
 
@@ -201,8 +204,8 @@ export const createPost = async (req, res) => {
 
     try {
         await dbPromise.query(
-            'INSERT INTO article (title, text_article, directory_img) VALUES (?, ?, ?)',
-            [title, text, directory]
+            'INSERT INTO article (title, text_article, directory_img, creation_date) VALUES (?, ?, ?, ?)',
+            [title, text, directory, now]
         );
 
         return res.status(200).json({ title, text, directory });
@@ -214,8 +217,9 @@ export const createPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
     try {
-        const list = await dbPromise.query('SELECT * FROM article');
-        return res.status(200).json({ list });
+        const [list] = await dbPromise.query('SELECT * FROM article');
+        console.log(list);
+        return res.status(200).json(list);
     } catch (e) {
         console.log(e);
         return res.status(500);
@@ -229,7 +233,6 @@ export const getPost = async (req, res) => {
             'SELECT * FROM article WHERE id = ?;',
             [id]
         );
-        console.log(row);
         return res.status(200).json(row[0]);
     } catch (e) {
         console.error(e);

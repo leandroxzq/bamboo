@@ -5,6 +5,8 @@ import Select from '@mui/material/Select';
 
 import { useState, useEffect } from 'react';
 
+import { formattedDateUser } from '../../../Date.js';
+
 import './ListAvaibality.scss';
 
 function List({ sendDate, sendTime }) {
@@ -12,14 +14,11 @@ function List({ sendDate, sendTime }) {
     const [availableTimes, setAvailableTimes] = useState([]);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
-    // eslint-disable-next-line no-unused-vars
-    const [loading, SetLoading] = useState(false);
 
     const fetchSavedDates = async () => {
         try {
             const response = await fetch('http://localhost:5000/availability');
             if (response.ok) {
-                SetLoading(true);
                 const data = await response.json();
                 setSavedDates(data.dates);
             } else {
@@ -37,15 +36,6 @@ function List({ sendDate, sendTime }) {
         const year = d.getFullYear();
 
         return `${year}-${month}-${day}`;
-    };
-
-    const formatDateUser = (date) => {
-        const d = new Date(date);
-        const day = String(d.getDate()).padStart(2, '0');
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const year = d.getFullYear();
-
-        return `${day}-${month}-${year}`;
     };
 
     const handleDateChange = (event) => {
@@ -94,7 +84,7 @@ function List({ sendDate, sendTime }) {
                         {savedDates?.length ? (
                             savedDates.map((item) => (
                                 <MenuItem key={item.date} value={item.date}>
-                                    {formatDateUser(item.date)}
+                                    {formattedDateUser(item.date)}
                                 </MenuItem>
                             ))
                         ) : (

@@ -9,6 +9,7 @@ main {
     .background {
         height: calc(100dvh - 79px);
         width: 100vw;
+        height: 70vw;
 
         @media (width >= 1024px) {
             padding: 2rem 0;
@@ -52,6 +53,10 @@ main {
                     &:hover {
                         text-decoration: underline;
                     }
+                }
+
+                i {
+                    margin-right: 0.7rem;
                 }
             }
 
@@ -155,6 +160,10 @@ main {
                     padding: 0 1rem;
                     font-size: 0.8rem;
                     color: #8d8d8d;
+
+                    i {
+                        margin-right: 0.7rem;
+                    }
                 }
 
                 &__img {

@@ -3,6 +3,8 @@ import { useParams } from 'react-router';
 
 import './Post.scss';
 
+import { formattedDateUser } from '../../../Date.js';
+
 function Post() {
     const { id } = useParams();
     const [post, setPost] = useState(null);
@@ -40,6 +42,7 @@ function Post() {
                 </div>
                 <div className='post__body'>
                     <h1 className='title'>{post.title}</h1>
+                    <span>{formattedDateUser(post.creation_date)}</span>
                     <p className='text'>{post.text_article}</p>
                 </div>
             </article>
