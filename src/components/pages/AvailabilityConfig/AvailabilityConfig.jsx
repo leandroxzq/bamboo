@@ -147,7 +147,7 @@ function AvailabilityConfig() {
                     adapterLocale='en-gb'
                     sx={{ padding: 0 }}
                 >
-                    <Box sx={{ padding: 3 }}>
+                    <Box sx={{ minWidth: '50%' }}>
                         <h2>Configuração de Disponibilidade</h2>
                         <DatePicker
                             sx={{ width: '100%' }}
@@ -220,13 +220,11 @@ function AvailabilityConfig() {
                         </Box>
                     </Box>
                 </LocalizationProvider>
-                <div className='wrapper-list'>
-                    <List
-                        className='list'
-                        sendDate={handleDate}
-                        sendTime={handleTime}
-                    ></List>
-                </div>
+                <List
+                    className='list'
+                    sendDate={handleDate}
+                    sendTime={handleTime}
+                ></List>
             </section>
         </div>
     );

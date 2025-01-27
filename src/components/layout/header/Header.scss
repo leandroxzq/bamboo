@@ -102,12 +102,10 @@
         right: 0;
         background-color: #fff;
         box-shadow: -7px 2px 3px #3f3f3f13;
-
         height: 100vh;
         z-index: 1000;
         padding: 1rem 0 0 0;
-
-        animation: slow 0.8s forwards;
+        animation: slow 0.4s forwards;
 
         @keyframes slow {
             0% {

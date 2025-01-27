@@ -152,7 +152,20 @@ function SignUp() {
                             adapterLocale='en-gb'
                         >
                             <DesktopDatePicker
-                                sx={{ width: '100%' }}
+                                sx={{
+                                    width: '100%',
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: '#888888',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: '#000',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: '#888888',
+                                        },
+                                    },
+                                }}
                                 value={formData.dob}
                                 onChange={(newValue) => {
                                     setFormData((prev) => ({

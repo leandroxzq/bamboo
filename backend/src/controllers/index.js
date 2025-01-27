@@ -145,6 +145,13 @@ export const schedule = async (req, res) => {
 
 export const getAppointments = async (req, res) => {
     try {
+        const updateQuery = `
+        UPDATE appointments
+        SET status = 'concluido'
+        WHERE status = 'pendente' AND TIMESTAMP(date, time) < NOW();
+    `;
+        await dbPromise.query(updateQuery);
+
         const query = `
             SELECT appointments.*, users.name, users.email, users.dob, users.turma
             FROM appointments
@@ -159,24 +166,35 @@ export const getAppointments = async (req, res) => {
     }
 };
 
-export const deleteAllAppointments = async (req, res) => {
-    try {
-        const result = await dbPromise.query('DELETE FROM appointments');
+export const changeAppointments = async (req, res) => {
+    const { id } = req.params; // O ID vem dos parâmetros da URL
+    const { status } = req.body; // O novo status vem do corpo da requisição
 
-        if (result.affectedRows > 0) {
-            return res.status(200).json({
-                message: 'Todos os agendamentos foram deletados com sucesso!',
-            });
-        } else {
-            return res.status(404).json({
-                message: 'Nenhum agendamento encontrado para deletar.',
-            });
+    if (!id || !status) {
+        return res.status(400).json({ message: 'ID e status são necessários' });
+    }
+
+    try {
+        const [result] = await dbPromise.query(
+            'UPDATE appointments SET status = ? WHERE id = ?',
+            [status, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res
+                .status(404)
+                .json({ message: 'Agendamento não encontrado' });
         }
+
+        res.status(200).json({
+            message: 'Status do agendamento atualizado com sucesso',
+        });
     } catch (error) {
-        console.error('Erro ao deletar os agendamentos:', error);
-        return res
-            .status(500)
-            .json({ message: 'Erro ao deletar os agendamentos.' });
+        console.error('Erro ao atualizar o agendamento:', error);
+        res.status(500).json({
+            message: 'Erro ao atualizar o agendamento',
+            error: error.message,
+        });
     }
 };
 
@@ -195,10 +213,6 @@ export const upload = multer({ storage });
 export const createPost = async (req, res) => {
     const { title, text } = req.body;
     const file = req.file;
-
-    console.log(file);
-    console.log(title);
-    console.log(text);
 
     const directory = `/uploads/${file.filename}`;
 

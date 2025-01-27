@@ -5,6 +5,7 @@
     min-height: calc(100dvh - 70px);
     width: 100%;
     z-index: 0;
+
     max-width: 350px;
 
     @media (width >= 512px) {
@@ -17,38 +18,13 @@
         background: #ececec93;
         box-shadow: 1px 1px 50px #00000057;
         border-radius: 9px;
+        padding: 1.4rem;
         gap: 20px;
 
         @media (width >= 908px) {
             flex-direction: row;
-            align-items: start;
+            align-items: center;
             min-width: 800px;
-        }
-
-        .wrapper-list {
-            @include flex-align(unset, center, column);
-            max-width: 300px;
-            width: 90%;
-
-            @media (width >= 908px) {
-                margin-top: 2rem;
-            }
-
-            .list {
-                padding: 0;
-                width: 100%;
-                gap: 1rem;
-
-                &__wrapper {
-                    padding: 0;
-                    width: 100%;
-                }
-
-                .list__button {
-                    margin-top: 1rem;
-                    margin-bottom: 1rem;
-                }
-            }
         }
     }
 }

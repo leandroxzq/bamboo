@@ -76,26 +76,28 @@ function Header() {
                         {role === 'admin' && (
                             <>
                                 <Link to={'/criar-postagem'}>
-                                    <i className='bi bi-pencil-square'></i>{' '}
+                                    <i className='bi bi-pencil-square'></i>
                                     Criar um novo post
                                 </Link>
-                                <Link to={'/configurar-disponibilidade'}>
-                                    <i className='bi bi-gear-wide'></i>{' '}
+                                <Link
+                                    to={'/configurar-disponibilidade'}
+                                    onClick={toggleMenu}
+                                >
+                                    <i className='bi bi-gear-wide'></i>
                                     Configuração de Disponibilidade
+                                </Link>
+                                <Link to={'/agendados'} onClick={toggleMenu}>
+                                    <i className='bi bi-card-checklist'></i>
+                                    Consultas Agendadas
                                 </Link>
                             </>
                         )}
 
                         {role !== null ? (
-                            role === 'admin' ? (
-                                <Link to={'/agendados'}>
-                                    <i className='bi bi-card-checklist'></i>{' '}
-                                    Consultas Agendadas
-                                </Link>
-                            ) : (
+                            role !== 'admin' && (
                                 <>
                                     <Link to={'/perfil'}>
-                                        <i className='bi bi-person-circle'></i>{' '}
+                                        <i className='bi bi-person-circle'></i>
                                         Perfil
                                     </Link>
                                     <Link to={'/agendamento'}>

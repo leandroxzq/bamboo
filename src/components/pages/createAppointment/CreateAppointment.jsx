@@ -31,7 +31,7 @@ function Create() {
 
             if (response.ok) {
                 Swal.fire({
-                    title: `Disponibilidade salva com sucesso`,
+                    title: `Agendamento realizado com sucesso`,
                     icon: 'success',
                 });
                 navigate('/home');

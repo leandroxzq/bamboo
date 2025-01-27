@@ -2,41 +2,14 @@
 
 .list {
     @include flex-align(start, center, column);
-    padding: 1rem;
-
-    &__button {
-        @include flex-align(center, center);
-        color: #fff;
-        background-color: #000;
-        width: 100%;
-        font-size: 1rem;
-        font-weight: 600;
-        padding: 1rem 0;
-        border-radius: 0.6rem;
-        gap: 1rem;
-        transition: 0.2s all;
-
-        &:hover {
-            cursor: pointer;
-            background-color: #272727;
-        }
-    }
+    width: 100%;
+    gap: 1rem;
 
     &__wrapper {
+        width: 100%;
+        margin: 0 1rem;
+
         display: flex;
         flex-direction: column;
-        padding: 1rem;
-        min-width: 100%;
-
-        label {
-            margin-right: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        select {
-            padding: 1rem;
-            font-size: 1.2rem;
-            border-radius: 6px;
-        }
     }
 }

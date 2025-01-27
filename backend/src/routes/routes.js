@@ -9,7 +9,7 @@ import {
     deleteAllAvaibility,
     schedule,
     getAppointments,
-    deleteAllAppointments,
+    changeAppointments,
     createPost,
     upload,
     getPosts,
@@ -41,7 +41,7 @@ router.post('/appointment', isAuthenticated, schedule);
 
 router.get('/scheduled', isAuthenticated, isAdmin, getAppointments);
 
-router.delete('/scheduled', isAuthenticated, isAdmin, deleteAllAppointments);
+router.put('/scheduled/:id', isAuthenticated, isAdmin, changeAppointments);
 
 // post
 
