@@ -1,0 +1,91 @@
+@use '../../../assets/style/mixin.scss' as *;
+
+.profile {
+    @include flex-align(center, center, column);
+    min-height: 75vh;
+    width: 100%;
+
+    &__card {
+        @include flex-align(unset, start, column);
+        padding: 2rem;
+        min-height: 550px;
+        max-width: 500px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0px 0px 10px #00000075;
+
+        @media (width <= 600px) {
+            padding: 1rem;
+        }
+
+        &__data {
+            @include flex-align(unset, unset, column);
+
+            &__header {
+                @include flex-align(unset, center, row);
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        &__image {
+            font-size: 3rem;
+        }
+
+        &__name {
+            margin: 0;
+        }
+    }
+
+    &__appointments {
+        article {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 500px; /* Define uma largura máxima */
+            max-height: 300px; /* Define uma altura máxima */
+            overflow-y: auto; /* Adiciona rolagem vertical quando necessário */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+
+            @media (width <= 600px) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        article div {
+            position: relative;
+            min-width: 200px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        article p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            border: none;
+            background: #ff4d4d;
+            color: white;
+            font-weight: bolder;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #cc0000;
+        }
+    }
+}

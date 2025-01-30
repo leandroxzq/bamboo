@@ -96,7 +96,7 @@ function Header() {
                         {role !== null ? (
                             role !== 'admin' && (
                                 <>
-                                    <Link to={'/perfil'}>
+                                    <Link to={'/perfil'} onClick={toggleMenu}>
                                         <i className='bi bi-person-circle'></i>
                                         Perfil
                                     </Link>

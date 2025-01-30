@@ -9,6 +9,7 @@ import SignUp from '../components/pages/signUp/SignUp.jsx';
 import ForgotPassword from '../components/pages/forgotPassword/ForgotPassword.jsx';
 
 import { Home } from '../components/pages/home/Home.jsx';
+import { Profile } from '../components/pages/profile/Profile.jsx';
 import Post from '../components/pages/post/Post.jsx';
 import CreatePost from '../components/pages/createPost/CreatePost.jsx';
 
@@ -47,12 +48,23 @@ const RoutesConfig = () => {
             <Route path='/cadastre-se' element={<SignUp />} />
             <Route path='/recuperar-senha' element={<ForgotPassword />} />
 
-            {/* Rotas protegidas (role !== null) */}
+            {/* Rotas protegidas */}
             {role !== null && (
                 <Route path='/agendamento' element={<CreateAppointment />} />
             )}
 
-            {/* Rotas de administrador (role === 'admin') */}
+            {role === 'user' && (
+                <Route
+                    path='/perfil'
+                    element={
+                        <Layout>
+                            <Profile />
+                        </Layout>
+                    }
+                />
+            )}
+
+            {/* Rotas de administrador */}
             {role === 'admin' && (
                 <>
                     <Route path='/criar-postagem' element={<CreatePost />} />

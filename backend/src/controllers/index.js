@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
 import 'dotenv/config';
 
 import { dbPromise } from '../config/connection.js';
@@ -167,8 +168,8 @@ export const getAppointments = async (req, res) => {
 };
 
 export const changeAppointments = async (req, res) => {
-    const { id } = req.params; // O ID vem dos parâmetros da URL
-    const { status } = req.body; // O novo status vem do corpo da requisição
+    const { id } = req.params;
+    const { status } = req.body;
 
     if (!id || !status) {
         return res.status(400).json({ message: 'ID e status são necessários' });
@@ -232,7 +233,6 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     try {
         const [list] = await dbPromise.query('SELECT * FROM article');
-        console.log(list);
         return res.status(200).json(list);
     } catch (e) {
         console.log(e);
@@ -258,6 +258,18 @@ export const deletePost = async (req, res) => {
     const { id } = req.params;
 
     try {
+        const [rows] = await dbPromise.query(
+            'SELECT directory_img FROM article WHERE id = ?',
+            [id]
+        );
+
+        const path = rows[0].directory_img;
+
+        fs.unlink(`./${path}`, (err) => {
+            if (err) throw err;
+            console.log('arquivo removido');
+        });
+
         await dbPromise.query('DELETE FROM article WHERE id = ?', [id]);
 
         return res
@@ -266,5 +278,55 @@ export const deletePost = async (req, res) => {
     } catch (e) {
         console.error('Erro ao excluir o post:', e);
         return res.status(500).json({ message: 'Erro ao excluir postagem' });
+    }
+};
+
+export const getProfile = async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const [data] = await dbPromise.query(
+            `SELECT u.name, u.turma, u.email, a.date, a.time, a.id, a.status 
+             FROM users u
+             LEFT JOIN appointments a ON u.id = a.user_id
+             WHERE u.id = ?`,
+            [userId]
+        );
+
+        const user = {
+            name: data[0]?.name,
+            turma: data[0]?.turma,
+            email: data[0]?.email,
+            appointments: data.map((item) => ({
+                id: item.id,
+                date: item.date,
+                time: item.time,
+                status: item.status,
+            })),
+        };
+
+        console.log(data);
+
+        return res.status(200).json(user);
+    } catch (e) {
+        console.error(e);
+        res.status(500);
+    }
+};
+
+export const deleteAppointmentsProfile = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.id;
+
+    try {
+        const [result] = await dbPromise.query(
+            'DELETE FROM appointments WHERE id = ? AND user_id = ?',
+            [id, userId]
+        );
+
+        res.json({ message: 'deletado com sucesso', result });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao deletar agendamento' });
     }
 };

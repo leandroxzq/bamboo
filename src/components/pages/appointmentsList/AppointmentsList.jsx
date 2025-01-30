@@ -177,9 +177,9 @@ function Scheduled() {
                             backgroundColor: '#f5f5f5',
                         },
                         '@media (max-width: 600px)': {
-                            fontSize: '12px', // Reduzir o tamanho da fonte
+                            fontSize: '12px',
                             '& .MuiDataGrid-cell': {
-                                padding: '8px', // Menos padding em células pequenas
+                                padding: '8px',
                             },
                         },
                     }}
