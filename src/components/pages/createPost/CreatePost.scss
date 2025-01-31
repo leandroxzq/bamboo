@@ -18,6 +18,15 @@
     flex-direction: column;
     gap: 1rem;
 
+    @media (width <= 600px) {
+        min-width: 220px;
+        padding: 1rem;
+    }
+
+    @media (width <= 300px) {
+        padding: 1rem;
+    }
+
     &__header {
         text-align: center;
 

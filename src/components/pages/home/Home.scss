@@ -51,8 +51,8 @@ main {
 
                 .button {
                     @include flex-align(center, center, row);
-                    background: #000;
-                    color: #fff;
+                    background: #fff;
+                    color: #000;
                     border: none;
                     border-radius: 0px 8px 0px 8px;
                     padding: 0.6rem;
@@ -62,7 +62,7 @@ main {
                     font-size: 1.5rem;
 
                     &:hover {
-                        background-color: rgb(110, 0, 0);
+                        color: rgb(167, 41, 41);
                         cursor: pointer;
                     }
                 }

@@ -230,9 +230,11 @@ export const createPost = async (req, res) => {
     }
 };
 
-export const getPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => {
     try {
-        const [list] = await dbPromise.query('SELECT * FROM article');
+        const [list] = await dbPromise.query(
+            'SELECT * FROM article ORDER BY id DESC'
+        );
         return res.status(200).json(list);
     } catch (e) {
         console.log(e);

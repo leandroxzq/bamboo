@@ -12,7 +12,7 @@ import {
     changeAppointments,
     createPost,
     upload,
-    getPosts,
+    getAllPosts,
     getPost,
     deletePost,
     getProfile,
@@ -55,7 +55,7 @@ router.post(
     createPost
 );
 
-router.get('/posts', getPosts);
+router.get('/posts', getAllPosts);
 
 router.get('/post/:id', getPost);
 
