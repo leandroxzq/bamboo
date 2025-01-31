@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
 
 import { formattedDateUser } from '../../../Date.js';
+
+import { Background } from '../../ui/background/Background.jsx';
 
 import './Home.scss';
 
@@ -50,29 +52,7 @@ export function Home() {
 
     return (
         <main className='main'>
-            <section className='background'>
-                {posts[0] && (
-                    <Link to={`/posts/${posts[0].id}`}>
-                        <div
-                            className='background__image'
-                            style={{
-                                backgroundImage: `url(${posts[0].directory_img})`,
-                            }}
-                        >
-                            <div className='bg-container'>
-                                <h2 className='bg-container__title'>
-                                    {posts[0].title}
-                                </h2>
-                                <div className='bg-container__date'>
-                                    <i className='bi bi-calendar-event'></i>
-                                    {formattedDateUser(posts[0].creation_date)}
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                )}
-            </section>
-
+            <Background posts={posts} />
             <section className='posts'>
                 {posts.length === 0 ? (
                     <p className='posts__latest'>
