@@ -6,7 +6,11 @@ import { useTheme, useMediaQuery } from '@mui/material';
 
 import Swal from 'sweetalert2';
 
-import { formattedDateUser, formatTime, calculateAge } from '../../../Date.js';
+import {
+    formattedDateUser,
+    formatTime,
+    calculateAge,
+} from '../../../utils/Date';
 
 import './AppointmentsList.scss';
 

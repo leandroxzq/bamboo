@@ -3,7 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 import './Background.scss';
 
-import { formattedDateUser } from '../../../Date.js';
+import { formattedDateUser } from '../../../utils/Date.js';
 
 export function Background({ posts }) {
     return (

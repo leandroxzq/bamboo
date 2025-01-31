@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import Swal from 'sweetalert2';
 
-import { formattedDateUser } from '../../../Date.js';
+import { formattedDateUser } from '../../../utils/Date.js';
 
 import { Background } from '../../ui/background/Background.jsx';
 

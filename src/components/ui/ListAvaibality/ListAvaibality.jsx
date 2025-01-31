@@ -5,7 +5,7 @@ import Select from '@mui/material/Select';
 
 import { useState, useEffect } from 'react';
 
-import { formattedDateUser } from '../../../Date.js';
+import { formattedDateUser } from '../../../utils/Date';
 
 import './ListAvaibality.scss';
 

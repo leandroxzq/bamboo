@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Swal from 'sweetalert2';
 
-import { formattedDateUser } from '../../../Date';
+import { formattedDateUser } from '../../../utils/Date';
 
 import './Profile.scss';
 

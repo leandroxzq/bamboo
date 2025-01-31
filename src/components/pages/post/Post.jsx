@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import './Post.scss';
 
-import { formattedDateUser } from '../../../Date.js';
+import { formattedDateUser } from '../../../utils/Date.js';
 
 function Post() {
     const { id } = useParams();
