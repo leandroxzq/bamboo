@@ -108,6 +108,9 @@ function Scheduled() {
                                 padding: '12px 0px',
                                 textAlign: 'center',
                             },
+                            '@media (max-width: 600px)': {
+                                fontSize: '12px',
+                            },
                         }}
                         value={params.row.status}
                         onChange={(e) =>
@@ -164,12 +167,13 @@ function Scheduled() {
                             backgroundColor: '#fff',
                         },
                         '.MuiDataGrid-columnHeader': {
-                            backgroundColor: '#000',
+                            backgroundColor: '#00000086',
                             color: '#fff',
                         },
-                        '.MuiDataGrid-cell': {
-                            fontSize: '14px',
-                        },
+                        '.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle .MuiDataGrid-iconButtonContainer .MuiDataGrid-cell:hover':
+                            {
+                                color: '#fff',
+                            },
                         '& .MuiDataGrid-row:nth-of-type(odd)': {
                             backgroundColor: '#fff',
                         },

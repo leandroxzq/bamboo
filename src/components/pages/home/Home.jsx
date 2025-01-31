@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
+import Swal from 'sweetalert2';
 
 import { formattedDateUser } from '../../../Date.js';
 
@@ -28,21 +29,36 @@ export function Home() {
     const handleDelete = async (id, e) => {
         e.stopPropagation();
 
-        try {
-            const response = await fetch(`http://localhost:5000/delete/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
-
-            if (response.ok) {
-                setPosts(posts.filter((post) => post.id !== id));
-            } else {
-                console.error('Erro ao excluir o post');
+        const result = await Swal.fire({
+            text: 'Confirma a exclusão da postagem?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim',
+        });
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(
+                    `http://localhost:5000/delete/${id}`,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Postagem deletada!',
+                        icon: 'success',
+                    });
+                    setPosts(posts.filter((post) => post.id !== id));
+                }
+            } catch (error) {
+                console.error('Erro ao excluir o post:', error);
             }
-        } catch (error) {
-            console.error('Erro ao excluir o post:', error);
         }
     };
 
@@ -61,39 +77,43 @@ export function Home() {
                 ) : (
                     <span className='posts__latest'>Últimos Posts</span>
                 )}
-                <article className='posts__container'>
-                    {posts.map((post) => (
-                        <div
-                            key={post.id}
-                            className='card'
-                            onClick={() => navigate(`/posts/${post.id}`)}
-                        >
+                {posts.length !== 0 && (
+                    <article className='posts__container'>
+                        {posts.map((post) => (
                             <div
-                                className='card__img'
-                                style={{
-                                    backgroundImage: `url(${
-                                        post.directory_img
-                                    })`,
-                                }}
-                            />
-                            <div className='card__info'>
-                                <p className='card__title'>{post.title}</p>
-                                <div className='card__date'>
-                                    <i className='bi bi-calendar-event'></i>
-                                    {formattedDateUser(post.creation_date)}
+                                key={post.id}
+                                className='card'
+                                onClick={() => navigate(`/posts/${post.id}`)}
+                            >
+                                <div
+                                    className='card__img'
+                                    style={{
+                                        backgroundImage: `url(${
+                                            post.directory_img
+                                        })`,
+                                    }}
+                                />
+                                <div className='card__info'>
+                                    <p className='card__title'>{post.title}</p>
+                                    <div className='card__date'>
+                                        {formattedDateUser(post.creation_date)}
+                                        <i className='bi bi-calendar-event'></i>
+                                    </div>
                                 </div>
+                                {role === 'admin' && (
+                                    <button
+                                        className='button'
+                                        onClick={(e) =>
+                                            handleDelete(post.id, e)
+                                        }
+                                    >
+                                        <i className='bi bi-trash'></i>
+                                    </button>
+                                )}
                             </div>
-                            {role === 'admin' && (
-                                <button
-                                    className='button'
-                                    onClick={(e) => handleDelete(post.id, e)}
-                                >
-                                    <i className='bi bi-trash'></i>
-                                </button>
-                            )}
-                        </div>
-                    ))}
-                </article>
+                        ))}
+                    </article>
+                )}
             </section>
         </main>
     );

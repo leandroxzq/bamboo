@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
+import Swal from 'sweetalert2';
 
 import { formattedDateUser } from '../../../Date';
 
@@ -24,29 +25,46 @@ export function Profile() {
     };
 
     const handleDelete = async (id) => {
-        try {
-            const response = await fetch(
-                `http://localhost:5000/appointments/${id}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
+        const result = await Swal.fire({
+            text: 'Confirma o cancelamento do agendamento?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Não',
+            confirmButtonText: 'Sim',
+        });
+
+        if (result.isConfirmed) {
+            try {
+                const response = await fetch(
+                    `http://localhost:5000/appointments/${id}`,
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Deletado!',
+                        text: 'Agendamento cancelado',
+                        icon: 'success',
+                    });
                 }
-            );
-            const data = await response.json();
 
-            console.log(data);
-
-            setProfile((prevProfile) => ({
-                ...prevProfile,
-                appointments: prevProfile.appointments.filter(
-                    (a) => a.id !== id
-                ),
-            }));
-        } catch (e) {
-            console.log(e);
+                setProfile((prevProfile) => ({
+                    ...prevProfile,
+                    appointments: prevProfile.appointments.filter(
+                        (a) => a.id !== id
+                    ),
+                }));
+            } catch (e) {
+                console.log(e);
+            }
         }
     };
 
@@ -73,7 +91,6 @@ export function Profile() {
                         </>
                     ) : (
                         <>
-                            {/* Skeletons for profile data */}
                             <div className='profile__card__data__header'>
                                 <Skeleton
                                     variant='circular'

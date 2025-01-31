@@ -21,8 +21,8 @@ export function Background({ posts }) {
                                 {posts[0].title}
                             </h2>
                             <div className='bg-container__date'>
-                                <i className='bi bi-calendar-event'></i>
                                 {formattedDateUser(posts[0].creation_date)}
+                                <i className='bi bi-calendar-event'></i>
                             </div>
                         </div>
                     </div>
@@ -30,14 +30,14 @@ export function Background({ posts }) {
             ) : (
                 <div className='background'>
                     <Skeleton
-                        animation='pulse'
+                        animation='wave'
                         variant='rectangular'
                         width='100%'
                         height='100%'
                         style={{
                             borderRadius: '1rem',
+                            backgroundColor: '#00000044',
                         }}
-                        sx={{ bgcolor: 'grey.300' }}
                     />
                 </div>
             )}

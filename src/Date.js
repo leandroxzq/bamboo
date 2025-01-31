@@ -3,7 +3,7 @@ export const formattedDateUser = (dateString) => {
 
     const [year, month, day] = date.split('-');
 
-    return `${day}-${month}-${year}`;
+    return `${day}/${month}/${year}`;
 };
 
 export const formatTime = (time) => {

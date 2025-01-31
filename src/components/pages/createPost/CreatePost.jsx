@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 
 import Swal from 'sweetalert2';
 
-import '../../../assets/style/Modal.scss';
+import './CreatePost.scss';
 
 function CreatePost() {
     const [title, setTitle] = useState('');
@@ -73,62 +73,59 @@ function CreatePost() {
     };
 
     return (
-        <div className='background-form'>
-            <form action='' className='form-login' onSubmit={handleUpload}>
-                <section className='login'>
-                    <Link to={'/home'}>
-                        <i className='bi bi-x exit'></i>
-                    </Link>
-                    <div className='login__header'>
-                        <h2>Criar Postagem</h2>
+        <form action='' className='form' onSubmit={handleUpload}>
+            <section className='login'>
+                <Link to={'/home'}>
+                    <i className='bi bi-x exit'></i>
+                </Link>
+                <div className='login__header'>
+                    <h2>Criar Postagem</h2>
+                </div>
+                <div className='login__input'>
+                    <label htmlFor='titulo'>Título</label>
+                    <input
+                        type='text'
+                        name='titulo'
+                        id='titulo'
+                        onChange={handleTitleChange}
+                    />
+                </div>
+                <div className='login__input'>
+                    <label htmlFor='texto'>Descrição</label>
+                    <textarea
+                        name='texto'
+                        id='texto'
+                        cols='30'
+                        rows='10'
+                        onChange={handleTextChange}
+                    ></textarea>
+                </div>
+                <label htmlFor='file-upload' className='file-upload'>
+                    <i className='bi bi-card-image'></i>
+                    <p>Adicionar Imagem</p>
+                    <input
+                        type='file'
+                        name='imagem'
+                        id='file-upload'
+                        onChange={handleFileChange}
+                        ref={fileInputRef}
+                    />
+                </label>
+                {selectedFileName && (
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <i
+                            className='bi bi-x-lg'
+                            style={{ cursor: 'pointer' }}
+                            onClick={removeSelected}
+                        ></i>
+                        <p className='file-upload__name'>{selectedFileName}</p>
                     </div>
-                    <div className='login__input'>
-                        <label htmlFor='titulo'>Título</label>
-                        <input
-                            type='text'
-                            name='titulo'
-                            id='titulo'
-                            onChange={handleTitleChange}
-                        />
-                    </div>
-                    <div className='login__input'>
-                        <label htmlFor='texto'>Descrição</label>
-                        <textarea
-                            name='texto'
-                            id='texto'
-                            cols='30'
-                            rows='10'
-                            onChange={handleTextChange}
-                        ></textarea>
-                    </div>
-                    <label htmlFor='file-upload' className='file-upload'>
-                        <p>Adicionar Imagem</p>
-                        <input
-                            type='file'
-                            name='imagem'
-                            id='file-upload'
-                            onChange={handleFileChange}
-                            ref={fileInputRef}
-                        />
-                    </label>
-                    {selectedFileName && (
-                        <div style={{ display: 'flex', gap: '1rem' }}>
-                            <i
-                                className='bi bi-x-lg'
-                                style={{ cursor: 'pointer' }}
-                                onClick={removeSelected}
-                            ></i>
-                            <p className='file-upload__name'>
-                                {selectedFileName}
-                            </p>
-                        </div>
-                    )}
-                    <button type='submit' className='button-black'>
-                        Criar
-                    </button>
-                </section>
-            </form>
-        </div>
+                )}
+                <button type='submit' className='button-black'>
+                    Criar
+                </button>
+            </section>
+        </form>
     );
 }
 

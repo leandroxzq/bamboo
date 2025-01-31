@@ -1,53 +1,63 @@
-@use '../../../assets/style/mixin.scss' as *;
-
 .post {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    max-width: 1200px;
+    width: 90%;
 
     &__content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        width: 100%;
+        padding: 2rem;
     }
 
     &__header {
-        height: 60vh;
-        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        position: relative;
+
         &__img {
-            height: 100%;
             width: 100%;
-            background-image: url();
-            background-position: center center;
-            background-repeat: no-repeat;
+            height: 500px;
             background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
     }
 
     &__body {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        max-width: 1200px;
-        padding: 1rem;
-
-        .bi {
-            font-size: 2rem;
-
-            &:hover {
-                color: red;
-            }
-        }
+        align-items: flex-start;
 
         .title {
-            text-align: left;
-            margin: 2rem;
-            width: 100%;
-            font-size: 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        span {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 1.5rem;
         }
 
         .text {
-            margin-top: 2rem;
-            font-size: 1rem;
-            line-height: 2rem;
+            font-size: 1.125rem;
+            line-height: 1.6;
+            color: #000000;
+            text-align: justify;
         }
     }
 }
