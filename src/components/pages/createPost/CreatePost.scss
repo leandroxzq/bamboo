@@ -3,91 +3,91 @@
 .form {
     @include flex-align(center, center, row);
     height: 100vh;
-}
 
-.login {
-    position: relative;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    min-width: 550px;
-    max-width: 650px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    @media (width <= 600px) {
-        min-width: 220px;
-        padding: 1rem;
-    }
-
-    @media (width <= 300px) {
-        padding: 1rem;
-    }
-
-    &__header {
-        text-align: center;
-
-        h2 {
-            font-size: 2rem;
-            color: #333;
-        }
-    }
-
-    &__input {
+    .login {
+        position: relative;
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        min-width: 550px;
+        max-width: 650px;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
 
-        label {
-            font-weight: bold;
-            color: #444;
+        @media (width <= 600px) {
+            min-width: 220px;
+            padding: 1rem;
         }
 
-        input,
-        textarea {
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            outline: none;
-            transition: border 0.3s;
-            max-width: 100%;
+        @media (width <= 300px) {
+            padding: 1rem;
+        }
 
-            &:focus {
-                border-color: #3085d6;
+        &__header {
+            text-align: center;
+
+            h2 {
+                font-size: 2rem;
+                color: #333;
             }
         }
 
-        textarea {
-            max-height: 400px;
+        &__input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            label {
+                font-weight: bold;
+                color: #444;
+            }
+
+            input,
+            textarea {
+                padding: 0.75rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+                outline: none;
+                transition: border 0.3s;
+                max-width: 100%;
+
+                &:focus {
+                    border-color: #3085d6;
+                }
+            }
+
+            textarea {
+                max-height: 400px;
+            }
         }
-    }
 
-    .file-upload {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
-        padding: 0.75rem;
-        border: 1px dashed #999;
-        border-radius: 4px;
-        text-align: center;
-        color: #555;
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            border: 1px dashed #999;
+            border-radius: 4px;
+            text-align: center;
+            color: #555;
 
-        &:hover {
-            background: #f0f0f0;
+            &:hover {
+                background: #f0f0f0;
+            }
+
+            input {
+                display: none;
+            }
         }
 
-        input {
-            display: none;
+        .file-upload__name {
+            font-size: 0.9rem;
+            color: #666;
         }
-    }
-
-    .file-upload__name {
-        font-size: 0.9rem;
-        color: #666;
     }
 }

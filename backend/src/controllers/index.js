@@ -10,6 +10,9 @@ import { dbPromise } from '../config/connection.js';
 import moment from 'moment';
 const now = moment.utc().toISOString();
 
+// eslint-disable-next-line no-undef
+const secretKey = process.env.SECRET_KEY;
+
 export const register = async (req, res) => {
     const { name, email, password, dob, turma } = req.body;
 
@@ -27,9 +30,6 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    // eslint-disable-next-line no-undef
-    const secretKey = process.env.SECRET_KEY;
-
     const { email, password } = req.body;
 
     try {
@@ -330,5 +330,32 @@ export const deleteAppointmentsProfile = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Erro ao deletar agendamento' });
+    }
+};
+
+export const forgotPassword = async (req, res) => {
+    const { email, birthdate, newPassword } = req.body;
+
+    const [rows] = await dbPromise.query(
+        'SELECT * FROM users WHERE email = ? AND dob = ?',
+        [email, birthdate]
+    );
+
+    const user = rows[0];
+
+    if (!user) {
+        return res
+            .status(404)
+            .json({ message: 'Usuário não encontrado ou dados incorretos' });
+    } else {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        await dbPromise.query('UPDATE users SET password = ? WHERE email = ?', [
+            hashedPassword,
+            email,
+        ]);
+        res.json({
+            message: 'Senha alterada com sucesso',
+        });
     }
 };

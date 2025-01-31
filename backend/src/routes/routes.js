@@ -17,6 +17,7 @@ import {
     deletePost,
     getProfile,
     deleteAppointmentsProfile,
+    forgotPassword,
 } from '../controllers/index.js';
 
 const router = express.Router();
@@ -66,6 +67,10 @@ router.delete('/delete/:id', isAuthenticated, isAdmin, deletePost);
 router.get('/profile', isAuthenticated, getProfile);
 
 router.delete('/appointments/:id', isAuthenticated, deleteAppointmentsProfile);
+
+// password
+
+router.post('/forgot-password', forgotPassword);
 
 // Servir os arquivos estáticos da pasta de uploads
 router.use('/uploads', express.static('uploads'));
