@@ -34,14 +34,15 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    width: 100%;
     background-color: #000000;
     color: #fff;
     padding: 1rem;
+    margin: 1rem 0;
     font-size: 1.3rem;
     border: none;
     font-weight: 600;
-    border-radius: 0.6rem;
+    border-radius: 6px;
 
     &:hover {
         cursor: pointer;
@@ -51,12 +52,4 @@ a {
 
 p {
     margin: 0;
-}
-
-.times {
-    max-width: 400px;
-}
-
-.list p {
-    z-index: 999;
 }

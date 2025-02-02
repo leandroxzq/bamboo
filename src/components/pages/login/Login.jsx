@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
+
 import { useAuth } from '../../../auth/AuthContext.jsx';
+import { Password } from '../../ui/inputs/Password.jsx';
+import { Text } from '../../ui/inputs/Text.jsx';
 
 import Logo from '../../ui/Logo.jsx';
 import '../../../assets/style/Modal.scss';
@@ -105,45 +108,28 @@ function Login() {
                         </p>
                     )}
 
-                    <div className='login__input'>
-                        <label htmlFor='email'>Email</label>
-                        <input
-                            type='text'
-                            id='email'
-                            name='email'
-                            placeholder='Digite seu email'
-                            value={email}
-                            style={{
-                                borderColor: isValid ? '#888888' : 'red',
-                                borderWidth: isValid ? '1px' : '2px',
-                            }}
-                            onChange={handleEmailChange}
+                    <Text
+                        label='Email'
+                        placeholder='Digite seu email'
+                        value={email}
+                        onChange={handleEmailChange}
+                    />
+
+                    <div className='login__forgot'>
+                        <Link
+                            to='/recuperar-senha'
+                            style={{ textAlign: 'right' }}
+                        >
+                            Esqueceu ?
+                        </Link>
+                        <Password
+                            label='Senha'
+                            placeholder='Digite sua senha'
+                            value={password}
+                            onChange={handlePasswordChange}
                         />
                     </div>
-                    <div className='login__input'>
-                        <div className='login__input__container'>
-                            <label htmlFor='password'>Senha</label>
-                            <Link to='/recuperar-senha'>Esqueceu ?</Link>
-                        </div>
-                        <div
-                            className='password-container'
-                            style={{
-                                borderColor: isValid ? '#888888' : 'red',
-                                borderWidth: isValid ? '1px' : '2px',
-                            }}
-                        >
-                            <input
-                                type={passwordType}
-                                className='password-style'
-                                id='password'
-                                name='password'
-                                placeholder='Digite sua senha'
-                                value={password}
-                                onChange={handlePasswordChange}
-                            />
-                            <i className={eye} onClick={togglePassword}></i>
-                        </div>
-                    </div>
+
                     <button type='submit' className='button-black'>
                         Entrar
                     </button>

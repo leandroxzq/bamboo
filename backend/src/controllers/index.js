@@ -10,22 +10,29 @@ import { dbPromise } from '../config/connection.js';
 import moment from 'moment';
 const now = moment.utc().toISOString();
 
-// eslint-disable-next-line no-undef
 const secretKey = process.env.SECRET_KEY;
 
 export const register = async (req, res) => {
-    const { name, email, password, dob, turma } = req.body;
+    const { name, email, password, date, room } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const role = 'user';
-    const newUser = { name, email, password: hashedPassword, dob, turma, role };
+    const newUser = {
+        name,
+        email,
+        password: hashedPassword,
+        dob: date,
+        turma: room,
+        role,
+    };
 
     try {
         await dbPromise.query('INSERT INTO users SET ?', newUser);
         res.status(201).json({ message: 'Usuário registrado com sucesso!' });
-    } catch (error) {
-        res.status(500).send(error);
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
     }
 };
 
@@ -91,7 +98,6 @@ export const configAvailability = async (req, res) => {
                 .json({ message: 'Data já configurada no sistema.' });
         }
 
-        // eslint-disable-next-line no-unused-vars
         const [result] = await dbPromise.query(
             'INSERT INTO availability (date, times) VALUES (?, ?)',
             [date, timesJSON]
@@ -112,7 +118,6 @@ export const deleteAllAvaibility = async (req, res) => {
         const [result] = await dbPromise.query('DELETE FROM availability');
         res.status(200).json({
             message: 'Todas as disponibilidades foram removidas.',
-            affectedRows: result.affectedRows,
         });
     } catch (error) {
         console.error('Erro ao remover disponibilidades:', error);
@@ -171,30 +176,19 @@ export const changeAppointments = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!id || !status) {
-        return res.status(400).json({ message: 'ID e status são necessários' });
-    }
-
     try {
         const [result] = await dbPromise.query(
             'UPDATE appointments SET status = ? WHERE id = ?',
             [status, id]
         );
 
-        if (result.affectedRows === 0) {
-            return res
-                .status(404)
-                .json({ message: 'Agendamento não encontrado' });
-        }
-
         res.status(200).json({
             message: 'Status do agendamento atualizado com sucesso',
         });
-    } catch (error) {
-        console.error('Erro ao atualizar o agendamento:', error);
+    } catch (e) {
         res.status(500).json({
             message: 'Erro ao atualizar o agendamento',
-            error: error.message,
+            error: e.message,
         });
     }
 };
@@ -225,7 +219,6 @@ export const createPost = async (req, res) => {
 
         return res.status(200).json({ title, text, directory });
     } catch (e) {
-        console.error('Erro ao salvar no banco de dados:', e);
         return res.status(500).json({ message: 'Erro interno do servidor.' });
     }
 };
@@ -278,7 +271,6 @@ export const deletePost = async (req, res) => {
             .status(200)
             .json({ message: 'Postagem excluída com sucesso' });
     } catch (e) {
-        console.error('Erro ao excluir o post:', e);
         return res.status(500).json({ message: 'Erro ao excluir postagem' });
     }
 };
@@ -306,8 +298,6 @@ export const getProfile = async (req, res) => {
                 status: item.status,
             })),
         };
-
-        console.log(data);
 
         return res.status(200).json(user);
     } catch (e) {
@@ -347,15 +337,15 @@ export const forgotPassword = async (req, res) => {
         return res
             .status(404)
             .json({ message: 'Usuário não encontrado ou dados incorretos' });
-    } else {
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-        await dbPromise.query('UPDATE users SET password = ? WHERE email = ?', [
-            hashedPassword,
-            email,
-        ]);
-        res.json({
-            message: 'Senha alterada com sucesso',
-        });
     }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await dbPromise.query('UPDATE users SET password = ? WHERE email = ?', [
+        hashedPassword,
+        email,
+    ]);
+    res.json({
+        message: 'Senha alterada com sucesso',
+    });
 };

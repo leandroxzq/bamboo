@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 import Swal from 'sweetalert2';
 
-import List from '../../ui/ListAvaibality/ListAvaibality.jsx';
-
+import Logo from '../../ui/Logo.jsx';
+import List from '../../ui/listAvaibality/ListAvaibality.jsx';
 import '../../../assets/style/Modal.scss';
 
 function Create() {
@@ -48,7 +48,8 @@ function Create() {
                     <Link to={'/home'}>
                         <i className='bi bi-x exit'></i>
                     </Link>
-                    <div className='create'>
+                    <div className='login__header'>
+                        <Logo />
                         <h2 className='create__title'>Agendamento</h2>
                         <List sendDate={handleDate} sendTime={handleTime} />
                         <button type='submit' className='button-black'>

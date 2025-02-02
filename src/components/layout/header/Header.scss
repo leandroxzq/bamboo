@@ -120,6 +120,11 @@
             }
         }
 
+        @media (width >= 1000px) {
+            max-width: 20%;
+            animation: slow 0.6s forwards;
+        }
+
         i {
             margin-left: 1rem;
             font-size: 2rem;

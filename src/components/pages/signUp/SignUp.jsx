@@ -1,44 +1,27 @@
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
+
 import Swal from 'sweetalert2';
+
+import Logo from '../../ui/Logo';
+import { Password } from '../../ui/inputs/Password';
+import { Text } from '../../ui/inputs/Text';
+import { DataPicker } from '../../ui/inputs/DataPicker';
 import '../../../assets/style/Modal.scss';
 
 function SignUp() {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        dob: null,
-        turma: '',
-    });
-
-    const [cleared, setCleared] = useState(false);
-
-    useEffect(() => {
-        if (cleared) {
-            const timeout = setTimeout(() => {
-                setCleared(false);
-            }, 1500);
-
-            return () => clearTimeout(timeout);
-        }
-        return () => {};
-    }, [cleared]);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [date, setDate] = useState(null);
+    const [room, setRoom] = useState('');
 
     const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.email.endsWith('@discente.ifpe.edu.br')) {
+        if (!email.endsWith('@discente.ifpe.edu.br')) {
             Swal.fire({
                 title: `O email deve ser do domínio @discente.ifpe.edu.br`,
                 icon: 'error',
@@ -52,21 +35,13 @@ function SignUp() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({ name, email, password, date, room }),
             });
 
             if (response.ok) {
                 Swal.fire({
                     title: `Cadastro realizado com sucesso!`,
                     icon: 'success',
-                });
-
-                setFormData({
-                    name: '',
-                    email: '',
-                    password: '',
-                    dob: null,
-                    turma: '',
                 });
 
                 navigate('/login');
@@ -80,17 +55,9 @@ function SignUp() {
                     });
                 }
             }
-        } catch (err) {
-            console.log(err);
+        } catch (e) {
+            console.log(e);
         }
-    };
-
-    const [passwordType, setPasswordType] = useState('password');
-    const [eye, setBiType] = useState('bi bi-eye-slash');
-
-    const togglePassword = () => {
-        setPasswordType(passwordType === 'password' ? 'text' : 'password');
-        setBiType(eye === 'bi bi-eye-slash' ? 'bi bi-eye' : 'bi bi-eye-slash');
     };
 
     return (
@@ -101,100 +68,46 @@ function SignUp() {
                         <i className='bi bi-x exit'></i>
                     </Link>
                     <div className='login__header'>
-                        <h2>Cadastre-se</h2>
+                        <Logo></Logo>
+                        <h1>Cadastre-se</h1>
                     </div>
-                    <div className='login__input'>
-                        <label htmlFor='name'>Nome Completo</label>
-                        <input
-                            type='text'
-                            id='name'
-                            name='name'
-                            placeholder='Digite seu nome completo'
-                            value={formData.name}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className='login__input'>
-                        <label htmlFor='email'>Email</label>
-                        <input
-                            type='text'
-                            id='email'
-                            name='email'
-                            placeholder='Digite seu email'
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className='login__input'>
-                        <div className='login__input__container'>
-                            <label htmlFor='password'>Senha</label>
-                        </div>
-                        <div className='password-container'>
-                            <input
-                                type={passwordType}
-                                className='password-style'
-                                id='password'
-                                name='password'
-                                placeholder='Digite sua senha'
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                            <i className={eye} onClick={togglePassword}></i>
-                        </div>
-                    </div>
+                    <Text
+                        id='name'
+                        label='Nome Completo'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder='Digite seu nome completo'
+                    />
+                    <Text
+                        id='email'
+                        label='Email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder='Digite seu email'
+                    />
 
-                    <div>
-                        <span>Data de Nascimento</span>
-                        <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            adapterLocale='en-gb'
-                        >
-                            <DesktopDatePicker
-                                sx={{
-                                    width: '100%',
-                                    '& .MuiOutlinedInput-root': {
-                                        '& fieldset': {
-                                            borderColor: '#888888',
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: '#000',
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: '#888888',
-                                        },
-                                    },
-                                }}
-                                value={formData.dob}
-                                onChange={(newValue) => {
-                                    setFormData((prev) => ({
-                                        ...prev,
-                                        dob: newValue,
-                                    }));
-                                }}
-                                slotProps={{
-                                    field: {
-                                        clearable: true,
-                                        onClear: () => setCleared(true),
-                                    },
-                                }}
-                            />
-                        </LocalizationProvider>
-                    </div>
+                    <Password
+                        id='password'
+                        label='Senha'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder='Digite sua senha'
+                    />
 
-                    <div className='login__input'>
-                        <label htmlFor='turma'>Turma</label>
-                        <input
-                            type='text'
-                            id='turma'
-                            name='turma'
-                            placeholder='Digite sua turma'
-                            value={formData.turma}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    <Text
+                        id='room'
+                        label='Turma'
+                        value={room}
+                        onChange={(e) => setRoom(e.target.value)}
+                        placeholder='Digite sua turma'
+                    />
+
+                    <DataPicker
+                        label='Data de nascimento'
+                        value={date}
+                        onChange={(e) => setDate(e)}
+                    />
+
                     <button type='submit' className='button-black'>
                         Cria Conta
                     </button>

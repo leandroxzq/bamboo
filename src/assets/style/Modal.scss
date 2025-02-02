@@ -2,19 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 .background-form {
+    @include flex-align(center, center, row);
     height: 100dvh;
     width: 100vw;
     z-index: 2;
     position: fixed;
     background: #f8f9fa;
-    @include flex-align(center, center);
 
     .form-login {
-        position: relative;
         @include flex-align(center, center);
+        position: relative;
         background: #fff;
         padding: 1rem 2rem;
-        margin: 0.8rem;
+        margin: 0 0.8rem;
         color: #000;
         border-radius: 8px;
         width: 100%;
@@ -29,11 +29,7 @@
             @include flex-align(center, unset, column);
             width: 100%;
             height: 100%;
-
-            &__input__container {
-                @include space-between;
-                align-items: center;
-            }
+            gap: 1rem;
 
             &__header {
                 @include flex-align(start, center);
@@ -52,114 +48,13 @@
                 }
             }
 
-            &__input {
-                display: flex;
-                flex-direction: column;
-                margin: 0.8rem 0;
-
-                i {
-                    font-size: 1.2rem;
-                }
-
-                input[type='date'] {
-                    cursor: pointer;
-                }
-
-                input {
-                    background: #fff;
-                    border: 1px solid #888888;
-                    border-radius: 4px;
-                    padding: 1rem;
-                    color: #000;
-                    font-family: 'Roboto', serif;
-
-                    font-size: 1rem;
-
-                    &:focus {
-                        outline: none;
-                    }
-
-                    &:hover {
-                        outline: 1px solid #000000;
-                    }
-                }
+            &__forgot {
+                @include flex-align(unset, unset, column);
             }
 
             &__registrar {
                 text-align: center;
             }
-
-            .button-black {
-                margin: 1rem 0;
-            }
-
-            .password-container {
-                @include space-between;
-                position: relative;
-                border: 1px solid #888888;
-                border-radius: 6px;
-                padding: 0.7rem;
-
-                &:hover {
-                    outline: 1px solid #000000;
-                }
-
-                .toggle-password {
-                    position: absolute;
-                    top: 50%;
-                    right: 10px;
-                    transform: translateY(-50%);
-                    cursor: pointer;
-                }
-
-                .password-style {
-                    padding: 0 0 0 5px;
-                    margin: 0;
-                    border: none;
-                    outline: none;
-                    width: 90%;
-
-                    &:hover {
-                        border: none;
-                        outline: none;
-                    }
-
-                    &:focus {
-                        border: none;
-                        outline: none;
-                    }
-                }
-
-                i {
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .create {
-            display: flex;
-            flex-direction: column;
-            min-width: 100%;
-
-            &__title {
-                padding: 0;
-                text-align: center;
-            }
-        }
-
-        .list {
-            align-items: center;
-
-            &__wrapper {
-                width: 100%;
-            }
-        }
-
-        textarea {
-            font-family: 'Open Sans', serif;
-            padding: 1rem;
-            font-size: 1.4rem;
-            max-width: 385px;
         }
     }
 }

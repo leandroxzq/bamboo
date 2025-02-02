@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { Password } from '../../ui/inputs/Password';
+import { Text } from '../../ui/inputs/Text';
+import { DataPicker } from '../../ui/inputs/DataPicker';
 
+import Logo from '../../ui/Logo.jsx';
 import { formatDate } from '../../../utils/Date.js';
-
 import '../../../assets/style/Modal.scss';
 
 function ForgotPassword() {
@@ -63,61 +63,31 @@ function ForgotPassword() {
                         <i className='bi bi-x exit'></i>
                     </Link>
                     <div className='login__header'>
-                        <h2>Recuperar Senha</h2>
+                        <Logo></Logo>
+                        <h1>Recuperar Senha</h1>
                     </div>
                     <p>{message}</p>
-                    <div className='login__input'>
-                        <label htmlFor='email'>Email</label>
-                        <input
-                            type='email'
-                            placeholder='Digite seu e-mail'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <span>Data de Nascimento</span>
-                        <LocalizationProvider
-                            dateAdapter={AdapterDayjs}
-                            adapterLocale='en-gb'
-                        >
-                            <DesktopDatePicker
-                                sx={{
-                                    width: '100%',
-                                    '& .MuiOutlinedInput-root': {
-                                        '& fieldset': {
-                                            borderColor: '#888888',
-                                        },
-                                        '&:hover fieldset': {
-                                            borderColor: '#000',
-                                        },
-                                        '&.Mui-focused fieldset': {
-                                            borderColor: '#888888',
-                                        },
-                                    },
-                                }}
-                                value={birthdate}
-                                onChange={(newValue) => setDob(newValue)}
-                                slotProps={{
-                                    field: {
-                                        clearable: true,
-                                        onClear: () => setCleared(true),
-                                    },
-                                }}
-                            />
-                        </LocalizationProvider>
-                    </div>
-                    <div className='login__input'>
-                        <label htmlFor='password'>Nova senha</label>
-                        <input
-                            type='password'
-                            placeholder='Digite sua nova senha'
-                            value={newPassword}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
+
+                    <Text
+                        id='email'
+                        label='Email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder='Digite seu email'
+                    />
+
+                    <DataPicker
+                        label='Data de nascimento'
+                        value={birthdate}
+                        onChange={(e) => setDob(e)}
+                    />
+                    <Password
+                        id='password'
+                        label='Nova senha'
+                        value={newPassword}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder='Digite sua nova senha'
+                    />
 
                     <button type='submit' className='button-black'>
                         Alterar senha
