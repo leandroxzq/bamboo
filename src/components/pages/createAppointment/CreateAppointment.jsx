@@ -34,7 +34,7 @@ function Create() {
                     title: `Agendamento realizado com sucesso`,
                     icon: 'success',
                 });
-                navigate('/home');
+                navigate('/blog');
             }
         } catch (e) {
             console.log(e);
@@ -45,7 +45,7 @@ function Create() {
         <div className='background-form'>
             <form className='form-login' onSubmit={handleSubmit}>
                 <div className='login'>
-                    <Link to={'/home'}>
+                    <Link to={'/blog'}>
                         <i className='bi bi-x exit'></i>
                     </Link>
                     <div className='login__header'>

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
+import { LoaderCircle } from 'lucide-react';
+
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import { Password } from '../../ui/inputs/Password.jsx';
 import { Text } from '../../ui/inputs/Text.jsx';
@@ -12,30 +14,15 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
     const { login } = useAuth();
-    const [isValid, setIsValid] = useState(true);
 
-    const validateForm = () => {
-        if (
-            email === '' &&
-            !email.endsWith('@discente.ifpe.edu.br') &&
-            password === ''
-        ) {
-            setIsValid(false);
-            return false;
-        } else {
-            setIsValid(true);
-            return true;
-        }
-    };
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!validateForm()) {
-            return;
-        }
+        setLoading(true);
 
         try {
             const response = await fetch('http://localhost:5000/login', {
@@ -51,22 +38,16 @@ function Login() {
 
                 login(data.token, data.role);
 
-                navigate('/home');
+                navigate('/blog');
             } else {
                 setError('Erro ao fazer login. Verifique suas credenciais.');
                 return;
             }
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false);
         }
-    };
-
-    const [passwordType, setPasswordType] = useState('password');
-    const [eye, setBiType] = useState('bi bi-eye-slash');
-
-    const togglePassword = () => {
-        setPasswordType(passwordType === 'password' ? 'text' : 'password');
-        setBiType(eye === 'bi bi-eye-slash' ? 'bi bi-eye' : 'bi bi-eye-slash');
     };
 
     const handleEmailChange = (e) => {
@@ -85,11 +66,11 @@ function Login() {
         <div className='background-form'>
             <form className='form-login' onSubmit={handleSubmit}>
                 <div className='login'>
-                    <Link to='/home'>
+                    <Link to='/blog'>
                         <i className='bi bi-x exit'></i>
                     </Link>
                     <div className='login__header'>
-                        <Link to={'/home'}>
+                        <Link to={'/blog'}>
                             <Logo />
                             <h1 className='header__title'>
                                 <span>B</span>
@@ -131,7 +112,16 @@ function Login() {
                     </div>
 
                     <button type='submit' className='button-black'>
-                        Entrar
+                        {loading ? (
+                            <LoaderCircle
+                                style={{
+                                    strokeWidth: 3,
+                                }}
+                                className='loading'
+                            />
+                        ) : (
+                            'Entrar'
+                        )}
                     </button>
                     <span className='login__registrar'>
                         Não Tem Uma Conta?{' '}

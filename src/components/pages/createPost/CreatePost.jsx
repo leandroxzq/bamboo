@@ -65,7 +65,7 @@ function CreatePost() {
                     icon: 'success',
                 });
 
-                navigate('/home');
+                navigate('/blog');
             }
         } catch (error) {
             console.error('Erro ao enviar o arquivo:', error);
@@ -75,7 +75,7 @@ function CreatePost() {
     return (
         <form action='' className='form' onSubmit={handleUpload}>
             <section className='login'>
-                <Link to={'/home'}>
+                <Link to={'/blog'}>
                     <i className='bi bi-x exit'></i>
                 </Link>
                 <div className='login__header'>

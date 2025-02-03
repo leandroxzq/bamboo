@@ -25,7 +25,7 @@ function Header() {
     return (
         <header className='header'>
             <div className='header__container'>
-                <Link to={'/home'}>
+                <Link to={'/blog'}>
                     <div className='header__logo'>
                         <Logo />
                         <h1 className='header__title'>

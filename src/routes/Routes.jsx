@@ -25,9 +25,9 @@ const RoutesConfig = () => {
     return (
         <Routes>
             {/* Rotas públicas */}
-            <Route path='/' element={<Navigate to='/home' replace />} />
+            <Route path='/' element={<Navigate to='/blog' replace />} />
             <Route
-                path='/home'
+                path='/blog'
                 element={
                     <Layout>
                         <Home />
