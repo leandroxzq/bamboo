@@ -97,12 +97,9 @@ function Login() {
                     />
 
                     <div className='login__forgot'>
-                        <Link
-                            to='/recuperar-senha'
-                            style={{ textAlign: 'right' }}
-                        >
-                            Esqueceu ?
-                        </Link>
+                        <span style={{ textAlign: 'right' }}>
+                            <Link to='/recuperar-senha'>Esqueceu ?</Link>
+                        </span>
                         <Password
                             label='Senha'
                             placeholder='Digite sua senha'

@@ -133,12 +133,16 @@ export function Profile() {
                             appointments.map((appointment) => (
                                 <div key={appointment.id}>
                                     <p>
-                                        Data:{' '}
+                                        <strong>Data: </strong>
                                         {formattedDateUser(appointment.date)}
                                     </p>
-                                    <p>Hora: {appointment.time}</p>
                                     <p>
-                                        Status: {appointment.status}
+                                        <strong>Hora: </strong>
+                                        {appointment.time}
+                                    </p>
+                                    <p>
+                                        <strong>Status: </strong>
+                                        {appointment.status}
                                         {appointment.status === 'pendente' && (
                                             <button
                                                 onClick={() =>
