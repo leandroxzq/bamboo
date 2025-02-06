@@ -1,37 +1,25 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import Swal from 'sweetalert2';
 
 import { Password } from '../../ui/inputs/Password';
 import { Text } from '../../ui/inputs/Text';
-import { DataPicker } from '../../ui/inputs/DataPicker';
 
 import Logo from '../../ui/Logo.jsx';
-import { formatDate } from '../../../utils/Date.js';
 import '../../../assets/style/Modal.scss';
 
 function ForgotPassword() {
     const [email, setEmail] = useState('');
-    const [birthdate, setDob] = useState(null);
+    const [studentID, setStudentID] = useState(null);
     const [newPassword, setPassword] = useState('');
 
     const [message, setMessage] = useState('');
-    const [cleared, setCleared] = useState(false);
 
-    useEffect(() => {
-        if (cleared) {
-            const timeout = setTimeout(() => {
-                setCleared(false);
-            }, 1500);
-
-            return () => clearTimeout(timeout);
-        }
-        return () => {};
-    }, [cleared]);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const formattedDob = formatDate(birthdate);
 
         try {
             const response = await fetch(
@@ -41,17 +29,25 @@ function ForgotPassword() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email,
-                        birthdate: formattedDob,
+                        studentID,
                         newPassword,
                     }),
                 }
             );
 
             const data = await response.json();
-            setMessage(data.message);
+            if (response.ok) {
+                Swal.fire({
+                    title: `Senha alterada com sucesso!`,
+                    icon: 'success',
+                });
+                navigate('/login');
+            } else {
+                setMessage(data.message);
+            }
         } catch (e) {
             console.log(e);
-            setMessage('Erro ao enviar solicitação.');
+            setMessage(data.message);
         }
     };
 
@@ -64,9 +60,11 @@ function ForgotPassword() {
                     </Link>
                     <div className='login__header'>
                         <Logo></Logo>
-                        <h1>Recuperar Senha</h1>
+                        <h1>Alterar senha</h1>
                     </div>
-                    <p>{message}</p>
+                    <p style={{ color: 'red', textAlign: 'center' }}>
+                        {message}
+                    </p>
 
                     <Text
                         id='email'
@@ -76,10 +74,12 @@ function ForgotPassword() {
                         placeholder='Digite seu email'
                     />
 
-                    <DataPicker
-                        label='Data de nascimento'
-                        value={birthdate}
-                        onChange={(e) => setDob(e)}
+                    <Text
+                        id='studentID'
+                        label='Matrícula'
+                        value={studentID}
+                        onChange={(e) => setStudentID(e.target.value)}
+                        placeholder='Digite sua matrícula'
                     />
                     <Password
                         id='password'

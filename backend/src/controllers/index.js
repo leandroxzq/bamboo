@@ -345,11 +345,11 @@ export const deleteAppointmentsProfile = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-    const { email, birthdate, newPassword } = req.body;
+    const { email, studentID, newPassword } = req.body;
 
     const [rows] = await dbPromise.query(
-        'SELECT * FROM users WHERE email = ? AND dob = ?',
-        [email, birthdate]
+        'SELECT * FROM users WHERE email = ? AND studentID = ?',
+        [email, studentID]
     );
 
     const user = rows[0];
