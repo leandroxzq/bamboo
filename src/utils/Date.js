@@ -1,4 +1,5 @@
 export const formattedDateUser = (dateString) => {
+    if (!dateString) return '';
     const [date] = dateString.split('T');
 
     const [year, month, day] = date.split('-');

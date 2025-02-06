@@ -7,7 +7,9 @@ import { formattedDateUser } from '../../../utils/Date';
 import './Profile.scss';
 
 export function Profile() {
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState([]);
+    const [appointments, setAppointments] = useState([]);
+    const [haveAppointments, setHaveAppointments] = useState(false);
 
     const handleProfile = async () => {
         try {
@@ -18,7 +20,14 @@ export function Profile() {
                 },
             });
             const data = await response.json();
-            setProfile(data);
+            setProfile(data.infos);
+
+            if (data.appointments[0].date !== null) {
+                setHaveAppointments(true);
+            }
+
+            setAppointments(data.appointments);
+            console.log(appointments);
         } catch (e) {
             console.log(e);
         }
@@ -56,11 +65,9 @@ export function Profile() {
                     });
                 }
 
-                setProfile((prevProfile) => ({
+                setAppointments((prevProfile) => ({
                     ...prevProfile,
-                    appointments: prevProfile.appointments.filter(
-                        (a) => a.id !== id
-                    ),
+                    appointments: prevProfile.filter((a) => a.id !== id),
                 }));
             } catch (e) {
                 console.log(e);
@@ -85,9 +92,10 @@ export function Profile() {
                                 </h1>
                             </div>
                             <p className='profile__card__turma'>
-                                Turma: {profile.turma}
+                                Turma: {profile.class}
                             </p>
                             <p>Email: {profile.email}</p>
+                            <p>Matrícula: {profile.studentID}</p>
                         </>
                     ) : (
                         <>
@@ -121,41 +129,30 @@ export function Profile() {
                 <section className='profile__appointments'>
                     <h2>Seus agendamentos</h2>
                     <article>
-                        {profile ? (
-                            profile.appointments.length > 0 ? (
-                                profile.appointments.map((appointment) => (
-                                    <div key={appointment.id}>
-                                        <p>
-                                            Data:{' '}
-                                            {formattedDateUser(
-                                                appointment.date
-                                            )}
-                                        </p>
-                                        <p>Hora: {appointment.time}</p>
-                                        <p>
-                                            Status: {appointment.status}
-                                            {appointment.status ===
-                                                'pendente' && (
-                                                <button
-                                                    onClick={() =>
-                                                        handleDelete(
-                                                            appointment.id
-                                                        )
-                                                    }
-                                                >
-                                                    <i className='bi bi-trash3-fill'></i>
-                                                </button>
-                                            )}
-                                        </p>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>Você não tem agendamentos.</p>
-                            )
+                        {haveAppointments && appointments.length > 0 ? (
+                            appointments.map((appointment) => (
+                                <div key={appointment.id}>
+                                    <p>
+                                        Data:{' '}
+                                        {formattedDateUser(appointment.date)}
+                                    </p>
+                                    <p>Hora: {appointment.time}</p>
+                                    <p>
+                                        Status: {appointment.status}
+                                        {appointment.status === 'pendente' && (
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(appointment.id)
+                                                }
+                                            >
+                                                <i className='bi bi-trash3-fill'></i>
+                                            </button>
+                                        )}
+                                    </p>
+                                </div>
+                            ))
                         ) : (
-                            <>
-                                <Skeleton width='100%' height={200} />
-                            </>
+                            <p>Não tem agendamentos</p>
                         )}
                     </article>
                 </section>

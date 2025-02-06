@@ -180,7 +180,7 @@ export const getAppointments = async (req, res) => {
         await dbPromise.query(updateQuery);
 
         const query = `
-            SELECT appointments.*, users.name, users.email, users.dob, users.turma
+            SELECT appointments.*, users.name, users.studentID, users.email, users.dob, users.class
             FROM appointments
             INNER JOIN users ON appointments.user_id = users.id
             ORDER BY appointments.date, appointments.time
@@ -300,8 +300,13 @@ export const getProfile = async (req, res) => {
     const userId = req.user.id;
 
     try {
+        const [have] = await dbPromise.query(
+            'SELECT * FROM appointments WHERE user_id = ? ',
+            [userId]
+        );
+
         const [data] = await dbPromise.query(
-            `SELECT u.name, u.turma, u.email, a.date, a.time, a.id, a.status 
+            `SELECT u.name, u.class, u.studentID, u.email, a.date, a.time, a.id, a.status 
              FROM users u
              LEFT JOIN appointments a ON u.id = a.user_id
              WHERE u.id = ?`,
@@ -309,16 +314,24 @@ export const getProfile = async (req, res) => {
         );
 
         const user = {
-            name: data[0]?.name,
-            turma: data[0]?.turma,
-            email: data[0]?.email,
-            appointments: data.map((item) => ({
+            infos: {
+                name: data[0]?.name,
+                class: data[0]?.class,
+                studentID: data[0]?.studentID,
+                email: data[0]?.email,
+            },
+        };
+
+        if (have.length > 0) {
+            user.appointments = data.map((item) => ({
                 id: item.id,
                 date: item.date,
                 time: item.time,
                 status: item.status,
-            })),
-        };
+            }));
+        }
+
+        console.log(user);
 
         return res.status(200).json(user);
     } catch (e) {
