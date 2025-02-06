@@ -13,23 +13,44 @@ const now = moment.utc().toISOString();
 const secretKey = process.env.SECRET_KEY;
 
 export const register = async (req, res) => {
-    const { name, email, password, date, room } = req.body;
+    const { name, email, password, date, room, studentID, cip } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const role = 'user';
+    let role = 'user';
+    if (cip) {
+        role = 'admin';
+    }
+
+    if (email) {
+        const [existing] = await dbPromise.query(
+            'SELECT * FROM users WHERE email = ?',
+            [email]
+        );
+
+        if (existing.length > 0) {
+            return res
+                .status(400)
+                .json({ message: 'Email já cadastrado no sistema.' });
+        }
+    }
+
     const newUser = {
         name,
         email,
         password: hashedPassword,
         dob: date,
-        turma: room,
+        class: room,
         role,
+        studentID: studentID || null,
+        cip: cip || null,
     };
 
     try {
         await dbPromise.query('INSERT INTO users SET ?', newUser);
-        res.status(201).json({ message: 'Usuário registrado com sucesso!' });
+        res.status(201).json({
+            message: `Usuário cadastrado com sucesso!`,
+        });
     } catch (e) {
         console.log(e);
         res.status(500).send(e);

@@ -15,6 +15,7 @@ function SignUp() {
     const [password, setPassword] = useState('');
     const [date, setDate] = useState(null);
     const [room, setRoom] = useState('');
+    const [studentID, setStudentID] = useState('');
 
     const navigate = useNavigate();
 
@@ -35,20 +36,27 @@ function SignUp() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password, date, room }),
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                    date,
+                    room,
+                    studentID,
+                }),
             });
+
+            const data = await response.json();
 
             if (response.ok) {
                 Swal.fire({
-                    title: `Cadastro realizado com sucesso!`,
+                    title: `${data.message}`,
                     icon: 'success',
                 });
 
                 navigate('/login');
             } else {
-                const data = await response.json();
-
-                if (data.code === 'ER_DUP_ENTRY') {
+                if (!response.ok) {
                     Swal.fire({
                         title: `Email já cadastrado`,
                         icon: 'error',
@@ -100,6 +108,14 @@ function SignUp() {
                         value={room}
                         onChange={(e) => setRoom(e.target.value)}
                         placeholder='Digite sua turma'
+                    />
+
+                    <Text
+                        id='studentID'
+                        label='Matrícula'
+                        value={studentID}
+                        onChange={(e) => setStudentID(e.target.value)}
+                        placeholder='Digite sua matrícula'
                     />
 
                     <DataPicker

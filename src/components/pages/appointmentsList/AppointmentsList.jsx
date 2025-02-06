@@ -72,7 +72,12 @@ function Scheduled() {
     };
 
     const columns = [
-        { field: 'id', headerName: 'Ordem', width: isMobile ? 50 : 70 },
+        { field: 'id', headerName: 'Ordem', width: 70 },
+        {
+            field: 'studentID',
+            headerName: 'Matrícula',
+            width: isMobile ? 50 : 120,
+        },
         {
             field: 'nomecompleto',
             headerName: 'Nome completo',
@@ -132,8 +137,9 @@ function Scheduled() {
 
     const rows = appointments.map((appointment) => ({
         id: appointment.id,
+        studentID: appointment.studentID,
         nomecompleto: appointment.name,
-        turma: appointment.turma,
+        turma: appointment.class,
         idade: calculateAge(appointment.dob),
         data: formattedDateUser(appointment.date),
         horario: formatTime(appointment.time),
@@ -153,7 +159,7 @@ function Scheduled() {
             <Paper
                 sx={{
                     width: '100%',
-                    maxWidth: '990px',
+                    maxWidth: '1110px',
                     marginTop: '1rem',
                     margin: '0 auto',
                     padding: '10px',
@@ -183,12 +189,6 @@ function Scheduled() {
                         },
                         '& .MuiDataGrid-row:nth-of-type(even)': {
                             backgroundColor: '#f5f5f5',
-                        },
-                        '@media (max-width: 600px)': {
-                            fontSize: '12px',
-                            '& .MuiDataGrid-cell': {
-                                padding: '8px',
-                            },
                         },
                     }}
                     rows={rows}
