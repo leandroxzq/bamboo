@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { formattedDateUser } from '../../../utils/Date';
 
 import './Profile.scss';
+import { data } from 'react-router-dom';
 
 export function Profile() {
     const [profile, setProfile] = useState([]);
@@ -27,7 +28,6 @@ export function Profile() {
             }
 
             setAppointments(data.appointments);
-            console.log(appointments);
         } catch (e) {
             console.log(e);
         }
@@ -57,18 +57,22 @@ export function Profile() {
                     }
                 );
 
+                const data = await response.json();
+
                 if (response.ok) {
                     Swal.fire({
                         title: 'Deletado!',
-                        text: 'Agendamento cancelado',
+                        text: `${data.message}`,
                         icon: 'success',
                     });
+                    handleProfile();
+                } else {
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: `${data.message}`,
+                        icon: 'error',
+                    });
                 }
-
-                setAppointments((prevProfile) => ({
-                    ...prevProfile,
-                    appointments: prevProfile.filter((a) => a.id !== id),
-                }));
             } catch (e) {
                 console.log(e);
             }

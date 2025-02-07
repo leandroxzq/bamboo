@@ -98,7 +98,7 @@ function Scheduled() {
         {
             field: 'status',
             headerName: 'Status',
-            width: isMobile ? 120 : 160,
+            width: isMobile ? 120 : 220,
             renderCell: (params) => (
                 <FormControl fullWidth>
                     <Select
@@ -129,6 +129,9 @@ function Scheduled() {
                         <MenuItem value='pendente'>Pendente</MenuItem>
                         <MenuItem value='concluído'>Concluído</MenuItem>
                         <MenuItem value='cancelado'>Cancelado</MenuItem>
+                        <MenuItem value='cancelado pelo usuário' disabled>
+                            Cancelado pelo usuário
+                        </MenuItem>
                     </Select>
                 </FormControl>
             ),

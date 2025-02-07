@@ -344,16 +344,22 @@ export const deleteAppointmentsProfile = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id;
 
+    const status = 'cancelado pelo usuário';
+
     try {
         const [result] = await dbPromise.query(
-            'DELETE FROM appointments WHERE id = ? AND user_id = ?',
-            [id, userId]
+            'UPDATE appointments SET status = ? WHERE id = ? AND user_id = ?',
+            [status, id, userId]
         );
 
-        res.json({ message: 'deletado com sucesso', result });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao deletar agendamento' });
+        res.status(200).json({
+            message: 'Status do agendamento atualizado com sucesso',
+        });
+    } catch (e) {
+        res.status(500).json({
+            message: 'Erro ao atualizar o agendamento',
+            error: e.message,
+        });
     }
 };
 

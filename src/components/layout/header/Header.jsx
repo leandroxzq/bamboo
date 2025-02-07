@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { Tooltip } from 'react-tooltip';
 
@@ -12,6 +12,7 @@ function Header() {
     const navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef(null);
 
     const handleLogout = () => {
         logout();
@@ -21,6 +22,24 @@ function Header() {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        }
+
+        if (isMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMenuOpen]);
 
     return (
         <header className='header'>
@@ -59,7 +78,6 @@ function Header() {
                             <div onClick={handleLogout}>
                                 <i
                                     className='bi bi-box-arrow-right'
-                                    onClick={handleLogout}
                                     data-tooltip-id='exit-tooltip'
                                     data-tooltip-content='Sair'
                                 ></i>
@@ -69,8 +87,13 @@ function Header() {
                     )}
                 </div>
 
+                {/* Overlay escuro ao abrir o menu */}
                 {isMenuOpen && (
-                    <div className='header__menu'>
+                    <div className='overlay' onClick={toggleMenu}></div>
+                )}
+
+                {isMenuOpen && (
+                    <div className='header__menu' ref={menuRef}>
                         <i className='bi bi-x-lg' onClick={toggleMenu}></i>
 
                         {role === 'admin' && (
