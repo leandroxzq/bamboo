@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Paper, Select, MenuItem, FormControl } from '@mui/material';
 import { ptBR } from '@mui/x-data-grid/locales';
-import { useTheme, useMediaQuery } from '@mui/material';
 
 import Swal from 'sweetalert2';
 
@@ -16,9 +15,6 @@ import './AppointmentsList.scss';
 
 function Scheduled() {
     const [appointments, setAppointments] = useState([]);
-
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const fetchAppointments = async () => {
         try {
@@ -72,37 +68,50 @@ function Scheduled() {
     };
 
     const columns = [
-        { field: 'id', headerName: 'Ordem', width: 70 },
+        {
+            field: 'id',
+            headerName: 'Ordem',
+            flex: 1,
+            minWidth: 50,
+        },
         {
             field: 'studentID',
             headerName: 'Matrícula',
-            width: isMobile ? 50 : 120,
+            flex: 1,
+            minWidth: 130,
         },
         {
             field: 'nomecompleto',
             headerName: 'Nome completo',
-            width: isMobile ? 150 : 250,
+            flex: 1,
+            minWidth: 180,
         },
-        { field: 'turma', headerName: 'Turma', width: isMobile ? 50 : 100 },
+        { field: 'turma', headerName: 'Turma', flex: 1, minWidth: 120 },
         {
             field: 'idade',
             headerName: 'Idade',
-            width: isMobile ? 70 : 120,
+            flex: 1,
+            minWidth: 60,
         },
-        { field: 'data', headerName: 'Data', width: isMobile ? 90 : 130 },
+        { field: 'data', headerName: 'Data', flex: 1, minWidth: 100 },
         {
             field: 'horario',
             headerName: 'Horário',
-            width: isMobile ? 70 : 160,
+            flex: 1,
+            minWidth: 80,
         },
         {
             field: 'status',
             headerName: 'Status',
-            width: isMobile ? 120 : 220,
+            flex: 2,
+            minWidth: 250,
+
             renderCell: (params) => (
                 <FormControl fullWidth>
                     <Select
                         sx={{
+                            flex: 1,
+                            minWidth: 150,
                             '& .MuiOutlinedInput-notchedOutline': {
                                 border: 'none',
                             },
@@ -117,7 +126,7 @@ function Scheduled() {
                                 padding: '12px 0px',
                                 textAlign: 'center',
                             },
-                            '@media (max-width: 600px)': {
+                            '@media (max-width: 1024px)': {
                                 fontSize: '12px',
                             },
                         }}
@@ -161,8 +170,11 @@ function Scheduled() {
 
             <Paper
                 sx={{
-                    width: '100%',
-                    maxWidth: '1110px',
+                    width: '60vw',
+                    '@media (max-width: 1024px)': {
+                        width: '90vw',
+                        padding: '0px',
+                    },
                     marginTop: '1rem',
                     margin: '0 auto',
                     padding: '10px',
@@ -182,11 +194,20 @@ function Scheduled() {
                         '.MuiDataGrid-columnHeader': {
                             backgroundColor: '#00000086',
                             color: '#fff',
+                            '@media (max-width: 1024px)': {
+                                fontSize: '12px',
+                            },
                         },
                         '.MuiDataGrid-columnHeader .MuiDataGrid-columnHeaderTitle .MuiDataGrid-iconButtonContainer .MuiDataGrid-cell:hover':
                             {
                                 color: '#fff',
                             },
+                        '.MuiDataGrid-cell': {
+                            textAlign: 'center',
+                            '@media (max-width: 1024px)': {
+                                fontSize: '12px',
+                            },
+                        },
                         '& .MuiDataGrid-row:nth-of-type(odd)': {
                             backgroundColor: '#fff',
                         },
