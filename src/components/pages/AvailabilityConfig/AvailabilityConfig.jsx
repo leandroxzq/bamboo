@@ -8,7 +8,7 @@ import 'dayjs/locale/en-gb';
 
 import Swal from 'sweetalert2';
 
-import List from '../../ui/ListAvaibality/ListAvaibality.jsx';
+import List from '../../ui/listAvaibality/ListAvaibality.jsx';
 
 import './AvailabilityConfig.scss';
 
