@@ -31,6 +31,7 @@ a {
 }
 
 .button-black {
+    font-family: 'Rowdies', serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +42,6 @@ a {
     margin: 1rem 0;
     font-size: 1.3rem;
     border: none;
-    font-weight: 600;
     border-radius: 6px;
 
     &:hover {

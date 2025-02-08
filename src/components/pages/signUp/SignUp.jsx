@@ -128,7 +128,7 @@ function SignUp() {
                     />
 
                     <button type='submit' className='button-black'>
-                        Cria Conta
+                        Cadastrar
                     </button>
                     <span className='login__registrar'>
                         <Link to='/login'>Já tem uma conta?</Link>
