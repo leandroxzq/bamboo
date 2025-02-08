@@ -86,6 +86,8 @@ main {
                     font-size: 1.25rem;
                     color: #000;
                     padding: 0.5rem 1rem;
+                    max-width: 100%;
+                    white-space: nowrap;
                     text-overflow: ellipsis;
                     &:hover {
                         text-decoration: underline;

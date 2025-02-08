@@ -3,13 +3,13 @@ import dayjs from 'dayjs';
 export const formattedDateUser = (dateString) => {
     const date = dayjs(dateString).add(+1, 'day');
 
-    return date.format('DD-MM-YYYY');
+    return date.format('DD/MM/YYYY');
 };
 
 export const formattedPostUser = (dateString) => {
     const date = dayjs(dateString);
 
-    return date.format('DD-MM-YYYY');
+    return date.format('DD/MM/YYYY');
 };
 
 export const formatTime = (time) => {
