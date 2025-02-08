@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import { formattedDateUser } from '../../../utils/Date';
 
 import './Profile.scss';
-import { data } from 'react-router-dom';
 
 export function Profile() {
     const [profile, setProfile] = useState([]);

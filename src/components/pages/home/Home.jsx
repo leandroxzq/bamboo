@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import Swal from 'sweetalert2';
 
-import { formattedDateUser } from '../../../utils/Date.js';
+import { formattedPostUser } from '../../../utils/Date.js';
 
 import { Background } from '../../ui/background/Background.jsx';
 
@@ -98,7 +98,7 @@ export function Home() {
                                 <div className='card__info'>
                                     <p className='card__title'>{post.title}</p>
                                     <div className='card__date'>
-                                        {formattedDateUser(post.creation_date)}
+                                        {formattedPostUser(post.creation_date)}
                                         <i className='bi bi-calendar-event'></i>
                                     </div>
                                 </div>

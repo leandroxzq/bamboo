@@ -1,12 +1,11 @@
 @use '../../../assets/style/mixin.scss' as *;
 
 .background {
-    height: calc(100dvh - 79px);
+    height: 75dvh;
     width: 100vw;
-    height: 70vw;
 
     @media (width >= 1024px) {
-        padding: 2rem 0;
+        padding: 1rem 0;
         height: 70vh;
         width: 80vw;
         border-radius: 1rem;

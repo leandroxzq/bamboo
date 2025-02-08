@@ -30,6 +30,7 @@
         color: #000;
         margin: 0;
         font-family: 'Rowdies', serif;
+        transition: all 0.3s;
 
         @media (width <= 512px) {
             font-size: 1.8rem;
@@ -71,7 +72,7 @@
     }
 
     img {
-        width: 100px;
+        width: 80px;
         transition: all 0.3s;
         cursor: pointer;
         &:hover {
@@ -80,6 +81,9 @@
         }
         @media (width <= 380px) {
             display: none;
+        }
+        @media (width >= 768px) {
+            width: 100px;
         }
     }
 
@@ -108,7 +112,7 @@
         height: 100vh;
         z-index: 1000;
         padding: 1rem 0 0 0;
-        animation: slow 0.4s linear forwards;
+        animation: slow 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 
         @keyframes slow {
             0% {

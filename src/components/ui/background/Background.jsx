@@ -3,7 +3,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 import './Background.scss';
 
-import { formattedDateUser } from '../../../utils/Date.js';
+import { formattedPostUser } from '../../../utils/Date.js';
 
 export function Background({ posts }) {
     return (
@@ -21,7 +21,7 @@ export function Background({ posts }) {
                                 {posts[0].title}
                             </h2>
                             <div className='bg-container__date'>
-                                {formattedDateUser(posts[0].creation_date)}
+                                {formattedPostUser(posts[0].creation_date)}
                                 <i className='bi bi-calendar-event'></i>
                             </div>
                         </div>
@@ -34,8 +34,11 @@ export function Background({ posts }) {
                         variant='rectangular'
                         width='100%'
                         height='100%'
-                        style={{
-                            borderRadius: '1rem',
+                        sx={{
+                            borderRadius: '0rem',
+                            '@media (min-width: 1024px)': {
+                                borderRadius: '1rem',
+                            },
                             backgroundColor: '#00000044',
                         }}
                     />

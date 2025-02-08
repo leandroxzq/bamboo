@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import './Post.scss';
 
-import { formattedDateUser } from '../../../utils/Date.js';
+import { formattedPostUser } from '../../../utils/Date.js';
 
 function Post() {
     const { id } = useParams();
@@ -44,7 +44,7 @@ function Post() {
                 </div>
                 <div className='post__body'>
                     <h1 className='title'>{post.title}</h1>
-                    <span>{formattedDateUser(post.creation_date)}</span>
+                    <span>{formattedPostUser(post.creation_date)}</span>
                     <p className='text'>{post.text_article}</p>
                 </div>
             </article>

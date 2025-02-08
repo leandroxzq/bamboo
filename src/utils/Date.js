@@ -1,10 +1,15 @@
+import dayjs from 'dayjs';
+
 export const formattedDateUser = (dateString) => {
-    if (!dateString) return '';
-    const [date] = dateString.split('T');
+    const date = dayjs(dateString).add(+1, 'day');
 
-    const [year, month, day] = date.split('-');
+    return date.format('DD-MM-YYYY');
+};
 
-    return `${day}/${month}/${year}`;
+export const formattedPostUser = (dateString) => {
+    const date = dayjs(dateString).add(-1, 'day');
+
+    return date.format('DD-MM-YYYY');
 };
 
 export const formatTime = (time) => {
