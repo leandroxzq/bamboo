@@ -26,7 +26,7 @@ const availableTimes = [
     '18:00',
 ];
 
-function AvailabilityConfig() {
+export function AvailabilityConfig() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTimes, setSelectedTimes] = useState([]);
 
@@ -231,5 +231,3 @@ function AvailabilityConfig() {
         </div>
     );
 }
-
-export default AvailabilityConfig;

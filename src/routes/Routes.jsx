@@ -14,7 +14,7 @@ import Post from '../components/pages/post/Post.jsx';
 import CreatePost from '../components/pages/createPost/CreatePost.jsx';
 
 import CreateAppointment from '../components/pages/createAppointment/CreateAppointment.jsx';
-import AvailabilityConfig from '../components/pages/availabilityConfig/AvailabilityConfig.jsx';
+import { AvailabilityConfig } from '../components/pages/availabilityConfig/AvailabilityConfig.jsx';
 import AppointmentsList from '../components/pages/appointmentsList/AppointmentsList.jsx';
 
 import Error from '../components/pages/notFound/Error.jsx';
