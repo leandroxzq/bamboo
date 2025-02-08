@@ -105,7 +105,7 @@ export function AvailabilityConfig() {
         if (result.isConfirmed) {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/availability',
+                    `${import.meta.env.VITE_API_URL}/availability`,
                     {
                         method: 'DELETE',
                         headers: {
