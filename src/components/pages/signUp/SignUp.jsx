@@ -84,7 +84,7 @@ function SignUp() {
                     </div>
                     <Text
                         id='name'
-                        label='Nome Completo'
+                        label='Nome completo'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder='Digite seu nome completo'
