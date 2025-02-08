@@ -7,7 +7,7 @@ export const formattedDateUser = (dateString) => {
 };
 
 export const formattedPostUser = (dateString) => {
-    const date = dayjs(dateString).add(-1, 'day');
+    const date = dayjs(dateString);
 
     return date.format('DD-MM-YYYY');
 };
