@@ -130,10 +130,12 @@ function Header() {
                                 </>
                             )
                         ) : (
-                            <div>
-                                <i className='bi bi-clock loggedout'></i> Você
-                                precisa estar logado para agendar!
-                            </div>
+                            <>
+                                <Link to={'/login'}>
+                                    <i className='bi bi-clock loggedout'></i>{' '}
+                                    Você precisa estar logado para agendar!
+                                </Link>
+                            </>
                         )}
                     </div>
                 )}

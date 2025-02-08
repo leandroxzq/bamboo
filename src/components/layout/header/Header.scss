@@ -162,22 +162,6 @@
         }
     }
 
-    .loggedout {
-        color: #5c5c5caf;
-
-        &::after {
-            opacity: 0;
-            display: flex;
-            position: absolute;
-            bottom: -50px;
-            width: 120px;
-            content: 'Você precisa estar logado para agendar!';
-            background: #000;
-            color: #fff;
-            font-size: 0.6rem;
-        }
-    }
-
     .overlay {
         position: fixed;
         top: 0;
