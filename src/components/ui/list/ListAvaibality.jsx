@@ -5,7 +5,7 @@ import Select from '@mui/material/Select';
 
 import { useState, useEffect } from 'react';
 
-import { formattedDateUser } from '../../../utils/Date';
+import { formattedPostUser } from '../../../utils/Date';
 
 import './ListAvaibality.scss';
 
@@ -77,7 +77,7 @@ function List({ sendDate, sendTime }) {
                         {savedDates?.length ? (
                             savedDates.map((item) => (
                                 <MenuItem key={item.date} value={item.date}>
-                                    {formattedDateUser(item.date)}
+                                    {formattedPostUser(item.date)}
                                 </MenuItem>
                             ))
                         ) : (

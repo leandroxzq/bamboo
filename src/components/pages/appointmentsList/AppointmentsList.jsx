@@ -6,7 +6,7 @@ import { ptBR } from '@mui/x-data-grid/locales';
 import Swal from 'sweetalert2';
 
 import {
-    formattedDateUser,
+    formattedPostUser,
     formatTime,
     calculateAge,
 } from '../../../utils/Date';
@@ -156,7 +156,7 @@ function Scheduled() {
         nomecompleto: appointment.name,
         turma: appointment.class,
         idade: calculateAge(appointment.dob),
-        data: formattedDateUser(appointment.date),
+        data: formattedPostUser(appointment.date),
         horario: formatTime(appointment.time),
         status: appointment.status,
     }));

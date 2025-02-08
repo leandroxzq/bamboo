@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Swal from 'sweetalert2';
 
-import { formattedDateUser } from '../../../utils/Date';
+import { formattedPostUser } from '../../../utils/Date';
 
 import './Profile.scss';
 
@@ -140,7 +140,7 @@ export function Profile() {
                                 <div key={appointment.id}>
                                     <p>
                                         <strong>Data: </strong>
-                                        {formattedDateUser(appointment.date)}
+                                        {formattedPostUser(appointment.date)}
                                     </p>
                                     <p>
                                         <strong>Hora: </strong>
