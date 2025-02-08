@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 import Logo from '../../ui/Logo.jsx';
-import List from '../../ui/listAvaibality/ListAvaibality.jsx';
+import List from '../../ui/list/ListAvaibality.jsx';
 import '../../../assets/style/Modal.scss';
 
 function Create() {
