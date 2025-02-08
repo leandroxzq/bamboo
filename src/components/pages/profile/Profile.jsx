@@ -14,12 +14,15 @@ export function Profile() {
 
     const handleProfile = async () => {
         try {
-            const response = await fetch('http://localhost:5000/profile', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/profile`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            );
             const data = await response.json();
             setProfile(data.infos);
 
@@ -47,7 +50,7 @@ export function Profile() {
         if (result.isConfirmed) {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/appointments/${id}`,
+                    `${import.meta.env.VITE_API_URL}/appointments/${id}`,
                     {
                         method: 'DELETE',
                         headers: {

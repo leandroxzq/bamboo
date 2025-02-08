@@ -20,14 +20,17 @@ function Create() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/appointment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify({ date, time }),
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/appointment`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({ date, time }),
+                }
+            );
 
             if (response.ok) {
                 Swal.fire({

@@ -11,7 +11,9 @@ function Post() {
 
     const fetchPostDetails = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/post/${id}`);
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/post/${id}`
+            );
             const data = await response.json();
             setPost(data);
             console.log(data);

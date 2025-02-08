@@ -23,7 +23,7 @@ function ForgotPassword() {
 
         try {
             const response = await fetch(
-                'http://localhost:5000/forgot-password',
+                `${import.meta.env.VITE_API_URL}/forgot-password`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

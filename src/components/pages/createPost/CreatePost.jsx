@@ -46,29 +46,60 @@ function CreatePost() {
     formDatas.append('title', title);
     formDatas.append('text', text);
 
+    const uploadImage = async (file) => {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const API_KEY = 'e93db0f7ccb0a2ffe37f42cf11f85830'; // Pegue em https://imgbb.com
+        const response = await fetch(
+            `https://api.imgbb.com/1/upload?key=${API_KEY}`,
+            {
+                method: 'POST',
+                body: formData,
+            }
+        );
+
+        const data = await response.json();
+        return data.data.url; // Retorna a URL da imagem hospedada
+    };
+
     const handleUpload = async (e) => {
         e.preventDefault();
 
-        console.log(formDatas);
+        if (!image) {
+            Swal.fire({ title: 'Adicione uma imagem!', icon: 'error' });
+            return;
+        }
 
         try {
-            const response = await fetch('http://localhost:5000/upload', {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: formDatas,
-            });
+            // Faz o upload da imagem no ImgBB
+            const imageUrl = await uploadImage(image);
+
+            // Envia os dados para o backend (com a URL da imagem)
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/upload`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({ title, text, imageUrl }), // Agora enviamos a URL da imagem
+                }
+            );
+
             if (response.ok) {
                 Swal.fire({
-                    title: `Postagem realizada com sucesso!`,
+                    title: 'Postagem realizada com sucesso!',
                     icon: 'success',
                 });
-
                 navigate('/blog');
+            } else {
+                throw new Error('Erro ao criar postagem');
             }
         } catch (error) {
-            console.error('Erro ao enviar o arquivo:', error);
+            console.error('Erro ao enviar:', error);
+            Swal.fire({ title: 'Erro ao criar postagem!', icon: 'error' });
         }
     };
 

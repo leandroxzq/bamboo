@@ -18,12 +18,15 @@ function Scheduled() {
 
     const fetchAppointments = async () => {
         try {
-            const response = await fetch('http://localhost:5000/scheduled', {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/scheduled`,
+                {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                }
+            );
             if (response.ok) {
                 const data = await response.json();
                 console.log(data.appointments);
@@ -39,7 +42,7 @@ function Scheduled() {
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await fetch(
-                `http://localhost:5000/scheduled/${id}`,
+                `${import.meta.env.VITE_API_URL}/scheduled/${id}`,
                 {
                     method: 'PUT',
                     headers: {

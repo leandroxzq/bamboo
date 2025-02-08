@@ -18,7 +18,9 @@ export function Home() {
 
     const fetchCards = async () => {
         try {
-            const response = await fetch('http://localhost:5000/posts');
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/posts`
+            );
             const posts = await response.json();
             setPosts(posts);
         } catch (e) {
@@ -41,7 +43,7 @@ export function Home() {
         if (result.isConfirmed) {
             try {
                 const response = await fetch(
-                    `http://localhost:5000/delete/${id}`,
+                    `${import.meta.env.VITE_API_URL}/delete/${id}`,
                     {
                         method: 'DELETE',
                         headers: {

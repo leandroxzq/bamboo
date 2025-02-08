@@ -29,12 +29,11 @@ const availableTimes = [
 function AvailabilityConfig() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTimes, setSelectedTimes] = useState([]);
-    // eslint-disable-next-line no-unused-vars
+
     const [savedDates, setSavedDates] = useState({});
 
-    // eslint-disable-next-line no-unused-vars
     const [date, setDate] = useState(null);
-    // eslint-disable-next-line no-unused-vars
+
     const [time, setTime] = useState(null);
 
     const handleDate = (newData) => setDate(newData);
@@ -55,14 +54,17 @@ function AvailabilityConfig() {
         };
 
         try {
-            const response = await fetch('http://localhost:5000/availability', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: JSON.stringify(availability),
-            });
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/availability`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify(availability),
+                }
+            );
 
             if (response.ok) {
                 const data = await response.json();
