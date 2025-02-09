@@ -15,12 +15,12 @@
         @include flex-align(start, end);
         height: 100%;
         width: 100%;
-        filter: drop-shadow(3px 3px 10px #000000);
-        box-shadow: inset 0px 0px 10px #0000007c;
+        filter: drop-shadow(0px 0px 10px #0000004b);
+        box-shadow: inset 0px 0px 10px #00000036;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
-        transition: 0.3s;
+        transition: 0.6s all;
 
         @media (width >= 1024px) {
             border-radius: 1rem;
@@ -58,7 +58,7 @@
         }
 
         &:hover {
-            box-shadow: inset 0px 0px 400px #00000067;
+            box-shadow: inset 0px 0px 400px #0000002c;
         }
     }
 }

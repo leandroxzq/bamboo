@@ -2,7 +2,7 @@
 
 .wrapper {
     @include flex-align(center, center, column);
-    min-height: calc(100dvh - 70px);
+    min-height: calc(100dvh - 250px);
     width: 100%;
     z-index: 0;
 

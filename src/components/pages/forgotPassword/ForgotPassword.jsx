@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { LoaderCircle } from 'lucide-react';
 
 import Swal from 'sweetalert2';
 
@@ -15,11 +16,13 @@ function ForgotPassword() {
     const [newPassword, setPassword] = useState('');
 
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         try {
             const response = await fetch(
@@ -48,6 +51,8 @@ function ForgotPassword() {
         } catch (e) {
             console.log(e);
             setMessage(data.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -60,7 +65,27 @@ function ForgotPassword() {
                     </Link>
                     <div className='login__header'>
                         <Logo></Logo>
-                        <h1>Alterar senha</h1>
+                        <h1 className='header__title'>
+                            <span>A</span>
+                            <span>l</span>
+                            <span>t</span>
+                            <span>e</span>
+                            <span>r</span>
+                            <span>a</span>
+                            <span style={{ animationDelay: '0.7s' }}>r</span>
+                            <span
+                                style={{
+                                    animationDelay: '0.1s',
+                                    marginLeft: '10px',
+                                }}
+                            >
+                                s
+                            </span>
+                            <span style={{ animationDelay: '0.2s' }}>e</span>
+                            <span style={{ animationDelay: '0.3s' }}>n</span>
+                            <span style={{ animationDelay: '0.4s' }}>h</span>
+                            <span style={{ animationDelay: '0.5s' }}>a</span>
+                        </h1>
                     </div>
                     <p style={{ color: 'red', textAlign: 'center' }}>
                         {message}
@@ -90,7 +115,16 @@ function ForgotPassword() {
                     />
 
                     <button type='submit' className='button-black'>
-                        Alterar senha
+                        {loading ? (
+                            <LoaderCircle
+                                style={{
+                                    strokeWidth: 3,
+                                }}
+                                className='loading'
+                            />
+                        ) : (
+                            'Cadastrar'
+                        )}
                     </button>
                 </div>
             </form>

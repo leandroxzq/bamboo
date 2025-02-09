@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
 import Swal from 'sweetalert2';
+import { LoaderCircle } from 'lucide-react';
 
 import Logo from '../../ui/Logo';
 import { Password } from '../../ui/inputs/Password';
@@ -16,6 +17,7 @@ function SignUp() {
     const [date, setDate] = useState(null);
     const [room, setRoom] = useState('');
     const [studentID, setStudentID] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -30,6 +32,22 @@ function SignUp() {
             return;
         }
 
+        if (
+            email === '' ||
+            password === '' ||
+            name === '' ||
+            date === null ||
+            room === '' ||
+            studentID === ''
+        ) {
+            Swal.fire({
+                title: `Preencha todos os campos!`,
+                icon: 'error',
+            });
+            return;
+        }
+
+        setLoading(true);
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_API_URL}/register`,
@@ -68,6 +86,8 @@ function SignUp() {
             }
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -80,7 +100,19 @@ function SignUp() {
                     </Link>
                     <div className='login__header'>
                         <Logo></Logo>
-                        <h1>Cadastre-se</h1>
+                        <h1 className='header__title'>
+                            <span>C</span>
+                            <span>a</span>
+                            <span>d</span>
+                            <span>a</span>
+                            <span>s</span>
+                            <span>t</span>
+                            <span style={{ animationDelay: '0.7s' }}>r</span>
+                            <span style={{ animationDelay: '0.8s' }}>e</span>
+                            <span style={{ animationDelay: '0.9s' }}>-</span>
+                            <span style={{ animationDelay: '1s' }}>s</span>
+                            <span style={{ animationDelay: '1.1s' }}>e</span>
+                        </h1>
                     </div>
                     <Text
                         id='name'
@@ -128,7 +160,16 @@ function SignUp() {
                     />
 
                     <button type='submit' className='button-black'>
-                        Cadastrar
+                        {loading ? (
+                            <LoaderCircle
+                                style={{
+                                    strokeWidth: 3,
+                                }}
+                                className='loading'
+                            />
+                        ) : (
+                            'Cadastrar'
+                        )}
                     </button>
                     <span className='login__registrar'>
                         <Link to='/login'>Já tem uma conta?</Link>
