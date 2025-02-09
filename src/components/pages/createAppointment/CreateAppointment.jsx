@@ -55,7 +55,11 @@ function Create() {
                         <Logo />
                         <h2 className='create__title'>Agendamento</h2>
                         <List sendDate={handleDate} sendTime={handleTime} />
-                        <button type='submit' className='button-black'>
+                        <button
+                            type='submit'
+                            className='button-black'
+                            style={{ marginTop: '10px' }}
+                        >
                             Confirmar
                         </button>
                     </div>

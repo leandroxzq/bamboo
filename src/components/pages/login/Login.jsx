@@ -56,13 +56,11 @@ function Login() {
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         setError(null);
-        setIsValid(true);
     };
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
         setError(null);
-        setIsValid(true);
     };
 
     return (
