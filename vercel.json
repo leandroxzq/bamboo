@@ -1,4 +1,6 @@
 {
     "rewrites": [{ "source": "/:match*", "destination": "/index.html" }],
-    "routes": [{ "src": "/(.*)", "dest": "/index.html", "status": 404 }]
+    "redirects": [
+        { "source": "/(.*)", "destination": "/404.html", "statusCode": 404 }
+    ]
 }
