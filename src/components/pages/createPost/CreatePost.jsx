@@ -50,7 +50,7 @@ function CreatePost() {
         const formData = new FormData();
         formData.append('image', file);
 
-        const API_KEY = 'e93db0f7ccb0a2ffe37f42cf11f85830'; // Pegue em https://imgbb.com
+        const API_KEY = import.meta.env.VITE_API_KEY;
         const response = await fetch(
             `https://api.imgbb.com/1/upload?key=${API_KEY}`,
             {
@@ -60,7 +60,7 @@ function CreatePost() {
         );
 
         const data = await response.json();
-        return data.data.url; // Retorna a URL da imagem hospedada
+        return data.data.url;
     };
 
     const handleUpload = async (e) => {
@@ -72,10 +72,8 @@ function CreatePost() {
         }
 
         try {
-            // Faz o upload da imagem no ImgBB
             const imageUrl = await uploadImage(image);
 
-            // Envia os dados para o backend (com a URL da imagem)
             const response = await fetch(
                 `${import.meta.env.VITE_API_URL}/upload`,
                 {
@@ -84,7 +82,7 @@ function CreatePost() {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
-                    body: JSON.stringify({ title, text, imageUrl }), // Agora enviamos a URL da imagem
+                    body: JSON.stringify({ title, text, imageUrl }),
                 }
             );
 
