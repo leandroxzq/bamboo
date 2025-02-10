@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 import {
     formattedPostUser,
+    formattedDateUser,
     formatTime,
     calculateAge,
 } from '../../../utils/Date';
@@ -156,7 +157,7 @@ function Scheduled() {
         nomecompleto: appointment.name,
         turma: appointment.class,
         idade: calculateAge(appointment.dob),
-        data: formattedPostUser(appointment.date),
+        data: formattedDateUser(appointment.date),
         horario: formatTime(appointment.time),
         status: appointment.status,
     }));
