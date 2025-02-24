@@ -1,6 +1,18 @@
-# Bamboo
+# 🎋 Bamboo
 
-Este repositório contém o frontend de uma aplicação desenvolvida com React.js e Material UI para componentes como skeletons, inputs e datepickers. A aplicação é voltada para a gestão de postagens, visualização de blogs e agendamentos com uma psicóloga. Além disso, oferece funcionalidades específicas para diferentes perfis de usuários:
+Este repositório contém o frontend de uma aplicação desenvolvida com React.js e Material UI para componentes como skeletons, inputs e datepickers. A aplicação é voltada para a gestão de postagens é horarios, visualização de conteúdo e agendamentos com uma psicóloga. Oferece funcionalidades específicas para diferentes perfis de usuários:
+
+## Links do Projeto
+
+[Deploy Vercel](https://bamboo-rho.vercel.app)
+
+[Repositório do frontend](https://github.com/leandroxzq/bamboo)
+
+[Repositório do backend](https://github.com/leandroxzq/backend-bamboo)
+
+## 🎯 Motivação do Projeto
+
+O Projeto Bamboo foi desenvolvido como parte da disciplina de Engenharia de Software, sob requisito do professor, seguindo diretrizes dos Objetivos de Desenvolvimento Sustentável (ODS) da ONU e com foco na comunidade do campus IFPE.
 
 ## O projeto pode ser testado por completo na vercel
 
@@ -32,31 +44,17 @@ Para Psicóloga:
 
 Para Usuários:
 
+- Visualização de Postagens
+
 - Agendamento de Consultas: Escolher horários disponíveis para agendar consultas com a psicóloga.
 
 - Visualização de Perfil: Acessar informações pessoais e consultas agendadas.
 
 - Cancelamento de Consultas: Cancelar consultas pendentes diretamente no perfil do usuário.
 
-## Links do Projeto
+## Instalação
 
-[Deploy Vercel](https://bamboo-rho.vercel.app)
-
-[Repositório do frontend](https://github.com/leandroxzq/bamboo)
-
-[Repositório do backend](https://github.com/leandroxzq/backend-bamboo)
-
-## Pré-requisitos
-
-Antes de rodar o frontend localmente, você precisa ter o Node.js instalado em sua máquina. Caso ainda não tenha o Node.js instalado, siga as instruções no [site oficial do Node.js](https://nodejs.org/).
-
-Além disso, será necessário o npm (gerenciador de pacotes do Node.js), que já vem instalado junto com o Node.js.
-
-## Instalação e Execução
-
-## O projeto pode ser testado pela vercel
-
-### 1. Clone o repositório
+### 1. Clone os repositórios
 
 ```bash
 git clone https://github.com/leandroxzq/bamboo.git
@@ -65,28 +63,57 @@ cd bamboo
 
 ### 2. Instale as dependências
 
-Dentro do diretório do projeto, execute o comando abaixo para instalar as dependências necessárias:
+Dentro dos diretórios do projeto, execute o comando abaixo para instalar as dependências necessárias:
 
 ```bash
 npm install
 ```
 
-### 3. Execute o servidor de desenvolvimento
+### 3. Execute o projeto
 
-Para rodar o frontend em modo de desenvolvimento, execute o seguinte comando:
+Utilize o script em ambos.
 
 ```bash
 npm run dev
 ```
 
-O Vite irá iniciar o servidor local e disponibilizar a aplicação na URL http://localhost:5173.
+## Configuração do Ambiente
 
-### 4. Configuração de Variáveis de Ambiente
+### - Frontend:
 
-Crie um arquivo .env na raiz do projeto e defina a URL da API que será consumida pela aplicação. Para rodar o frontend localmente com a API do backend também local, configure da seguinte forma:
+Na raiz do seu projeto, crie um arquivo chamado .env, defina as variáveis de ambiente conforme o exemplo abaixo:
 
 ```bash
 VITE_API_URL=http://localhost:5000
+VITE_API_KEY="SUA KEY NO IMGBB"
 ```
 
-Se estiver utilizando o ambiente de produção, a URL pode ser diferente, como o link de sua API hospedada. Não se esqueça de configurar o arquivo .env corretamente!
+- VITE_API_URL: Esta variável define a URL da API que o frontend irá consumir. No exemplo, a API está rodando localmente na porta 5000.
+
+- VITE_API_KEY: Esta variável armazena a chave da API do IMGBB.
+
+### - Backend:
+
+```bash
+SECRET_KEY="SUAKEYSEGURA"
+BD_HOST="ENDEREÇO_BANCO"
+BD_NAME="NOME_BANCO"
+BD_USER="SEU_USER"
+BD_PASSWORD="SUA_SENHA"
+```
+
+- SECRET_KEY: Chave secreta usada para assinar tokens JWT ou outras operações de criptografia.
+
+- BD_HOST: Endereço do servidor do banco de dados.
+
+- BD_NAME: Nome do banco de dados.
+
+- BD_USER: Usuário do banco de dados.
+
+- BD_PASSWORD: Senha do banco de dados.
+
+# 🗃️ Configuração do Banco de Dados
+
+O arquivo `schema.sql` contém todos os comandos necessários para criar as tabelas no banco de dados. Ele está localizado na pasta `database/` no backend.
+
+Certifique-se de que as variáveis de ambiente no arquivo `.env` do backend estejam corretamente configuradas para se conectar ao banco de dados.
