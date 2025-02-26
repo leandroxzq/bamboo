@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Swal from 'sweetalert2';
-
-import { formattedDateUser } from '../../../utils/Date';
+import dayjs from 'dayjs';
 
 import './Profile.scss';
 
@@ -140,7 +139,9 @@ export function Profile() {
                                 <div key={appointment.id}>
                                     <p>
                                         <strong>Data: </strong>
-                                        {formattedDateUser(appointment.date)}
+                                        {dayjs(appointment.date).format(
+                                            'DD/MM/YYYY'
+                                        )}
                                     </p>
                                     <p>
                                         <strong>Hora: </strong>

@@ -2,15 +2,10 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Paper, Select, MenuItem, FormControl } from '@mui/material';
 import { ptBR } from '@mui/x-data-grid/locales';
-
+import dayjs from 'dayjs';
 import Swal from 'sweetalert2';
 
-import {
-    formattedPostUser,
-    formattedDateUser,
-    formatTime,
-    calculateAge,
-} from '../../../utils/Date';
+import { formatTime, calculateAge } from '../../../utils/Date';
 
 import './AppointmentsList.scss';
 
@@ -157,7 +152,7 @@ function Scheduled() {
         nomecompleto: appointment.name,
         turma: appointment.class,
         idade: calculateAge(appointment.dob),
-        data: formattedDateUser(appointment.date),
+        data: dayjs(appointment.date).format('DD/MM/YYYY'),
         horario: formatTime(appointment.time),
         status: appointment.status,
     }));

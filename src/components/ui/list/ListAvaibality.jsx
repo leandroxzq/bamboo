@@ -2,10 +2,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import dayjs from 'dayjs';
 
 import { useState, useEffect } from 'react';
-
-import { formattedDateUser } from '../../../utils/Date';
 
 import './ListAvaibality.scss';
 
@@ -77,7 +76,7 @@ function List({ sendDate, sendTime }) {
                         {savedDates?.length ? (
                             savedDates.map((item) => (
                                 <MenuItem key={item.date} value={item.date}>
-                                    {formattedDateUser(item.date)}
+                                    {dayjs(item.date).format('DD/MM/YYYY')}
                                 </MenuItem>
                             ))
                         ) : (
