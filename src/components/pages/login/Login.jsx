@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle, CircleHelp } from 'lucide-react';
 
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import { Password } from '../../ui/inputs/Password.jsx';
@@ -63,10 +63,38 @@ function Login() {
         setError(null);
     };
 
+    const [info, setInfo] = useState(false);
+
+    const toggleInfo = () => {
+        setInfo(true);
+        if (info === true) {
+            setInfo(false);
+        }
+    };
+
     return (
         <div className='background-form'>
             <form className='form-login' onSubmit={handleSubmit}>
+                {info && (
+                    <aside className='credentials'>
+                        <div className='credentials__card'>
+                            <span>Admin</span>
+                            <span>Usuário: psicologa</span>
+                            <span>Senha: 123</span>
+                        </div>
+                        <div className='credentials__card'>
+                            <span>Aluno</span>
+                            <span>Usuário: aluno@discente.ifpe.edu.br</span>
+                            <span>Senha: 123</span>
+                        </div>
+                    </aside>
+                )}
                 <div className='login'>
+                    <CircleHelp
+                        data-tooltip-id='login-tooltip'
+                        onClick={toggleInfo}
+                    />
+
                     <Link to='/blog'>
                         <i className='bi bi-x exit'></i>
                     </Link>
