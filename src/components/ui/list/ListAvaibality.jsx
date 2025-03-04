@@ -42,7 +42,10 @@ function List({ sendDate, sendTime }) {
         );
 
         if (selectedDateData && selectedDateData.times) {
-            setAvailableTimes(selectedDateData.times);
+            const sortedTimes = [...selectedDateData.times].sort((a, b) =>
+                a.localeCompare(b)
+            );
+            setAvailableTimes(sortedTimes);
         } else {
             setAvailableTimes([]);
         }

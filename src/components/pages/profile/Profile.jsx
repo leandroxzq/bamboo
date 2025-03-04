@@ -5,6 +5,8 @@ import dayjs from 'dayjs';
 
 import './Profile.scss';
 
+import { formatTime } from '../../../utils/Date.js';
+
 export function Profile() {
     const [profile, setProfile] = useState([]);
     const [appointments, setAppointments] = useState([]);
@@ -145,7 +147,7 @@ export function Profile() {
                                     </p>
                                     <p>
                                         <strong>Hora: </strong>
-                                        {appointment.time}
+                                        {formatTime(appointment.time)}
                                     </p>
                                     <p>
                                         <strong>Status: </strong>
