@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
+import 'dayjs/locale/pt-BR';
 
 export const formattedPostUser = (dateString) => {
-    const date = dayjs(dateString);
+    const date = dayjs(dateString).locale('pt-br');
 
-    return date.format('DD/MM/YYYY');
+    return date.format('D [de] MMMM, YYYY');
 };
 
 export const formatTime = (time) => {
