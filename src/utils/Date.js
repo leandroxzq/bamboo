@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import 'dayjs/locale/pt-BR';
+import 'dayjs/locale/pt-br';
 
 export const formattedPostUser = (dateString) => {
     const date = dayjs(dateString).locale('pt-br');
