@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 
-import { LoaderCircle, CircleHelp } from 'lucide-react';
+import { LoaderCircle, KeyRound } from 'lucide-react';
 
 import { useAuth } from '../../../auth/AuthContext.jsx';
 import { Password } from '../../ui/inputs/Password.jsx';
@@ -90,9 +90,11 @@ function Login() {
                     </aside>
                 )}
                 <div className='login'>
-                    <CircleHelp
+                    <KeyRound
+                        className=''
                         data-tooltip-id='login-tooltip'
                         onClick={toggleInfo}
+                        style={{ cursor: 'pointer' }}
                     />
 
                     <Link to='/blog'>
