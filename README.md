@@ -1,14 +1,12 @@
 # 🎋 Bamboo
 
-Este repositório contém o frontend de uma aplicação desenvolvida com React.js e Material UI para componentes como skeletons, inputs e datepickers. A aplicação é voltada para a gestão de postagens é horarios, visualização de conteúdo e agendamentos com uma psicóloga. Oferece funcionalidades específicas para diferentes perfis de usuários:
+Este projeto reúne o frontend e o backend da aplicação Bamboo, uma plataforma voltada para a gestão de agendamentos, postagens e horários com uma psicóloga.
+
+O frontend, desenvolvido com React.js e Material UI, utiliza componentes como skeletons, inputs e datepickers para oferecer uma experiência fluida e intuitiva. Já o backend, construído com Node.js, Express e MySQL, gerencia a lógica da aplicação, autenticação, banco de dados e integração com o frontend.
 
 ## Links do Projeto
 
 [Deploy Vercel](https://bamboo-rho.vercel.app)
-
-[Repositório do frontend](https://github.com/leandroxzq/bamboo)
-
-[Repositório do backend](https://github.com/leandroxzq/backend-bamboo)
 
 ## 🎯 Motivação do Projeto
 
@@ -36,21 +34,21 @@ Senha: 123
 
 Para Psicóloga:
 
-- Gestão de Agendamentos: Configurar datas e horários disponíveis para agendamentos.
+-   Gestão de Agendamentos: Configurar datas e horários disponíveis para agendamentos.
 
-- Painel de Controle: Visualizar dados dos agendamentos, alterar o status dos agendamentos (confirmado, cancelado, pendente, etc.).
+-   Painel de Controle: Visualizar dados dos agendamentos, alterar o status dos agendamentos (confirmado, cancelado, pendente, etc.).
 
-- Gestão de Postagens: Criar, editar e excluir postagens no blog.
+-   Gestão de Postagens: Criar, editar e excluir postagens no blog.
 
 Para Usuários:
 
-- Visualização de Postagens
+-   Visualização de Postagens
 
-- Agendamento de Consultas: Escolher horários disponíveis para agendar consultas com a psicóloga.
+-   Agendamento de Consultas: Escolher horários disponíveis para agendar consultas com a psicóloga.
 
-- Visualização de Perfil: Acessar informações pessoais e consultas agendadas.
+-   Visualização de Perfil: Acessar informações pessoais e consultas agendadas.
 
-- Cancelamento de Consultas: Cancelar consultas pendentes diretamente no perfil do usuário.
+-   Cancelamento de Consultas: Cancelar consultas pendentes diretamente no perfil do usuário.
 
 ## Instalação
 
@@ -88,9 +86,9 @@ VITE_API_URL=http://localhost:5000
 VITE_API_KEY="SUA KEY NO IMGBB"
 ```
 
-- VITE_API_URL: Esta variável define a URL da API que o frontend irá consumir. No exemplo, a API está rodando localmente na porta 5000.
+-   VITE_API_URL: Esta variável define a URL da API que o frontend irá consumir. No exemplo, a API está rodando localmente na porta 5000.
 
-- VITE_API_KEY: Esta variável armazena a chave da API do IMGBB.
+-   VITE_API_KEY: Esta variável armazena a chave da API do IMGBB.
 
 ### - Backend:
 
@@ -102,15 +100,15 @@ BD_USER="SEU_USER"
 BD_PASSWORD="SUA_SENHA"
 ```
 
-- SECRET_KEY: Chave secreta usada para assinar tokens JWT ou outras operações de criptografia.
+-   SECRET_KEY: Chave secreta usada para assinar tokens JWT ou outras operações de criptografia.
 
-- BD_HOST: Endereço do servidor do banco de dados.
+-   BD_HOST: Endereço do servidor do banco de dados.
 
-- BD_NAME: Nome do banco de dados.
+-   BD_NAME: Nome do banco de dados.
 
-- BD_USER: Usuário do banco de dados.
+-   BD_USER: Usuário do banco de dados.
 
-- BD_PASSWORD: Senha do banco de dados.
+-   BD_PASSWORD: Senha do banco de dados.
 
 # 🗃️ Configuração do Banco de Dados
 
