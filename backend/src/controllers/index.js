@@ -26,10 +26,15 @@ export const register = async (req, res) => {
 	}
 
 	if (email) {
-		const [existing] = await dbPromise.query("SELECT * FROM users WHERE email = ?", [email])
+		const [existing] = await dbPromise.query(
+			"SELECT * FROM users WHERE email = ?",
+			[email]
+		)
 
 		if (existing.length > 0) {
-			return res.status(400).json({ message: "Email já cadastrado no sistema." })
+			return res
+				.status(400)
+				.json({ message: "Email já cadastrado no sistema." })
 		}
 	}
 
@@ -59,7 +64,10 @@ export const login = async (req, res) => {
 	const { email, password } = req.body
 
 	try {
-		const [rows] = await dbPromise.query("SELECT * FROM users WHERE email = ?", [email])
+		const [rows] = await dbPromise.query(
+			"SELECT * FROM users WHERE email = ?",
+			[email]
+		)
 
 		const user = rows[0]
 
@@ -79,13 +87,17 @@ export const login = async (req, res) => {
 
 export const getAvailability = async (req, res) => {
 	try {
-		await dbPromise.query("DELETE FROM availability WHERE JSON_LENGTH(times) = 0")
+		await dbPromise.query(
+			"DELETE FROM availability WHERE JSON_LENGTH(times) = 0"
+		)
 		await dbPromise.query(`
             DELETE FROM availability 
             WHERE date < CURDATE()
         `)
 
-		const [rows] = await dbPromise.query("SELECT * FROM availability ORDER BY date, times")
+		const [rows] = await dbPromise.query(
+			"SELECT * FROM availability ORDER BY date, times"
+		)
 
 		res.status(200).json({ dates: rows })
 	} catch (err) {
@@ -100,14 +112,22 @@ export const configAvailability = async (req, res) => {
 	const timesJSON = JSON.stringify(times)
 
 	try {
-		const [existing] = await dbPromise.query("SELECT * FROM availability WHERE date = ?", [date])
+		const [existing] = await dbPromise.query(
+			"SELECT * FROM availability WHERE date = ?",
+			[date]
+		)
 
 		if (existing.length > 0) {
 			console.error("Data já configurada no sistema.")
-			return res.status(400).json({ message: "Data já configurada no sistema." })
+			return res
+				.status(400)
+				.json({ message: "Data já configurada no sistema." })
 		}
 
-		const [result] = await dbPromise.query("INSERT INTO availability (date, times) VALUES (?, ?)", [date, timesJSON])
+		const [result] = await dbPromise.query(
+			"INSERT INTO availability (date, times) VALUES (?, ?)",
+			[date, timesJSON]
+		)
 		res.status(201).json({
 			message: "Disponibilidade salva com sucesso",
 		})
@@ -136,14 +156,19 @@ export const schedule = async (req, res) => {
 	const formattedDate = date.split("T")[0]
 
 	try {
-		await dbPromise.query("INSERT INTO appointments (user_id, date, time) VALUES (?, ?, ?)", [userId, date, time])
+		await dbPromise.query(
+			"INSERT INTO appointments (user_id, date, time) VALUES (?, ?, ?)",
+			[userId, date, time]
+		)
 
 		const [result] = await dbPromise.query(
 			"UPDATE availability SET times = JSON_REMOVE(times, JSON_UNQUOTE(JSON_SEARCH(times, 'one', ?))) WHERE date = ?",
 			[time, formattedDate]
 		)
 
-		return res.status(200).json({ message: "Agendamento realizado com sucesso!" })
+		return res
+			.status(200)
+			.json({ message: "Agendamento realizado com sucesso!" })
 	} catch (e) {
 		console.error(e)
 	}
@@ -172,7 +197,10 @@ export const changeAppointments = async (req, res) => {
 	const { status } = req.body
 
 	try {
-		const [result] = await dbPromise.query("UPDATE appointments SET status = ? WHERE id = ?", [status, id])
+		const [result] = await dbPromise.query(
+			"UPDATE appointments SET status = ? WHERE id = ?",
+			[status, id]
+		)
 
 		res.status(200).json({
 			message: "Status do agendamento atualizado com sucesso",
@@ -189,11 +217,10 @@ export const createPost = async (req, res) => {
 	const { title, text, imageUrl } = req.body
 
 	try {
-		await dbPromise.query("INSERT INTO article (title, text_article, directory_img) VALUES (?, ?, ?)", [
-			title,
-			text,
-			imageUrl,
-		])
+		await dbPromise.query(
+			"INSERT INTO article (title, text_article, directory_img) VALUES (?, ?, ?)",
+			[title, text, imageUrl]
+		)
 
 		return res.status(200).json({ title, text, imageUrl })
 	} catch (e) {
@@ -204,7 +231,9 @@ export const createPost = async (req, res) => {
 
 export const getAllPosts = async (req, res) => {
 	try {
-		const [list] = await dbPromise.query("SELECT * FROM article ORDER BY id DESC")
+		const [list] = await dbPromise.query(
+			"SELECT * FROM article ORDER BY id DESC"
+		)
 		return res.status(200).json(list)
 	} catch (e) {
 		console.log(e)
@@ -215,7 +244,9 @@ export const getAllPosts = async (req, res) => {
 export const getPost = async (req, res) => {
 	try {
 		const { id } = req.params
-		const [row] = await dbPromise.query("SELECT * FROM article WHERE id = ?;", [id])
+		const [row] = await dbPromise.query("SELECT * FROM article WHERE id = ?;", [
+			id,
+		])
 		return res.status(200).json(row[0])
 	} catch (e) {
 		console.error(e)
@@ -241,7 +272,10 @@ export const getProfile = async (req, res) => {
 	try {
 		await updateAppointments()
 
-		const [have] = await dbPromise.query("SELECT * FROM appointments WHERE user_id = ? ", [userId])
+		const [have] = await dbPromise.query(
+			"SELECT * FROM appointments WHERE user_id = ? ",
+			[userId]
+		)
 
 		const [data] = await dbPromise.query(
 			`SELECT u.name, u.class, u.studentID, u.email, a.date, a.time, a.id, a.status 
@@ -282,16 +316,15 @@ export const deleteAppointmentsProfile = async (req, res) => {
 	const status = "cancelado pelo usuário"
 
 	try {
-		const [result] = await dbPromise.query("UPDATE appointments SET status = ? WHERE id = ? AND user_id = ?", [
-			status,
-			id,
-			userId,
-		])
+		const [result] = await dbPromise.query(
+			"UPDATE appointments SET status = ? WHERE id = ? AND user_id = ?",
+			[status, id, userId]
+		)
 
-		const [appointment] = await dbPromise.query("SELECT date, time FROM appointments WHERE id = ? AND user_id = ?", [
-			id,
-			userId,
-		])
+		const [appointment] = await dbPromise.query(
+			"SELECT date, time FROM appointments WHERE id = ? AND user_id = ?",
+			[id, userId]
+		)
 
 		if (!appointment || appointment.length === 0) {
 			return res.status(404).json({ message: "Agendamento não encontrado." })
@@ -299,19 +332,27 @@ export const deleteAppointmentsProfile = async (req, res) => {
 
 		const { date, time } = appointment[0]
 
-		const formattedTime = time.split(":").slice(0, 2).join(":")
+		const formattedTime = new Date(`2000-01-01T${time}`)
+			.toTimeString()
+			.slice(0, 5)
 
-		const [availability] = await dbPromise.query("SELECT * FROM availability WHERE date = ?", [date])
+		const [availability] = await dbPromise.query(
+			"SELECT * FROM availability WHERE date = ?",
+			[date]
+		)
 
 		if (availability.length === 0) {
-			await dbPromise.query("INSERT INTO availability (date, times) VALUES (?, JSON_ARRAY(?))", [date, formattedTime])
+			await dbPromise.query(
+				"INSERT INTO availability (date, times) VALUES (?, JSON_ARRAY(?))",
+				[date, formattedTime]
+			)
 		} else {
 			const times = availability[0].times
 			if (!times.includes(formattedTime)) {
-				await dbPromise.query("UPDATE availability SET times = JSON_ARRAY_APPEND(times, '$', ?) WHERE date = ?", [
-					formattedTime,
-					date,
-				])
+				await dbPromise.query(
+					"UPDATE availability SET times = JSON_ARRAY_APPEND(times, '$', ?) WHERE date = ?",
+					[formattedTime, date]
+				)
 			} else {
 				console.log("O horário já existe na disponibilidade:", time)
 			}
@@ -331,17 +372,25 @@ export const deleteAppointmentsProfile = async (req, res) => {
 export const forgotPassword = async (req, res) => {
 	const { email, studentID, newPassword } = req.body
 
-	const [rows] = await dbPromise.query("SELECT * FROM users WHERE email = ? AND studentID = ?", [email, studentID])
+	const [rows] = await dbPromise.query(
+		"SELECT * FROM users WHERE email = ? AND studentID = ?",
+		[email, studentID]
+	)
 
 	const user = rows[0]
 
 	if (!user) {
-		return res.status(404).json({ message: "Usuário não encontrado ou dados incorretos" })
+		return res
+			.status(404)
+			.json({ message: "Usuário não encontrado ou dados incorretos" })
 	}
 
 	const hashedPassword = await bcrypt.hash(newPassword, 10)
 
-	await dbPromise.query("UPDATE users SET password = ? WHERE email = ?", [hashedPassword, email])
+	await dbPromise.query("UPDATE users SET password = ? WHERE email = ?", [
+		hashedPassword,
+		email,
+	])
 	res.json({
 		message: "Senha alterada com sucesso",
 	})
