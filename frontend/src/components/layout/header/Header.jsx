@@ -1,11 +1,35 @@
-import { Link, useNavigate } from 'react-router';
-import { useAuth } from '../../../auth/AuthContext.jsx';
 import { useState, useEffect, useRef } from 'react';
-
+import { Link, useNavigate } from 'react-router';
 import { Tooltip } from 'react-tooltip';
 
+import { useAuth } from '../../../auth/AuthContext.jsx';
+import { MenuItem } from '../../ui/MenuItem.jsx';
 import Logo from '../../ui/Logo.jsx';
+
 import './Header.scss';
+
+const adminLinks = [
+    {
+        to: '/criar-postagem',
+        icon: 'bi-pencil-square',
+        label: 'Criar um novo post',
+    },
+    {
+        to: '/configurar-disponibilidade',
+        icon: 'bi-gear-wide',
+        label: 'Configuração de Disponibilidade',
+    },
+    {
+        to: '/agendados',
+        icon: 'bi-card-checklist',
+        label: 'Consultas Agendadas',
+    },
+];
+
+const userLinks = [
+    { to: '/perfil', icon: 'bi-person-circle', label: 'Perfil' },
+    { to: '/agendamento', icon: 'bi-clock', label: 'Agendar uma Consulta' },
+];
 
 function Header() {
     const { role, logout } = useAuth();
@@ -96,46 +120,31 @@ function Header() {
                     <div className='header__menu' ref={menuRef}>
                         <i className='bi bi-x-lg' onClick={toggleMenu}></i>
 
-                        {role === 'admin' && (
-                            <>
-                                <Link to={'/criar-postagem'}>
-                                    <i className='bi bi-pencil-square'></i>
-                                    Criar um novo post
-                                </Link>
-                                <Link
-                                    to={'/configurar-disponibilidade'}
+                        {role === 'admin' &&
+                            adminLinks.map((item) => (
+                                <MenuItem
+                                    key={item.to}
+                                    {...item}
                                     onClick={toggleMenu}
-                                >
-                                    <i className='bi bi-gear-wide'></i>
-                                    Configuração de Disponibilidade
-                                </Link>
-                                <Link to={'/agendados'} onClick={toggleMenu}>
-                                    <i className='bi bi-card-checklist'></i>
-                                    Consultas Agendadas
-                                </Link>
-                            </>
-                        )}
+                                />
+                            ))}
 
-                        {role !== null ? (
-                            role !== 'admin' && (
-                                <>
-                                    <Link to={'/perfil'} onClick={toggleMenu}>
-                                        <i className='bi bi-person-circle'></i>
-                                        Perfil
-                                    </Link>
-                                    <Link to={'/agendamento'}>
-                                        <i className='bi bi-clock'></i> Agendar
-                                        uma Consulta
-                                    </Link>
-                                </>
-                            )
-                        ) : (
-                            <>
-                                <Link to={'/login'}>
-                                    <i className='bi bi-clock loggedout'></i>{' '}
-                                    Você precisa estar logado para agendar!
-                                </Link>
-                            </>
+                        {role &&
+                            role !== 'admin' &&
+                            userLinks.map((item) => (
+                                <MenuItem
+                                    key={item.to}
+                                    {...item}
+                                    onClick={toggleMenu}
+                                ></MenuItem>
+                            ))}
+
+                        {!role && (
+                            <MenuItem
+                                to='/login'
+                                icon='bi-clock loggedout'
+                                label='Você precisa estar logado para agendar!'
+                            />
                         )}
                     </div>
                 )}
