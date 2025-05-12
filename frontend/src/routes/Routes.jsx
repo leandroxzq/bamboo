@@ -5,7 +5,7 @@ import { useAuth } from '../auth/AuthContext.jsx';
 import Layout from '../components/layout/Layout.jsx';
 
 import Login from '../components/pages/login/Login.jsx';
-import SignUp from '../components/pages/signUp/SignUp.jsx';
+import { SignUp } from '../components/pages/signUp/SignUp.jsx';
 import ForgotPassword from '../components/pages/forgotPassword/ForgotPassword.jsx';
 
 import { Home } from '../components/pages/home/Home.jsx';
