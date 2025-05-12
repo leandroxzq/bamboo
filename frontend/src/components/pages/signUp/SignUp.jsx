@@ -10,13 +10,23 @@ import { Text } from '../../ui/inputs/Text';
 import { DataPicker } from '../../ui/inputs/DataPicker';
 import '../../../assets/style/Modal.scss';
 
-function SignUp() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [date, setDate] = useState(null);
-    const [room, setRoom] = useState('');
-    const [studentID, setStudentID] = useState('');
+export function SignUp() {
+    const [formData, setFormData] = useState({
+        name:"",
+        email:"",
+        password:"",
+        date:null,
+        room:"",
+        studentID:"",
+    })
+
+    const handleChange = (name, value) => {
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+    
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -24,7 +34,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!email.endsWith('@discente.ifpe.edu.br')) {
+        if (!formData.email.endsWith('@discente.ifpe.edu.br')) {
             Swal.fire({
                 title: `O email deve ser do domínio @discente.ifpe.edu.br`,
                 icon: 'error',
@@ -33,12 +43,12 @@ function SignUp() {
         }
 
         if (
-            email === '' ||
-            password === '' ||
-            name === '' ||
-            date === null ||
-            room === '' ||
-            studentID === ''
+            formData.email === '' ||
+            formData.password === '' ||
+            formData.name === '' ||
+            formData.date === null ||
+            formData.room === '' ||
+            formData.studentID === ''
         ) {
             Swal.fire({
                 title: `Preencha todos os campos!`,
@@ -56,14 +66,7 @@ function SignUp() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        password,
-                        date,
-                        room,
-                        studentID,
-                    }),
+                    body: JSON.stringify(formData),
                 }
             );
 
@@ -114,49 +117,49 @@ function SignUp() {
                             <span style={{ animationDelay: '1.1s' }}>e</span>
                         </h1>
                     </div>
-                    <Text
-                        id='name'
+                     <Text
+                        id='name'                
                         label='Nome completo'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={formData.name}
+                        onChange={(e) => handleChange('name', e.target.value)}
                         placeholder='Digite seu nome completo'
                     />
                     <Text
-                        id='email'
+                        id='email'                      
                         label='Email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
                         placeholder='Digite seu email'
                     />
 
                     <Password
                         id='password'
                         label='Senha'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={formData.password}
+                        onChange={(e) => handleChange('password', e.target.value)}
                         placeholder='Digite sua senha'
                     />
 
                     <Text
                         id='room'
                         label='Turma'
-                        value={room}
-                        onChange={(e) => setRoom(e.target.value)}
+                        value={formData.room}
+                        onChange={(e) => handleChange('room', e.target.value)}
                         placeholder='Digite sua turma'
                     />
 
                     <Text
                         id='studentID'
                         label='Matrícula'
-                        value={studentID}
-                        onChange={(e) => setStudentID(e.target.value)}
+                        value={formData.studentID}
+                        onChange={(e) => handleChange('studentID', e.target.value)}
                         placeholder='Digite sua matrícula'
                     />
 
-                    <DataPicker
+                    <DataPicker                 
                         label='Data de nascimento'
-                        value={date}
-                        onChange={(e) => setDate(e)}
+                        value={formData.date}
+                        onChange={(e) => handleChange('date', e)}
                     />
 
                     <button type='submit' className='button-black'>
@@ -179,5 +182,3 @@ function SignUp() {
         </div>
     );
 }
-
-export default SignUp;
